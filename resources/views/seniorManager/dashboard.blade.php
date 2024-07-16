@@ -8,6 +8,11 @@
 </head>
 <body>
     <h1>Welcome to Senior Management Dashboard</h1>
+    <li class="dropdown-item py-2">
+        <form method="POST" action="{{ route('logout') }}">
+          @csrf
+              <input class = "btn btn-danger" type="submit" value = "Logout">
+      </form>
 </body>
 </html>
 

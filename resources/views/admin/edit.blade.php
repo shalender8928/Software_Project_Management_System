@@ -7,11 +7,10 @@
     <title>Document</title>
 </head>
 <body>
-    <h1>Welcome to Developer Dashboard</h1>
-    <li class="dropdown-item py-2">
-        <form method="POST" action="{{ route('logout') }}">
-          @csrf
-              <input class = "btn btn-danger" type="submit" value = "Logout">
-      </form>
+    <h1>Edit Employee Detail</h1>
+    <form method="POST" action="{{ route('logout') }}">
+        @csrf
+            <input class = "btn btn-danger" type="submit" value = "Logout">
+    </form>
 </body>
 </html>

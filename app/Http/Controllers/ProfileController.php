@@ -58,3 +58,22 @@ class ProfileController extends Controller
         return Redirect::to('/');
     }
 }
+use App\Models\User;
+use Illuminate\Support\Facades\Hash;
+
+
+$user = User::create([
+    'firstname' => 'John',
+    'lastname' => 'Doe',
+    'email' => 'john.doe@example.com',
+    'password' => Hash::make('password'),
+    'phone' => '123-456-7890',       
+    'gender' => 'male',              
+    'age' => 30,                     
+    'image' => 'path/to/image.jpg',  
+    'registered_by' => 'admin',      
+    'updated_by' => 'admin',         
+]);
+
+
+$user;
