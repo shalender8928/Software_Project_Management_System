@@ -36,11 +36,10 @@
   <link rel="shortcut icon" href="{{asset('./assets/images/favicon.png.')}}" />
 </head>
 <body>
-<<<<<<< HEAD
 <div class="main-wrapper">
 
 <!-- partial:partials/_sidebar.html -->
-   @include('projectManager.sidebar')
+   @include('admin.sidebar')
 
 <!-- partial -->
 
@@ -48,28 +47,20 @@
             
     <!-- partial:partials/_navbar.html -->
     
-         @include('projectManager.header')  
+         @include('admin.header')  
          
-         
-         @include('projectManager.index')
-			<!-- partial:partials/_footer.html -->
-		@include('projectManager.footer')  
+     <div class="h1">
+		<h1>Add new Employee</h1>
+	 </div>
+		@include('admin.footer')  
 			<!-- partial -->
 		
 		</div>
 	</div>
 
 	<!-- core:js -->
-	@include('projectManager.js')
+	@include('admin.js')
 
-=======
-    <h1>Welcome to Developer Dashboard</h1>
-    <li class="dropdown-item py-2">
-        <form method="POST" action="{{ route('logout') }}">
-          @csrf
-              <input class = "btn btn-danger" type="submit" value = "Logout">
-      </form>
->>>>>>> 45bbf9aa614c660f5aee0417bd731c72dd503009
 </body>
 </html>    
 
