@@ -7,6 +7,7 @@ use App\Http\Controllers\SeniorManagerController;
 use App\Http\Controllers\ProjectManagerController;
 use App\Http\Controllers\DeveloperController;
 use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\ProjectController;
 
 
 
@@ -25,9 +26,23 @@ Route::middleware(['auth'])->group(function () {
         ->name('seniorManager.dashboard')
         ->middleware('CheckRole:Senior Manager');
 
-    Route::get('/project-manager/dashboard', [ProjectManagerController::class, 'dashboard'])
-        ->name('projectManager.dashboard')
-        ->middleware('CheckRole:Project Manager');
+        // Project Manager Routes
+
+    Route::middleware(['auth', 'CheckRole:Project Manager'])->group(function () 
+    {
+        
+    Route::get('/project-manager/dashboard', [ProjectManagerController::class, 'dashboard'])->name('projectManager.dashboard');
+    Route::get('edit_profile', [ProjectManagerController::class, 'edit_profile'])->name('projectManager.edit_profile');
+
+    Route::patch('update_profile/{id}', [ProjectManagerController::class, 'update_profile']);
+    
+    Route::get('create_project', [ProjectController::class, 'create_project'])->name('projectManager.create_project');
+    
+   // Route::post('store_data', [ProjectController::class, 'store_data']);
+    Route::post('/store_data', [ProjectController::class, 'store_data'])->name('store_data');
+
+    });
+        
 
     Route::get('/developer/dashboard', [DeveloperController::class, 'dashboard'])
         ->name('developer.dashboard')
