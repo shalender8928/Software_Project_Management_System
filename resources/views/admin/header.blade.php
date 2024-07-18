@@ -5,15 +5,15 @@
         <div class="navbar-content">
             <form class="search-form">
                 <div class="input-group">
-      <div class="input-group-text">
-        <i data-feather="search"></i>
-      </div>
+                <div class="input-group-text">
+                  <i data-feather="search"></i>
+                </div>
                     <input type="text" class="form-control" id="navbarForm" placeholder="Search here...">
                 </div>
             </form>
             <ul class="navbar-nav">
                 
-                <li class="nav-item dropdown">
+                {{-- <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="messageDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <i data-feather="mail"></i>
                     </a>
@@ -152,7 +152,7 @@
                             <a href="javascript:;">View all</a>
                         </div>
                     </div>
-                </li>
+                </li> --}}
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="profileDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                       <img class="wd-30 ht-30 rounded-circle" src="{{ asset('images/' . Auth::user()->image) }}" alt="profile">
@@ -170,9 +170,9 @@
                         </div>
         <ul class="list-unstyled p-1">
           <li class="dropdown-item py-2">
-            <a href="{{url('profile')}}" class="text-body ms-0">
+            <a href="{{url('/view_profile')}}" class="text-body ms-0">
               <i class="me-2 icon-md" data-feather="user"></i>
-              <span>Profile</span>
+              <span>View Profile</span>
             </a>
           </li>
           <li class="dropdown-item py-2">

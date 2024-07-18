@@ -28,9 +28,9 @@
                   <div class="card">
                     <div class="card-body">
       
-                                      <h6 class="card-title">Update Profile</h6>
+                                      <h6 class="card-title">Update Employee Profile</h6>
       
-                                      <form class="forms-sample" method="POST" action="{{ url('update_profile', $data->id) }}" enctype="multipart/form-data">
+                                      <form class="forms-sample" method="POST" action="{{ url('update_employee_profile', $data->id) }}" enctype="multipart/form-data">
                                         @csrf
                                         @method('PATCH')
                             
@@ -51,8 +51,16 @@
                                                 <div class="text-danger">{{ $message }}</div>
                                             @enderror
                                         </div>
-
                             
+                                        <!-- Email -->
+                                        <div class="mb-3">
+                                            <label for="email" class="form-label">Email</label>
+                                            <input type="email" class="form-control" id="email" name="email" value="{{ $data->email }}" required>
+                                            @error('email')
+                                                <div class="text-danger">{{ $message }}</div>
+                                            @enderror
+                                        </div>
+
                                         <!-- Phone -->
                                         <div class="mb-3">
                                             <label for="phone" class="form-label">Phone</label>
@@ -82,7 +90,7 @@
 
                                         <div class="mb-3">
                                           <label for="img">Current Image :</label>
-                                          <img class="wd-200 ht-200 rounded-circle"  src="images/{{$data->image}}"  alt="image not available">
+                                          <img class="wd-200 ht-200 rounded-circle"  src="/images/{{$data->image}}"  alt="image not available">
                                       </div>
                             
                                         <!--New Image -->

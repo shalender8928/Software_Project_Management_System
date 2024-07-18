@@ -23,11 +23,10 @@
                   <thead>
                     <tr>
                       <th class="pt-0">S. NO</th>
-                      <th class="pt-0">First Name</th>
-                      <th class="pt-0">Last Name</th>
-                      <th class="pt-0">Email</th>
-                      <th class="pt-0">Phone</th>
-                      <th class="pt-0">Gender</th>
+                      <th class="pt-0">Category Name</th>
+                      <th class="pt-0">Description</th>
+                      <th class="pt-0">Created By</th>
+                      <th class="pt-0">Updated By</th>
                       <th class="pt-0">Edit</th>
                     </tr>
                   </thead>
@@ -41,13 +40,13 @@
                     @endphp
                     <tr>
                       <td>{{$count}}</td>
-                      <td>{{$datas->firstname}}</td>
-                      <td>{{$datas->lastname}}</td>
-                      <td>{{$datas->email}}</td>
-                      <td>{{$datas->phone}}</td>
-                      <td>{{$datas->gender}}</td>
+                      <td>{{$datas->cat_name}}</td>
+                      <td>{!! Str::limit($datas->description,30)!!}</td>
+                      <td>{{ $datas->creator ? $datas->creator->firstname : 'N/A' }}</td>
+                      <td>{{ $datas->updater ? $datas->updater->firstname : 'N/A'}}</td>
+
                       <td>
-                        <a class="btn btn-success" href="{{url('update_employee',$datas->id)}}">Edit</a>
+                        <a class="btn btn-success" href="{{url('update_category',$datas->id)}}">Edit</a>
                       </td>
 
                     </tr>

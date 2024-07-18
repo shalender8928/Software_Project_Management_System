@@ -28,7 +28,8 @@
                       <th class="pt-0">Email</th>
                       <th class="pt-0">Phone</th>
                       <th class="pt-0">Gender</th>
-                      <th class="pt-0">Edit</th>
+                      <th class="pt-0">Age</th>
+                      <th class="pt-0">Select </th>
                     </tr>
                   </thead>
                   <tbody>
@@ -46,8 +47,9 @@
                       <td>{{$datas->email}}</td>
                       <td>{{$datas->phone}}</td>
                       <td>{{$datas->gender}}</td>
+                      <td>{{$datas->age}}</td>
                       <td>
-                        <a class="btn btn-success" href="{{url('update_employee',$datas->id)}}">Edit</a>
+                        <a class="btn btn-secondary"  href="{{url('assign_role_to_employee',$datas->id)}}">Select</a>
                       </td>
 
                     </tr>
@@ -65,6 +67,7 @@
 
 	<!-- core:js -->
 	@include('admin.js')
+    
 
 </body>
 </html>    

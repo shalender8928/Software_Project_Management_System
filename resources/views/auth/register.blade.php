@@ -68,6 +68,41 @@
             <x-input-error :messages="$errors->get('age')" class="mt-2" />
         </div>
 
+        <!-- street -->
+        <div>
+            <x-input-label for="street" :value="__('Street')" />
+            <x-text-input id="street" class="block mt-1 w-full" type="text" name="street" :value="old('street')" required autofocus autocomplete="street" />
+            <x-input-error :messages="$errors->get('street')" class="mt-2" />
+        </div>
+
+        <!-- city -->
+        <div>
+            <x-input-label for="city" :value="__('City')" />
+            <x-text-input id="city" class="block mt-1 w-full" type="text" name="city" :value="old('city')" required autofocus autocomplete="city" />
+            <x-input-error :messages="$errors->get('city')" class="mt-2" />
+        </div>
+
+        <!-- State -->
+        <div>
+            <x-input-label for="state" :value="__('State')" />
+            <x-text-input id="state" class="block mt-1 w-full" type="text" name="state" :value="old('state')" required autofocus autocomplete="state" />
+            <x-input-error :messages="$errors->get('state')" class="mt-2" />
+        </div>
+
+        <!-- Zip-Code -->
+        <div>
+            <x-input-label for="zip_code" :value="__('Zip Code')" />
+            <x-text-input id="zip_code" class="block mt-1 w-full" type="text" name="zip_code" :value="old('zip_code')" required autofocus autocomplete="zip_code" />
+            <x-input-error :messages="$errors->get('zip_code')" class="mt-2" />
+        </div>
+
+        <!-- Country -->
+        <div>
+            <x-input-label for="country" :value="__('Country')" />
+            <x-text-input id="country" class="block mt-1 w-full" type="text" name="country" :value="old('country')" required autofocus autocomplete="country" />
+            <x-input-error :messages="$errors->get('country')" class="mt-2" />
+        </div>
+
         <div class="flex items-center justify-end mt-4">
             <a class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" href="{{ route('login') }}">
                 {{ __('Already registered?') }}

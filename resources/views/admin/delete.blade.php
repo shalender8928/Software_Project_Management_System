@@ -28,7 +28,7 @@
                       <th class="pt-0">Email</th>
                       <th class="pt-0">Phone</th>
                       <th class="pt-0">Gender</th>
-                      <th class="pt-0">Edit</th>
+                      <th class="pt-0">Delete</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -47,7 +47,7 @@
                       <td>{{$datas->phone}}</td>
                       <td>{{$datas->gender}}</td>
                       <td>
-                        <a class="btn btn-success" href="{{url('update_employee',$datas->id)}}">Edit</a>
+                        <a class="btn btn-danger" onclick="confirmation(event)" href="{{url('delete_employee',$datas->id)}}">Delete</a>
                       </td>
 
                     </tr>
@@ -65,6 +65,25 @@
 
 	<!-- core:js -->
 	@include('admin.js')
+    <script>
+		function confirmation(ev) {
+			ev.preventDefault();
+			var urlToRedirect = ev.currentTarget.getAttribute('href');
+			console.log(urlToRedirect);
+			swal({
+				title: "Are you sure you want to delete this Employee ?",
+				text: "This action will be permanent.",
+				icon: "error",
+				buttons: true,
+				dangerMode: true,
+			})
+			.then((willDelete) => {
+				if (willDelete) {
+					window.location.href = urlToRedirect;
+				}
+			});
+		}
+		</script>
 
 </body>
 </html>    
