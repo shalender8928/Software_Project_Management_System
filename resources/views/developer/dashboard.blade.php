@@ -1,17 +1,34 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+ @include('developer.css')
 </head>
 <body>
-    <h1>Welcome to Developer Dashboard</h1>
-    <li class="dropdown-item py-2">
-        <form method="POST" action="{{ route('logout') }}">
-          @csrf
-              <input class = "btn btn-danger" type="submit" value = "Logout">
-      </form>
+<div class="main-wrapper">
+
+<!-- partial:partials/_sidebar.html -->
+   @include('developer.sidebar')
+
+<!-- partial -->
+
+<div class="page-wrapper">
+            
+    <!-- partial:partials/_navbar.html -->
+    
+         @include('developer.header')  
+         
+         
+         @include('developer.index')
+			<!-- partial:partials/_footer.html -->
+		@include('developer.footer')  
+			<!-- partial -->
+		
+		</div>
+	</div>
+
+	<!-- core:js -->
+	@include('developer.js')
+
 </body>
-</html>
+</html>    
+

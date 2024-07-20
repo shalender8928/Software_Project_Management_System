@@ -14,5 +14,12 @@ class Project extends Model
         'end_date',
     ];
 
+    use HasFactory;
+
+    public function feedbacks()
+    {
+        return $this->hasMany(Feedback::class, 'projectID');
+    }
+
 
 }
