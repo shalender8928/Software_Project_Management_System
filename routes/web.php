@@ -10,7 +10,6 @@ use Spatie\Permission\Models\Role;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\ProjectController;
 
-<<<<<<< HEAD
 
 
 
@@ -56,10 +55,6 @@ Route::middleware(['auth'])->group(function () {
 });
 
 
-
-
-=======
->>>>>>> 45bbf9aa614c660f5aee0417bd731c72dd503009
 Route::get('/', function () {
     return view('welcome');
 });
@@ -71,7 +66,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 });
 
 Route::middleware(['auth', 'CheckRole:Admin'])->group(function () {
-    Route::get('/admin/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
+    // Route::get('/admin/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
     Route::get('edit_profile', [AdminController::class, 'edit_profile'])->name('admin.edit_profile');
     Route::get('add_employee', [AdminController::class, 'add_employee'])->name('admin.add_employee');
     Route::get('edit', [AdminController::class, 'edit'])->name('admin.edit');
@@ -80,6 +75,9 @@ Route::middleware(['auth', 'CheckRole:Admin'])->group(function () {
 
     Route::get('add_category', [AdminController::class, 'add_category'])->name('admin.add_category');
     Route::get('edit_category', [AdminController::class, 'edit_category'])->name('admin.edit_category');
+
+    Route::get('dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
+
 
 
 
@@ -114,10 +112,51 @@ Route::middleware(['auth', 'CheckRole:Admin'])->group(function () {
     Route::get('assign_role', [AdminController::class, 'assign_role'])->name('admin.assign_role');
     Route::get('assign_role_to_employee/{id}', [AdminController::class, 'showAssignRoleForm'])->name('admin.assign_role_to_employee');
      Route::post('assign_role_finally/{id}', [AdminController::class, 'assign_role_finally'])->name('assign_role_finally');
-    
+
+     // Edit Role
+    Route::get('edit_role', [AdminController::class, 'edit_role'])->name('admin.edit_role');
+    Route::get('update_role/{id}', [AdminController::class, 'update_role'])->name('admin.update_role');
+    Route::patch('update_role_db/{id}', [AdminController::class, 'update_role_db']);
+
+    // Delete Role
+    Route::get('delete_role', [AdminController::class, 'delete_role'])->name('admin.delete_role');
+    Route::get('delete_role_added/{id}', [AdminController::class, 'delete_role_added']);
+
+    // View List of Roles
+    Route::get('view_role_list', [AdminController::class, 'view_role_list'])->name('admin.view_role_list');
+    Route::get('view_assined_user/{id}', [AdminController::class, 'view_assined_user'])->name('admin.view_assined_user');
+
+    // update Assigned Role
+    Route::get('update_user_assigned_role', [AdminController::class, 'update_user_assigned_role'])->name('admin.update_user_assigned_role');
+    Route::get('update_rolllee/{id}', [AdminController::class, 'update_rolllee'])->name('admin.update_rolllee');
+    Route::patch('submit_role_update/{id}', [AdminController::class, 'submit_role_update']);
 
 
+    // Adding Permission to the database
+
+    Route::get('add_new_permission', [AdminController::class, 'add_new_permission'])->name('admin.add_new_permission');
+    Route::post('add_permission', [AdminController::class, 'add_permission'])->name('admin.add_permission');
+
+    // Edit Permission
+    Route::get('edit_permission', [AdminController::class, 'edit_permission'])->name('admin.edit_permission');
+    Route::get('update_permission/{id}', [AdminController::class, 'update_permission'])->name('admin.update_permission');
+    Route::patch('update_permission_db/{id}', [AdminController::class, 'update_permission_db'])->name('admin.update_permission_db');
     
+
+    //Delete Permission
+    Route::get('delete_permission', [AdminController::class, 'delete_permission'])->name('admin.delete_permission');
+    Route::get('delete_permission_added/{id}', [AdminController::class, 'delete_permission_added']);
+
+
+    //Assign Permission
+    Route::get('assign_permission', [AdminController::class, 'assign_permission'])->name('admin.assign_permission');
+    Route::get('view_user_of_such_role/{id}', [AdminController::class, 'view_user_of_such_role'])->name('admin.view_user_of_such_role');
+    Route::get('assign_permission_for_selected_user/{id}', [AdminController::class, 'assign_permission_for_selected_user'])->name('admin.assign_permission_for_selected_user');
+    Route::post('update_permissions_for_selected_user/{id}', [AdminController::class, 'update_permissions_for_selected_user']);
+
+    // View Permission list
+    Route::get('view_permission_list', [AdminController::class, 'view_permission_list'])->name('admin.view_permission_list');
+    Route::get('view_permitted_user/{id}', [AdminController::class, 'view_permitted_user'])->name('admin.view_permitted_user');
 
 
 });

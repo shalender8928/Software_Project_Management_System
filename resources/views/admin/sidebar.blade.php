@@ -13,7 +13,7 @@
 <div class="sidebar-body">
 <ul class="nav">
   <li class="nav-item">
-    <a href="{{route('admin.dashboard')}}" class="nav-link">
+    <a href="{{url('dashboard')}}" class="nav-link">
       <i class="link-icon" data-feather="box"></i>
       <span class="link-title">Dashboard</span>
     </a>
@@ -85,16 +85,19 @@
           <a href="{{url('add_role')}}" class="nav-link">Add New Role</a>
         </li>
         <li class="nav-item">
-          <a href="pages/email/read.html" class="nav-link">Edit Role</a>
+          <a href="{{url('edit_role')}}" class="nav-link">Edit Role</a>
         </li>
         <li class="nav-item">
-          <a href="pages/email/compose.html" class="nav-link">Delete Role</a>
+          <a href="{{url('delete_role')}}" class="nav-link">Delete Role</a>
         </li>
         <li class="nav-item">
-          <a href="pages/email/compose.html" class="nav-link">View List of Role</a>
+          <a href="{{url('view_role_list')}}" class="nav-link">View List of Role</a>
         </li>
         <li class="nav-item">
           <a href="{{url('assign_role')}}" class="nav-link">Assign Role</a>
+        </li>
+        <li class="nav-item">
+          <a href="{{url('update_user_assigned_role')}}" class="nav-link">Update Assigned Role</a>
         </li>
       </ul>
     </div>
@@ -109,19 +112,19 @@
     <div class="collapse" id="emails">
       <ul class="nav sub-menu">
         <li class="nav-item">
-          <a href="pages/email/inbox.html" class="nav-link">Add New Permission</a>
+          <a href="{{url('add_new_permission')}}" class="nav-link">Add New Permission</a>
         </li>
         <li class="nav-item">
-          <a href="pages/email/read.html" class="nav-link">Edit Permission</a>
+          <a href="{{url('edit_permission')}}" class="nav-link">Edit Permission</a>
         </li>
         <li class="nav-item">
-          <a href="pages/email/compose.html" class="nav-link">Delete Permission</a>
+          <a href="{{url('delete_permission')}}" class="nav-link">Delete Permission</a>
         </li>
         <li class="nav-item">
-          <a href="pages/email/compose.html" class="nav-link">View List of Permission</a>
+          <a href="{{url('view_permission_list')}}" class="nav-link">View List of Permission</a>
         </li>
         <li class="nav-item">
-          <a href="pages/email/compose.html" class="nav-link">Assign Permission</a>
+          <a href="{{url('assign_permission')}}" class="nav-link">Assign Permission</a>
         </li>
       </ul>
     </div>

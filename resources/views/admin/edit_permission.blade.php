@@ -23,33 +23,25 @@
                   <thead>
                     <tr>
                       <th class="pt-0">S. NO</th>
-                      <th class="pt-0">First Name</th>
-                      <th class="pt-0">Last Name</th>
-                      <th class="pt-0">Email</th>
-                      <th class="pt-0">Phone</th>
-                      <th class="pt-0">Gender</th>
-                      <th class="pt-0">Age</th>
-                      <th class="pt-0">Select User</th>
+                      <th class="pt-0">Permission Name</th>
+                      <th class="pt-0">Edit</th>
                     </tr>
                   </thead>
                   <tbody>
                     @php
                     $count = 0;
                     @endphp
-                    @foreach($data as $datas)
+                    @foreach($permission as $permissions)
                     @php
                         $count++;
                     @endphp
                     <tr>
                       <td>{{$count}}</td>
-                      <td>{{$datas->firstname}}</td>
-                      <td>{{$datas->lastname}}</td>
-                      <td>{{$datas->email}}</td>
-                      <td>{{$datas->phone}}</td>
-                      <td>{{$datas->gender}}</td>
-                      <td>{{$datas->age}}</td>
+                      <td>{{$permissions->name}}</td>
+                      
+
                       <td>
-                        <a class="btn btn-success"  href="{{url('assign_role_to_employee',$datas->id)}}">Select</a>
+                        <a class="btn btn-success" href="{{url('update_permission',$permissions->id)}}">Edit</a>
                       </td>
 
                     </tr>
@@ -67,7 +59,6 @@
 
 	<!-- core:js -->
 	@include('admin.js')
-    
 
 </body>
 </html>    
