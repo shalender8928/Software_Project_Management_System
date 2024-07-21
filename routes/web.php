@@ -10,6 +10,7 @@ use Spatie\Permission\Models\Role;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\ProjectController;
 
+<<<<<<< HEAD
 
 
 
@@ -102,6 +103,8 @@ Route::middleware(['auth'])->group(function () {
 
 
 
+=======
+>>>>>>> df9f9bcbcaa6c9db8ceb3888cbb367345557baee
 Route::get('/', function () {
     return view('welcome');
 });
@@ -112,7 +115,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
     })->name('dashboard');
 });
 
-Route::middleware(['auth', 'CheckRole:Admin'])->group(function () {
+Route::middleware(['auth', 'CheckRole:Admin'])->group(function () 
+{
     Route::get('/admin/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
     Route::get('edit_profile', [AdminController::class, 'edit_profile'])->name('admin.edit_profile');
     Route::get('add_employee', [AdminController::class, 'add_employee'])->name('admin.add_employee');
@@ -171,14 +175,49 @@ Route::middleware('auth')->group(function () {
 });
 
 // Senior Manager Routes
-Route::middleware(['auth', 'CheckRole:Senior Manager'])->group(function () {
+Route::middleware(['auth', 'CheckRole:Senior Manager'])->group(function () 
+{
     Route::get('/senior-manager/dashboard', [SeniorManagerController::class, 'dashboard'])->name('seniorManager.dashboard');
+
+    Route::get('edit_profile', [SeniorManagerController::class, 'edit_profile'])->name('seniorManager.edit_profile');
+
+    Route::get('mange_view_profile', [SeniorManagerController::class, 'mange_view_profile'])->name('seniorManager.mange_view_profile');
+    
+    Route::patch('update_profile/{id}', [SeniorManagerController::class, 'update_profile']);
+    
 });
 
+<<<<<<< HEAD
 // Developer Routes
 Route::middleware(['auth', 'CheckRole:Developer'])->group(function () {
     Route::get('/developer/dashboard', [DeveloperController::class, 'dashboard'])->name('developer.dashboard');
     Route::get('/developer/edit-profile', [DeveloperController::class, 'edit_profile'])->name('developer.edit_profile');
+=======
+// Project Manager Routes
+Route::middleware(['auth', 'CheckRole:Project Manager'])->group(function () {
+    Route::get('/project-manager/dashboard', [ProjectManagerController::class, 'dashboard'])->name('projectManager.dashboard');
+});
+
+        // Developer Routes
+
+Route::middleware(['auth', 'CheckRole:Developer'])->group(function () 
+{
+    Route::get('/developer/dashboard', [DeveloperController::class, 'dashboard'])->name('developer.dashboard');
+
+    Route::get('dev_view_profile', [DeveloperController::class, 'dev_view_profile'])->name('developer.dev_view_profile');
+
+    Route::get('edit_profile', [DeveloperController::class, 'edit_profile'])->name('developer.edit_profile');
+    
+    Route::get('view_feedback', [DeveloperController::class, 'view_feedback'])->name('developer.view_feedback');
+
+    Route::get('view_feedback_details/{id}', [DeveloperController::class, 'view_feedback_details'])->name('developer.view_feedback_detail');
+
+    Route::patch('update_profile/{id}', [DeveloperController::class, 'update_profile']);
+
+
+
+
+>>>>>>> df9f9bcbcaa6c9db8ceb3888cbb367345557baee
 });
 // Customer Routes
 Route::middleware(['auth', 'CheckRole:Customer'])->group(function () {

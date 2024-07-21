@@ -22,11 +22,21 @@ class Project extends Model
         'category_id',
     ];
 
+<<<<<<< HEAD
     // Define relationships if applicable
     public function creator()
     {
         return $this->belongsTo(User::class, 'creator_id');
     }
+=======
+    use HasFactory;
+
+    public function feedbacks()
+    {
+        return $this->hasMany(Feedback::class, 'projectID');
+    }
+
+>>>>>>> df9f9bcbcaa6c9db8ceb3888cbb367345557baee
 
     public function updater()
     {

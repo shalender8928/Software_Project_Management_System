@@ -1,19 +1,34 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+ @include('seniorManager.css')
 </head>
 <body>
-    <h1>Welcome to Senior Management Dashboard</h1>
-    <li class="dropdown-item py-2">
-        <form method="POST" action="{{ route('logout') }}">
-          @csrf
-              <input class = "btn btn-danger" type="submit" value = "Logout">
-      </form>
-</body>
-</html>
+<div class="main-wrapper">
 
+<!-- partial:partials/_sidebar.html -->
+   @include('seniorManager.sidebar')
+
+<!-- partial -->
+
+<div class="page-wrapper">
+            
+    <!-- partial:partials/_navbar.html -->
+    
+         @include('seniorManager.header')  
+         
+         
+         @include('seniorManager.index')
+			<!-- partial:partials/_footer.html -->
+		@include('seniorManager.footer')  
+			<!-- partial -->
+		
+		</div>
+	</div>
+
+	<!-- core:js -->
+	@include('seniorManager.js')
+
+</body>
+</html>    
 
