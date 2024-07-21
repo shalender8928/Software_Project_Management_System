@@ -36,7 +36,6 @@
   <link rel="shortcut icon" href="{{asset('./assets/images/favicon.png.')}}" />
 </head>
 <body>
-<<<<<<< HEAD
 <div class="main-wrapper">
 
 <!-- partial:partials/_sidebar.html -->
@@ -62,14 +61,6 @@
 	<!-- core:js -->
 	@include('projectManager.js')
 
-=======
-    <h1>Welcome to Developer Dashboard</h1>
-    <li class="dropdown-item py-2">
-        <form method="POST" action="{{ route('logout') }}">
-          @csrf
-              <input class = "btn btn-danger" type="submit" value = "Logout">
-      </form>
->>>>>>> 45bbf9aa614c660f5aee0417bd731c72dd503009
 </body>
 </html>    
 

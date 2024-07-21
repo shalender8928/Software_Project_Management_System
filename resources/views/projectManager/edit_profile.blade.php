@@ -64,8 +64,8 @@
                                       <h6 class="card-title">Update Profile</h6>
       
                                       <form class="forms-sample" method="POST" action="{{ url('update_profile', $data->id) }}" enctype="multipart/form-data">
-                                        @csrf
-                                        @method('PATCH')
+                                          @csrf
+                                          @method('PATCH')
                             
                                         <!-- First Name -->
                                         <div class="mb-3">

@@ -40,7 +40,7 @@ class AuthenticatedSessionController extends Controller
             } elseif (Auth::user()->hasRole('Senior Manager')) {
                 return redirect()->intended('/senior-manager/dashboard');
             } elseif (Auth::user()->hasRole('Project Manager')) {
-                return redirect()->intended('/project-manager/dashboard');
+                return redirect()->intended('/projectManager/dashboard');
             } elseif (Auth::user()->hasRole('Developer')) {
                 return redirect()->intended('/developer/dashboard');
             } elseif (Auth::user()->hasRole('Customer')) {
