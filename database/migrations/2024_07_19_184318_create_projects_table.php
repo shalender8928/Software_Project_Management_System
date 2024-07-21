@@ -11,19 +11,23 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('categories', function (Blueprint $table) {
+        Schema::create('projects', function (Blueprint $table) {
             $table->id();
-            $table->string('cat_name')->unique(); // Changed to snake_case
-            $table->string('description');
+            $table->string('project_name');
+            $table->text('description')->nullable();
+            $table->enum('status', ['pending', 'in_progress', 'completed']);
+            $table->date('deadline');
+            $table->date('start_date');
+            $table->date('end_date');
+            $table->string('category_id');
             $table->unsignedBigInteger('created_by');
             $table->unsignedBigInteger('updated_by');
             $table->timestamps();
-        
-            // Adding foreign key constraints
+            
             $table->foreign('created_by')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('updated_by')->references('id')->on('users')->onUpdate('cascade');
+          
         });
-        
     }
 
     /**
@@ -31,6 +35,9 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('categories');
+        Schema::dropIfExists('projects');
     }
 };
+
+
+

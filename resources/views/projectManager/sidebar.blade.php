@@ -1,7 +1,7 @@
 <nav class="sidebar">
 <div class="sidebar-header">
 <a href="#" class="sidebar-brand" style="font-size:5;">
-  Pro Manager<span> spms</span>
+  Manager<span> spms</span>
 </a>
 <div class="sidebar-toggler not-active">
   <span></span>
@@ -26,28 +26,40 @@
 
   <li class="nav-item">
     <a class="nav-link" data-bs-toggle="collapse" href="#emails" role="button" aria-expanded="false" aria-controls="emails">
-      <i class="link-icon" data-feather="mail"></i>
+      <i class="link-icon" data-feather="folder-plus"></i>
       <span class="link-title">Manage Project </span>
       <i class="link-arrow" data-feather="chevron-down"></i>
     </a>
     <div class="collapse" id="emails">
       <ul class="nav sub-menu">
-        <li class="nav-item">
-        <a class="nav-link" href="{{url('create_project')}}">Create New Project Plan</a>
-        
-        </li>
         
         <li class="nav-item">
-          <a href="pages/email/compose.html" class="nav-link">view list of project</a>
+          <a href="{{url('Create_project')}}" class="nav-link">Create New Project Plan</a>
         </li>
         <li class="nav-item">
-          <a href="pages/email/compose.html" class="nav-link">update project plan</a>
+        <a href="{{ url('view_project_list') }}" class="nav-link">View Project List</a>
+
         </li>
         <li class="nav-item">
-          <a href="pages/email/compose.html" class="nav-link">delete new project plan</a>
+        <a href="{{ route('projectmanager.edit_project') }}" class="nav-link">Edit Project plan</a>
+
+      </li>
+        <li class="nav-item">
+          <a href="{{route('projectmanager.delete_project')}}" class="nav-link">delete  project plan</a>
+        </li>
+     
+        <li class="nav-item">
+          <a href="{{ route('ProjectManager.Assigntask') }}" class="nav-link"> Create Assign Task</a>
         </li>
         <li class="nav-item">
-          <a href="pages/email/compose.html" class="nav-link">assign task</a>
+          <a href="{{ route('ProjectManager.Edit_Assigntask') }}" class="nav-link"> Edit Assign Task</a>
+        </li>
+        <li class="nav-item">
+           <a href="{{ route('projectmanager.delete_task')}}" class="nav-link">Delete Task</a>
+           </li>
+        <li class="nav-item">
+        <a href="{{ url('view_task_list') }}" class="nav-link">View Project List</a>
+
         </li>
         <li class="nav-item">
           <a href="pages/email/compose.html" class="nav-link">track project progress</a>
@@ -56,24 +68,21 @@
     </div>
   <li class="nav-item">
     <a class="nav-link" data-bs-toggle="collapse" href="#emails" role="button" aria-expanded="false" aria-controls="emails">
-      <i class="link-icon" data-feather="mail"></i>
+      <i class="link-icon" data-feather="users"></i>
       <span class="link-title">Manage development team </span>
       <i class="link-arrow" data-feather="chevron-down"></i>
     </a>
     <div class="collapse" id="emails">
       <ul class="nav sub-menu">
         <li class="nav-item">
+      
           <a href="pages/email/inbox.html" class="nav-link">view list of development team</a>
         </li>
         <li class="nav-item">
+        
           <a href="pages/email/read.html" class="nav-link">track performance of Dev team </a>
         </li>
-        <li class="nav-item">
-          <a href="pages/email/compose.html" class="nav-link">delete category</a>
-        </li>
-        <li class="nav-item">
-          <a href="pages/email/compose.html" class="nav-link">view list of project  category</a>
-        </li>
+       
       </ul>
 
       <!-- End the manager project task-->
@@ -83,52 +92,20 @@
 
      <!-- start the manage Development team -->
 
-  <li class="nav-item">
-    <a class="nav-link" data-bs-toggle="collapse" href="#emails" role="button" aria-expanded="false" aria-controls="emails">
-      <i class="link-icon" data-feather="mail"></i>
-      <span class="link-title">Manager Project employee</span>
-      <i class="link-arrow" data-feather="chevron-down"></i>
-    </a>
-    <div class="collapse" id="emails">
-      <ul class="nav sub-menu">
-        <li class="nav-item">
-          <a href="pages/email/inbox.html" class="nav-link">add new employee</a>
-        </li>
-        <li class="nav-item">
-          <a href="pages/email/read.html" class="nav-link">edit employee</a>
-        </li>
-        <li class="nav-item">
-          <a href="pages/email/compose.html" class="nav-link">delete employee</a>
-        </li>
-        <li class="nav-item">
-          <a href="pages/email/compose.html" class="nav-link">view list of project  employee</a>
-        </li>
-        <li class="nav-item">
-          <a href="pages/email/inbox.html" class="nav-link"> Update employee status</a>
-        </li>
-      </ul>
-    </div>
-  </li>
-  
   <!-- End  the manage Development team -->
 
-  <li class="nav-item">
-    <a class="nav-link" data-bs-toggle="collapse" href="#emails" role="button" aria-expanded="false" aria-controls="emails">
-      <i class="link-icon" data-feather="mail"></i>
-      <span class="link-title">view notification</span>
-    </a>
-  </li>
+ 
 
   <li class="nav-item">
     <a class="nav-link" data-bs-toggle="collapse" href="#emails" role="button" aria-expanded="false" aria-controls="emails">
-      <i class="link-icon" data-feather="mail"></i>
+      <i class="link-icon" data-feather="send"></i>
       <span class="link-title">provide report </span>
     </a>
   </li>
 
   <li class="nav-item">
     <a class="nav-link" data-bs-toggle="collapse" href="#emails" role="button" aria-expanded="false" aria-controls="emails">
-      <i class="link-icon" data-feather="mail"></i>
+      <i class="link-icon" data-feather="eye"></i>
       <span class="link-title">view feedback of client</span>
     </a>
   </li>

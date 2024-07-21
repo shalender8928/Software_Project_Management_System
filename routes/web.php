@@ -26,21 +26,66 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/senior-manager/dashboard', [SeniorManagerController::class, 'dashboard'])
         ->name('seniorManager.dashboard')
         ->middleware('CheckRole:Senior Manager');
+     
+        Route::get('edit_profile', [ProjectManagerController::class, 'edit_profile'])
+        ->middleware('CheckRole:projectManager')
+        ->name('projectManager.edit_profile');
 
+        Route::get('/projectManager/dashboard', [projectManager::class, 'dashboard'])
+        ->name('projectManager.dashboard')
+        ->middleware('CheckRole:projectManager');
         // Project Manager Routes
 
     Route::middleware(['auth', 'CheckRole:Project Manager'])->group(function () 
     {
         
-    Route::get('/project-manager/dashboard', [ProjectManagerController::class, 'dashboard'])->name('projectManager.dashboard');
-    Route::get('edit_profile', [ProjectManagerController::class, 'edit_profile'])->name('projectManager.edit_profile');
 
+
+     Route::get('/projectManager/dashboard', [ProjectManagerController::class, 'dashboard'])->name('projectManager.dashboard');
+    Route::get('edit_profile', [ProjectManagerController::class, 'edit_profile'])->name('projectManager.edit_profile');
     Route::patch('update_profile/{id}', [ProjectManagerController::class, 'update_profile']);
-    
-    Route::get('create_project', [ProjectController::class, 'create_project'])->name('projectManager.create_project');
-    
+    Route::get('view_profile', [ProjectManagerController::class, 'view_profile'])->name('ProjectManagerController.view_profile');
+
+// create project
+
+   
+
+// edit project
+     // routes/web.php
+   // routes/web.php
+
+// Route for listing projects
+
+// Route for editing a project by ID
+    Route::get('/Create_project', [ProjectManagerController::class, 'createProject'])->name('projectmanager.create_project');
+    Route::post('/Create_project', [ProjectManagerController::class, 'add_new_Project'])->name('projectmanager.add_new_project');
+    Route::get('edit_project', [ProjectManagerController::class, 'edit_project'])->name('projectmanager.edit_project');
+    Route::get('update_project/{id}', [ProjectManagerController::class, 'update_project'])->name('projectmanager.update_project');
+    Route::patch('update_pro_project/{id}', [ProjectManagerController::class, 'update_pro_project'])->name('projectmanager.update_pro_project');
+    Route::get('delete_project', [ProjectManagerController::class, 'delete_project'])->name('projectmanager.delete_project');
+    Route::get('delete_pro_project/{id}', [ProjectManagerController::class, 'delete_pro_project']);
+    Route::get('/view_project_list', [ProjectManagerController::class, 'view_project_list'])->name('projectmanager.view_project_list');
+    Route::get('/view_project_detail/{id}', [ProjectManagerController::class, 'view_project_detail'])->name('projectmanager.view_project_detail');
+
+   
+
    // Route::post('store_data', [ProjectController::class, 'store_data']);
-    Route::post('/store_data', [ProjectController::class, 'store_data'])->name('store_data');
+   
+   Route::get('Assigntask', [ProjectManagerController::class, 'Assigntask'])->name('ProjectManager.Assigntask');
+   Route::post('Assigntask', [ProjectManagerController::class, 'storeTask'])->name('ProjectManager.storeTask');
+   Route::get('Edit_Assigntask', [ProjectManagerController::class, 'Edit_Assigntask'])->name('ProjectManager.Edit_Assigntask');
+   Route::get('update_assigntask/{id}', [ProjectManagerController::class, 'update_assigntask'])->name('ProjectManager.update_assigntask');
+   Route::patch('update_pro_assigntask/{id}', [ProjectManagerController::class, 'update_pro_assigntask'])->name('ProjectManager.update_pro_assigntask');
+  
+   Route::get('delete_task', [ProjectManagerController::class, 'delete_task'])->name('projectmanager.delete_task');
+   Route::get('delete_pro_assigntask/{id}', [ProjectManagerController::class, ' delete_pro_assigntask']);
+
+   Route::get('/view_task_list', [ProjectManagerController::class, 'view_task_list'])->name('projectmanager.view_task_list');
+   Route::get('/view_task_detail/{id}', [ProjectManagerController::class, 'view_task_detail'])->name('projectmanager.view_task_detail');
+
+
+
+
 
     });
         
@@ -55,6 +100,13 @@ Route::middleware(['auth'])->group(function () {
 });
 
 
+<<<<<<< HEAD
+=======
+
+
+=======
+>>>>>>> df9f9bcbcaa6c9db8ceb3888cbb367345557baee
+>>>>>>> 02abeea8175ad18e1942045690ff009c0bb94336
 Route::get('/', function () {
     return view('welcome');
 });
@@ -65,8 +117,14 @@ Route::middleware(['auth', 'verified'])->group(function () {
     })->name('dashboard');
 });
 
+<<<<<<< HEAD
 Route::middleware(['auth', 'CheckRole:Admin'])->group(function () {
     // Route::get('/admin/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
+=======
+Route::middleware(['auth', 'CheckRole:Admin'])->group(function () 
+{
+    Route::get('/admin/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
+>>>>>>> 02abeea8175ad18e1942045690ff009c0bb94336
     Route::get('edit_profile', [AdminController::class, 'edit_profile'])->name('admin.edit_profile');
     Route::get('add_employee', [AdminController::class, 'add_employee'])->name('admin.add_employee');
     Route::get('edit', [AdminController::class, 'edit'])->name('admin.edit');
@@ -168,20 +226,50 @@ Route::middleware('auth')->group(function () {
 });
 
 // Senior Manager Routes
-Route::middleware(['auth', 'CheckRole:Senior Manager'])->group(function () {
+Route::middleware(['auth', 'CheckRole:Senior Manager'])->group(function () 
+{
     Route::get('/senior-manager/dashboard', [SeniorManagerController::class, 'dashboard'])->name('seniorManager.dashboard');
+
+    Route::get('edit_profile', [SeniorManagerController::class, 'edit_profile'])->name('seniorManager.edit_profile');
+
+    Route::get('mange_view_profile', [SeniorManagerController::class, 'mange_view_profile'])->name('seniorManager.mange_view_profile');
+    
+    Route::patch('update_profile/{id}', [SeniorManagerController::class, 'update_profile']);
+    
 });
 
+<<<<<<< HEAD
+// Developer Routes
+Route::middleware(['auth', 'CheckRole:Developer'])->group(function () {
+    Route::get('/developer/dashboard', [DeveloperController::class, 'dashboard'])->name('developer.dashboard');
+    Route::get('/developer/edit-profile', [DeveloperController::class, 'edit_profile'])->name('developer.edit_profile');
+=======
 // Project Manager Routes
 Route::middleware(['auth', 'CheckRole:Project Manager'])->group(function () {
     Route::get('/project-manager/dashboard', [ProjectManagerController::class, 'dashboard'])->name('projectManager.dashboard');
 });
 
-// Developer Routes
-Route::middleware(['auth', 'CheckRole:Developer'])->group(function () {
-    Route::get('/developer/dashboard', [DeveloperController::class, 'dashboard'])->name('developer.dashboard');
-});
+        // Developer Routes
 
+Route::middleware(['auth', 'CheckRole:Developer'])->group(function () 
+{
+    Route::get('/developer/dashboard', [DeveloperController::class, 'dashboard'])->name('developer.dashboard');
+
+    Route::get('dev_view_profile', [DeveloperController::class, 'dev_view_profile'])->name('developer.dev_view_profile');
+
+    Route::get('edit_profile', [DeveloperController::class, 'edit_profile'])->name('developer.edit_profile');
+    
+    Route::get('view_feedback', [DeveloperController::class, 'view_feedback'])->name('developer.view_feedback');
+
+    Route::get('view_feedback_details/{id}', [DeveloperController::class, 'view_feedback_details'])->name('developer.view_feedback_detail');
+
+    Route::patch('update_profile/{id}', [DeveloperController::class, 'update_profile']);
+
+
+
+
+>>>>>>> df9f9bcbcaa6c9db8ceb3888cbb367345557baee
+});
 // Customer Routes
 Route::middleware(['auth', 'CheckRole:Customer'])->group(function () {
     Route::get('/customer/dashboard', [CustomerController::class, 'dashboard'])->name('customer.dashboard');
