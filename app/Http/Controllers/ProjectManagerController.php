@@ -115,6 +115,7 @@ public function createProject()
         return view('projectManager.Create_Project', compact('data' , 'categories'));
     }
 
+<<<<<<< HEAD
     public function add_new_Project(Request $request)
     {
         $request->validate([
@@ -126,6 +127,19 @@ public function createProject()
             'end_date' => 'required|date',
             'Category' => 'required|string',
         ]);
+=======
+    public function add_new_project(Request $request)
+{
+    $request->validate([
+        'project_name' => 'required|string|max:255',
+        'description' => 'required|string',
+        'status' => 'required|string',
+        'start_date' => 'required|date',
+        'end_date' => 'required|date',
+        'deadline' => 'required|date',
+        'project_id' => 'required|string',
+    ]);
+>>>>>>> e45607bcaddd26624d7200aebbd2eec3c13162ab
 
         $project = new Project;
         $project->project_name = $request->project_name;

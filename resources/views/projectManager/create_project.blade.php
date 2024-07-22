@@ -61,7 +61,7 @@
                                         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                                     </div>
                                 @endif
-                                <form class="forms-sample" method="POST" action="{{ route('projectmanager.add_new_project') }}" enctype="multipart/form-data">
+                                <form class="forms-sample" method="POST" action="{{ route('projectmanager.add_new_project') }}">
                                     @csrf
                                     <!-- project Name -->
                                     <div class="mb-3">

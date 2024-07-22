@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Address;
 use Spatie\Permission\Models\Role;
+use Spatie\Permission\Models\Permission;
+
 use App\Models\Category;
 
 
@@ -19,7 +21,33 @@ class AdminController extends Controller
 {
     public function dashboard()
     {
-        return view('admin.dashboard');
+        $roles = ['Developer', 'Senior Manager', 'Project Manager','Admin'];
+
+        // Assuming hasRole function checks if the user has any of the specified roles
+        $employee = User::whereHas('roles', function ($query) use ($roles) {
+            $query->whereIn('name', $roles);
+        })->count();
+    
+        $cust_roles = ['Customer'];
+    
+        // Assuming hasRole function checks if the user has any of the specified roles
+        $customer = User::whereHas('roles', function ($query) use ($cust_roles) {
+            $query->whereIn('name', $cust_roles);
+        })->count();
+
+        $roles_not = ['Developer', 'Senior Manager', 'Project Manager', 'Customer', 'Admin'];
+  
+        // Use whereDoesntHave instead of whereHas
+        $unAssigned = User::whereDoesntHave('roles', function ($query) use ($roles_not) {
+          $query->whereIn('name', $roles_not);
+        })->count();
+      
+    
+        $role_num = Role::all()->count();
+        $permissions = Permission::all()->count();
+        $category = Category::all()->count();
+    
+        return view('admin.dashboard', compact('employee','customer', 'role_num', 'permissions', 'category', 'unAssigned'));
     }
 
     public function edit_profile()
@@ -62,6 +90,7 @@ class AdminController extends Controller
 
     return redirect()->route('admin.dashboard');
 }
+
 
     public function add_employee()
     {
@@ -424,6 +453,265 @@ public function assign_role() {
     toastr()->success('Role assigned successfully.');
     return redirect()->route('admin.view_employee_list');
 }
+
+
+public function edit_role(){
+    $data = Role::orderBy('created_at', 'desc')->get();
+
+    return view('admin.edit_role' , compact('data'));
+}
+
+public function update_role($id){
+    $data = Role::find($id);
+
+    return view('admin.update_role' , compact('data'));
+}
+
+public function update_role_db(Request $request, $id){
+
+    $request->validate([
+        'name' => 'required|string|max:255',
+    ]);
+
+    $role = Role::find($id);
+    $role->name = $request->name;
+
+    $role->save();
+    toastr()->timeOut(10000)->closeButton()->addSuccess('Role Successfully Updated.');
+    return redirect()->route('admin.edit_role');
+
+
+}
+
+    public function delete_role()
+    {
+        $data = Role::orderBy('created_at', 'desc')->get();
+        return view('admin.delete_role', compact('data'));
+    }
+
+    public function delete_role_added($id)
+    {
+        $role = Role::find($id);
+
+        if (!$role) {
+            toastr()->timeOut(10000)->closeButton()->error('Role does not exist.');
+        } else {
+            $role->delete();
+            toastr()->timeOut(10000)->closeButton()->addSuccess('Role Successfully Deleted.');
+        }
+
+        return redirect()->route('admin.delete_role');
+    }
+
+
+    public function view_role_list(){
+        $data = Role:: orderBy('created_at' , 'desc')->get();
+
+        return view('admin.view_role_list' , compact('data'));
+    }
+    
+        public function view_assined_user($id)
+    {
+        $role = Role::find($id);
+
+        if (!$role) {
+            Toastr::timeOut(10000)->closeButton()->error('Role does not exist.');
+            return redirect()->back();
+        }
+
+        // Assuming 'roles' is the relationship name in the User model
+        $employees = User::whereHas('roles', function ($query) use ($role) {
+            $query->where('name', $role->name);
+        })->get();
+
+        return view('admin.view_assined_user', compact('employees', 'role'));
+    }
+
+
+    public function update_user_assigned_role(){
+        $roles = ['Developer', 'Senior Manager', 'Project Manager', 'Customer', 'Admin'];
+    
+        
+        $data = User::wherehas('roles', function ($query) use ($roles) {
+        $query->whereIn('name', $roles);
+        })->orderBy('created_at', 'desc')->get();
+    
+        return view('admin.update_user_assigned_role', compact('data'));
+    }
+
+    public function update_rolllee($id)
+    {
+        $user = User::find($id);
+        $roles = Role::orderBy('name', 'asc')->get();
+        return view('admin.update_rolllee', compact('user', 'roles'));
+    }
+
+    public function submit_role_update(Request $request, $id) {
+        $user = User::find($id);
+    
+        if (!$user) {
+            toastr()->error('User not found!');
+            return redirect()->route('admin.view_role_list');
+        }
+    
+        $currentRoleName = $user->getRoleNames()->first();
+    
+        if ($currentRoleName) {
+            $user->removeRole($currentRoleName); // Detach the current role
+        }
+    
+        $newRoleName = $request->role;
+    
+        if (!Role::where('name', $newRoleName)->exists()) {
+            toastr()->error('Role does not exist!');
+            return redirect()->route('admin.view_role_list');
+        }
+    
+        $user->assignRole($newRoleName); // Assign the new role
+    
+        toastr()->persistent()->closeButton()->addSuccess('Role Successfully Updated From  ' .$currentRoleName.' to '. $newRoleName.  ' for User: ' . $user->firstname . ' ' .$user->lastname );
+        return redirect()->route('admin.view_role_list');
+    }
+
+
+    public function add_new_permission(){
+        return view('admin.add_new_permission');
+    }
+
+    public function add_permission(Request $request){
+
+        $request->validate([
+            'name' => 'required|string|max:255|unique:permissions,name',
+        ]);
+    
+        $there = $request->name;
+        $count = Permission::where('name',$there)->count();
+    
+        if($count>0){
+            toastr()->timeOut(10000)->closeButton()->warning('This Permission Already Exists.');
+            return redirect()->back();
+        }
+        else{
+            $permission = Permission::create(['name' => $request->name]);
+        toastr()->timeOut(10000)->closeButton()->addSuccess('New Permission created Successfully.');
+        }
+        return redirect()->back();    
+    }
+
+    public function edit_permission(){
+
+        $permission = Permission::orderBy('created_at' , 'desc')->get();
+        return view('admin.edit_permission', compact('permission'));
+    }
+
+    public function update_permission($id){
+        $permission = Permission::find($id);
+        return view('admin.update_permission',  compact('permission'));
+    }
+
+    public function update_permission_db(Request $request, $id){
+        $permission = Permission::find($id);
+        $count = Permission::where('name' , $request->name)->count();
+
+        if($count>0){
+        toastr()->timeOut(10000)->closeButton()->warning('This Permission has already exist');
+        return redirect()->back();
+
+        }
+
+        else{
+             $permission->name = $request->name;
+             $permission->save();
+            toastr()->timeOut(10000)->closeButton()->addSuccess('Permission Updated Successfully');
+
+        return redirect()->route('admin.edit_permission');
+        }       
+    }
+
+    public function delete_permission(){
+        $permission = Permission::orderBy('name' , 'asc')->get();
+        return view('admin.delete_permission' , compact('permission'));
+    } 
+
+    public function delete_permission_added($id){
+        {
+            $permission = Permission::find($id);
+    
+            if (!$permission) {
+                toastr()->timeOut(10000)->closeButton()->error('Permission does not exist.');
+            } else {
+                $permission->delete();
+                toastr()->timeOut(10000)->closeButton()->addSuccess('Permission Successfully Deleted.');
+            }
+    
+            return redirect()->back();
+        }
+    }
+
+    public function assign_permission(){
+        $data = Role:: orderBy('name' , 'asc')->get();
+
+        return view('admin.assign_permission' , compact('data'));
+    }
+
+    public function view_user_of_such_role($id){
+        $role = Role::find($id);
+
+        if (!$role) {
+            Toastr::timeOut(10000)->closeButton()->error('Role does not exist.');
+            return redirect()->back();
+        }
+
+        // Assuming 'roles' is the relationship name in the User model
+        $employees = User::whereHas('roles', function ($query) use ($role) {
+            $query->where('name', $role->name);
+        })->get();
+
+        return view('admin.view_user_of_such_role', compact('employees', 'role'));
+    }
+
+    public function assign_permission_for_selected_user($id) {
+        $permissions = Permission::orderBy('name', 'asc')->get();
+        $user = User::find($id);
+        $userPermissions = $user->permissions->pluck('id')->toArray(); // Get IDs of assigned permissions
+        
+        return view('admin.assign_permission_for_selected_user', compact('permissions', 'user', 'userPermissions'));
+    }
+
+
+    public function update_permissions_for_selected_user(Request $request, $id) {
+        $user = User::find($id);
+        $user->permissions()->sync($request->permissions); // Sync the selected permissions
+        toastr()->timeOut(10000)->closeButton()->addSuccess('Permission Assigned Successfully.');
+        return redirect()->back();
+    }
+
+    public function view_permission_list(){
+        $permission = Permission:: orderBy('name' , 'asc')->get();
+
+        return view('admin.view_permission_list' , compact('permission'));
+    }
+
+    public function view_permitted_user($id)
+    {
+        // Find the permission by its ID
+        $permission = Permission::find($id);
+    
+        // Check if the permission exists
+        if (!$permission) {
+            return redirect()->back()->with('error', 'Permission not found.');
+        }
+    
+        // Get users who have the specified permission
+        $users = User::whereHas('permissions', function ($query) use ($id) {
+            $query->where('id', $id);
+        })->get();
+         
+    
+        // Return the view with the users and permission
+        return view('admin.view_permitted_user', compact('permission', 'users'));
+    }
+    
 
 
 }
