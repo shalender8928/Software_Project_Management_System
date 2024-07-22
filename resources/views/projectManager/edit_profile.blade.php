@@ -63,7 +63,7 @@
       
                                       <h6 class="card-title">Update Profile</h6>
       
-                                      <form class="forms-sample" method="POST" action="{{ url('update_profile', $data->id) }}" enctype="multipart/form-data">
+                                      <form class="forms-sample" method="POST" action="{{ url('update_profile_pm', $data->id) }}" enctype="multipart/form-data">
                                           @csrf
                                           @method('PATCH')
                             

@@ -9,8 +9,7 @@ use App\Http\Controllers\DeveloperController;
 use Spatie\Permission\Models\Role;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\ProjectController;
-
-<<<<<<< HEAD
+use App\Models\Project;
 
 
 
@@ -43,7 +42,8 @@ Route::middleware(['auth'])->group(function () {
 
 
      Route::get('/projectManager/dashboard', [ProjectManagerController::class, 'dashboard'])->name('projectManager.dashboard');
-    Route::get('edit_profile', [ProjectManagerController::class, 'edit_profile'])->name('projectManager.edit_profile');
+
+    Route::get('update_profile_pm', [ProjectManagerController::class, 'update_profile_pm'])->name('projectManager.update_profile_pm');
     Route::patch('update_profile/{id}', [ProjectManagerController::class, 'update_profile']);
     Route::get('view_profile', [ProjectManagerController::class, 'view_profile'])->name('ProjectManagerController.view_profile');
 
@@ -59,7 +59,7 @@ Route::middleware(['auth'])->group(function () {
 
 // Route for editing a project by ID
     Route::get('/Create_project', [ProjectManagerController::class, 'createProject'])->name('projectmanager.create_project');
-    Route::post('/Create_project', [ProjectManagerController::class, 'add_new_Project'])->name('projectmanager.add_new_project');
+    Route::post('add_new_project', [ProjectManagerController::class, 'add_new_Project'])->name('projectmanager.add_new_project');
     Route::get('edit_project', [ProjectManagerController::class, 'edit_project'])->name('projectmanager.edit_project');
     Route::get('update_project/{id}', [ProjectManagerController::class, 'update_project'])->name('projectmanager.update_project');
     Route::patch('update_pro_project/{id}', [ProjectManagerController::class, 'update_pro_project'])->name('projectmanager.update_pro_project');
@@ -103,8 +103,6 @@ Route::middleware(['auth'])->group(function () {
 
 
 
-=======
->>>>>>> df9f9bcbcaa6c9db8ceb3888cbb367345557baee
 Route::get('/', function () {
     return view('welcome');
 });
@@ -187,37 +185,10 @@ Route::middleware(['auth', 'CheckRole:Senior Manager'])->group(function ()
     
 });
 
-<<<<<<< HEAD
 // Developer Routes
 Route::middleware(['auth', 'CheckRole:Developer'])->group(function () {
     Route::get('/developer/dashboard', [DeveloperController::class, 'dashboard'])->name('developer.dashboard');
     Route::get('/developer/edit-profile', [DeveloperController::class, 'edit_profile'])->name('developer.edit_profile');
-=======
-// Project Manager Routes
-Route::middleware(['auth', 'CheckRole:Project Manager'])->group(function () {
-    Route::get('/project-manager/dashboard', [ProjectManagerController::class, 'dashboard'])->name('projectManager.dashboard');
-});
-
-        // Developer Routes
-
-Route::middleware(['auth', 'CheckRole:Developer'])->group(function () 
-{
-    Route::get('/developer/dashboard', [DeveloperController::class, 'dashboard'])->name('developer.dashboard');
-
-    Route::get('dev_view_profile', [DeveloperController::class, 'dev_view_profile'])->name('developer.dev_view_profile');
-
-    Route::get('edit_profile', [DeveloperController::class, 'edit_profile'])->name('developer.edit_profile');
-    
-    Route::get('view_feedback', [DeveloperController::class, 'view_feedback'])->name('developer.view_feedback');
-
-    Route::get('view_feedback_details/{id}', [DeveloperController::class, 'view_feedback_details'])->name('developer.view_feedback_detail');
-
-    Route::patch('update_profile/{id}', [DeveloperController::class, 'update_profile']);
-
-
-
-
->>>>>>> df9f9bcbcaa6c9db8ceb3888cbb367345557baee
 });
 // Customer Routes
 Route::middleware(['auth', 'CheckRole:Customer'])->group(function () {

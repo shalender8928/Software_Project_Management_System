@@ -115,18 +115,15 @@
                                             <div class="text-danger">{{ $message }}</div>
                                         @enderror
                                     </div>
-                                    <!-- category_id -->
+                                    <!-- Category -->
                                     <div class="mb-3">
-                                    <label for="category_id">Category</label>
-    <select class="form-control" id="category_id" name="category_id" required>
-        <option value="" disabled selected>Select a category</option>
-        <option value="website">Website</option>
-        <option value="mobile_app">Mobile App</option>
-        <option value="graphics_design">Graphics Design</option>
-        <option value="java">Java</option>
-        <option value="ai">AI</option>
-    </select>
-    @error('category_id')
+                                    <label for="Category">Category</label>
+                                    <select class="form-control" id="Category" name="Category" required>
+                                    @foreach($categories as $category)
+                    <option value="{{ $category->id }}">{{ $category->cat_name }}</option>
+                @endforeach
+                 </select>
+    @error('Category')
         <div class="text-danger">{{ $message }}</div>
     @enderror
                                     </div>
