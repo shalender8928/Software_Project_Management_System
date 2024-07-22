@@ -111,7 +111,7 @@ public function createProject()
         return view('projectManager.Create_Project', compact('data'));
     }
 
-    public function add_new_Project(Request $request)
+    public function add_new_project(Request $request)
 {
     $request->validate([
         'project_name' => 'required|string|max:255',

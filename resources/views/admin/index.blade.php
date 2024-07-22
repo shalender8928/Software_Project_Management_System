@@ -14,9 +14,9 @@
                           <i class="icon-lg text-muted pb-3px" data-feather="more-horizontal"></i>
                         </a>
                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                          <a class="dropdown-item d-flex align-items-center" href="javascript:;"><i data-feather="eye" class="icon-sm me-2"></i> <span class="">View</span></a>
-                          <a class="dropdown-item d-flex align-items-center" href="javascript:;"><i data-feather="edit-2" class="icon-sm me-2"></i> <span class="">Edit</span></a>
-                          <a class="dropdown-item d-flex align-items-center" href="javascript:;"><i data-feather="trash" class="icon-sm me-2"></i> <span class="">Delete</span></a>
+                          <a class="dropdown-item d-flex align-items-center" href="{{url('view_employee_list')}}"><i data-feather="eye" class="icon-sm me-2"></i> <span class="">View</span></a>
+                          <a class="dropdown-item d-flex align-items-center" href="{{url('edit')}}"><i data-feather="edit-2" class="icon-sm me-2"></i> <span class="">Edit</span></a>
+                          <a class="dropdown-item d-flex align-items-center" href="{{url('delete')}}" ><i data-feather="trash" class="icon-sm me-2"></i> <span class="">Delete</span></a>
                         </div>
                       </div>
                     </div>
@@ -65,9 +65,9 @@
                           <i class="icon-lg text-muted pb-3px" data-feather="more-horizontal"></i>
                         </a>
                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton2">
-                          <a class="dropdown-item d-flex align-items-center" href="javascript:;"><i data-feather="eye" class="icon-sm me-2"></i> <span class="">View</span></a>
-                          <a class="dropdown-item d-flex align-items-center" href="javascript:;"><i data-feather="edit-2" class="icon-sm me-2"></i> <span class="">Edit</span></a>
-                          <a class="dropdown-item d-flex align-items-center" href="javascript:;"><i data-feather="trash" class="icon-sm me-2"></i> <span class="">Delete</span></a>
+                          <a class="dropdown-item d-flex align-items-center" href="{{url('view_category_list')}}"><i data-feather="eye" class="icon-sm me-2"></i> <span class="">View</span></a>
+                          <a class="dropdown-item d-flex align-items-center" href="{{url('edit_category')}}"><i data-feather="edit-2" class="icon-sm me-2"></i> <span class="">Edit</span></a>
+                          <a class="dropdown-item d-flex align-items-center" href="{{url('delete_category')}}"><i data-feather="trash" class="icon-sm me-2"></i> <span class="">Delete</span></a>
 
                         </div>
                       </div>
@@ -91,9 +91,9 @@
                           <i class="icon-lg text-muted pb-3px" data-feather="more-horizontal"></i>
                         </a>
                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton2">
-                          <a class="dropdown-item d-flex align-items-center" href="javascript:;"><i data-feather="eye" class="icon-sm me-2"></i> <span class="">View</span></a>
-                          <a class="dropdown-item d-flex align-items-center" href="javascript:;"><i data-feather="edit-2" class="icon-sm me-2"></i> <span class="">Edit</span></a>
-                          <a class="dropdown-item d-flex align-items-center" href="javascript:;"><i data-feather="trash" class="icon-sm me-2"></i> <span class="">Delete</span></a>
+                          <a class="dropdown-item d-flex align-items-center" href="{{url('view_role_list')}}"><i data-feather="eye" class="icon-sm me-2"></i> <span class="">View</span></a>
+                          <a class="dropdown-item d-flex align-items-center" href="{{url('edit_role')}}"><i data-feather="edit-2" class="icon-sm me-2"></i> <span class="">Edit</span></a>
+                          <a class="dropdown-item d-flex align-items-center" href="{{url('delete_role')}}"><i data-feather="trash" class="icon-sm me-2"></i> <span class="">Delete</span></a>
 
                         </div>
                       </div>
@@ -117,9 +117,9 @@
                           <i class="icon-lg text-muted pb-3px" data-feather="more-horizontal"></i>
                         </a>
                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton2">
-                          <a class="dropdown-item d-flex align-items-center" href="javascript:;"><i data-feather="eye" class="icon-sm me-2"></i> <span class="">View</span></a>
-                          <a class="dropdown-item d-flex align-items-center" href="javascript:;"><i data-feather="edit-2" class="icon-sm me-2"></i> <span class="">Edit</span></a>
-                          <a class="dropdown-item d-flex align-items-center" href="javascript:;"><i data-feather="trash" class="icon-sm me-2"></i> <span class="">Delete</span></a>
+                          <a class="dropdown-item d-flex align-items-center" href="{{url('view_permission_list')}}"><i data-feather="eye" class="icon-sm me-2"></i> <span class="">View</span></a>
+                          <a class="dropdown-item d-flex align-items-center" href="{{url('edit_permission')}}"><i data-feather="edit-2" class="icon-sm me-2"></i> <span class="">Edit</span></a>
+                          <a class="dropdown-item d-flex align-items-center" href="{{url('delete_permission')}}"><i data-feather="trash" class="icon-sm me-2"></i> <span class="">Delete</span></a>
 
                         </div>
                       </div>
@@ -144,9 +144,8 @@
                           <i class="icon-lg text-muted pb-3px" data-feather="more-horizontal"></i>
                         </a>
                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton2">
-                          <a class="dropdown-item d-flex align-items-center" href="javascript:;"><i data-feather="eye" class="icon-sm me-2"></i> <span class="">View</span></a>
-                          <a class="dropdown-item d-flex align-items-center" href="javascript:;"><i data-feather="edit-2" class="icon-sm me-2"></i> <span class="">Edit</span></a>
-                          <a class="dropdown-item d-flex align-items-center" href="javascript:;"><i data-feather="trash" class="icon-sm me-2"></i> <span class="">Delete</span></a>
+                          <a class="dropdown-item d-flex align-items-center" href="{{url('assign_role')}}"><i data-feather="eye" class="icon-sm me-2"></i> <span class="">View</span></a>
+
 
                         </div>
                       </div>

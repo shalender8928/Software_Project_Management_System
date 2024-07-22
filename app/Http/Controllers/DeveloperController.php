@@ -2,20 +2,14 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-<<<<<<< HEAD
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
-=======
-use Illuminate\Support\Facades\Auth;
-use App\Models\User;
 use App\Models\Feedback;
->>>>>>> df9f9bcbcaa6c9db8ceb3888cbb367345557baee
 
 class DeveloperController extends Controller
 {
     public function dashboard()
     {
-<<<<<<< HEAD
         // Fetch user data or any other relevant data
         $data = Auth::user(); // Assuming you are fetching the authenticated user's data
 
@@ -23,20 +17,7 @@ class DeveloperController extends Controller
         return view('developer.dashboard', compact('data'));
     }
 
-    public function edit_profile()
-    {
-        $user = Auth::user(); // Get the authenticated user
-        $user_id = $user->id; // Get the user's ID
-        $data = User::find($user_id); // Fetch user data based on ID
-
-        return view('developer.edit_profile', compact('data')); // Pass user data to the view
-=======
-        $user = Auth::user();
-        $data = User::find($user->id);
-
-        return view('developer.dashboard', compact('data'));
->>>>>>> df9f9bcbcaa6c9db8ceb3888cbb367345557baee
-    }
+   
     //view profile 
     public function dev_view_profile(){
         $user = Auth::user();

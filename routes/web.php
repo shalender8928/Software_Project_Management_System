@@ -58,7 +58,7 @@ Route::middleware(['auth'])->group(function () {
 
 // Route for editing a project by ID
     Route::get('/Create_project', [ProjectManagerController::class, 'createProject'])->name('projectmanager.create_project');
-    Route::post('/Create_project', [ProjectManagerController::class, 'add_new_Project'])->name('projectmanager.add_new_project');
+    Route::post('/add_new_project', [ProjectManagerController::class, 'add_new_Project'])->name('projectmanager.add_new_project');
     Route::get('edit_project', [ProjectManagerController::class, 'edit_project'])->name('projectmanager.edit_project');
     Route::get('update_project/{id}', [ProjectManagerController::class, 'update_project'])->name('projectmanager.update_project');
     Route::patch('update_pro_project/{id}', [ProjectManagerController::class, 'update_pro_project'])->name('projectmanager.update_pro_project');
@@ -100,13 +100,6 @@ Route::middleware(['auth'])->group(function () {
 });
 
 
-<<<<<<< HEAD
-=======
-
-
-=======
->>>>>>> df9f9bcbcaa6c9db8ceb3888cbb367345557baee
->>>>>>> 02abeea8175ad18e1942045690ff009c0bb94336
 Route::get('/', function () {
     return view('welcome');
 });
@@ -117,14 +110,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
     })->name('dashboard');
 });
 
-<<<<<<< HEAD
-Route::middleware(['auth', 'CheckRole:Admin'])->group(function () {
-    // Route::get('/admin/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
-=======
 Route::middleware(['auth', 'CheckRole:Admin'])->group(function () 
 {
     Route::get('/admin/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
->>>>>>> 02abeea8175ad18e1942045690ff009c0bb94336
     Route::get('edit_profile', [AdminController::class, 'edit_profile'])->name('admin.edit_profile');
     Route::get('add_employee', [AdminController::class, 'add_employee'])->name('admin.add_employee');
     Route::get('edit', [AdminController::class, 'edit'])->name('admin.edit');
@@ -238,12 +226,12 @@ Route::middleware(['auth', 'CheckRole:Senior Manager'])->group(function ()
     
 });
 
-<<<<<<< HEAD
 // Developer Routes
 Route::middleware(['auth', 'CheckRole:Developer'])->group(function () {
     Route::get('/developer/dashboard', [DeveloperController::class, 'dashboard'])->name('developer.dashboard');
     Route::get('/developer/edit-profile', [DeveloperController::class, 'edit_profile'])->name('developer.edit_profile');
-=======
+
+});
 // Project Manager Routes
 Route::middleware(['auth', 'CheckRole:Project Manager'])->group(function () {
     Route::get('/project-manager/dashboard', [ProjectManagerController::class, 'dashboard'])->name('projectManager.dashboard');
@@ -268,7 +256,6 @@ Route::middleware(['auth', 'CheckRole:Developer'])->group(function ()
 
 
 
->>>>>>> df9f9bcbcaa6c9db8ceb3888cbb367345557baee
 });
 // Customer Routes
 Route::middleware(['auth', 'CheckRole:Customer'])->group(function () {
