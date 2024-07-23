@@ -74,12 +74,16 @@
 
                                     <!-- Project Name -->
                                     <div class="mb-3">
-                                        <label for="project_name" class="form-label">Project Name</label>
-                                        <input type="text" class="form-control" id="project_name" name="project_name" required>
-                                        @error('project_name')
-                                            <div class="text-danger">{{ $message }}</div>
-                                        @enderror
-                                    </div>
+    <label for="project_name" class="form-label">Project Name</label>
+    <select class="form-control" id="project_name" name="project_name" required>
+        @foreach($projects as $project)
+            <option value="{{ $project->id }}">{{ $project->project_name }}</option>
+        @endforeach
+    </select>
+    @error('project_name')
+        <div class="text-danger">{{ $message }}</div>
+    @enderror
+</div>
 
                                     <!-- Task Description -->
                                     <div class="mb-3">

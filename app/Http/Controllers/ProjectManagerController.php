@@ -15,73 +15,87 @@ class ProjectManagerController extends Controller
 {
     public function dashboard()
     {
-        return view('projectManager.dashboard');
+     
+    $completedCount = Project::where('status', 'completed')->count();
+    $pendingCount = Project::where('status', 'pending')->count();
+    $in_progress = Project::where('status', 'in_progress')->count();
+
+    // Fetch all projects
+    $projects = Project::all();
+    $projectCount = $projects->count();
+
+    // Pass the projects and project count to the view
+    return view('projectManager.dashboard', compact('projects', 'projectCount', 'pendingCount', 'completedCount', 'in_progress'));
+
     }
-    public function update_profile_pm()
-{
-    $user = Auth::user(); // Ensure the user is logged in
-    if (!$user) {
-        abort(403, 'Unauthorized');
+    public function viewProjectList($status)
+    {
+        // Fetch projects by status
+        $projects = Project::where('status', $status)->get();
+
+        // Pass projects and status to the view
+        return view('projectManager.projectList', compact('projects', 'status'));
     }
-    $data = User::find($user->id);
-    return view('projectManager.update_profile_pm', compact('data'));
-}
+   
 
-public function update_profile(Request $request, $id)
-{
-    $request->validate([
-        'firstname' => 'required|string|max:255',
-        'lastname' => 'required|string|max:255',
-        'phone' => 'required|string|max:15',
-        'gender' => 'required|string|max:10',
-        'age' => 'required|integer',
-        'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-    ]);
 
-    $user = User::find($id);
 
-    if (!$user || $user->id != Auth::id()) {
-        abort(403, 'Unauthorized');
-    }
 
-    $user->firstname = $request->firstname;
-    $user->lastname = $request->lastname;
-    $user->phone = $request->phone;
-    $user->gender = $request->gender;
-    $user->age = $request->age;
-
-    if ($request->hasFile('image')) {
-        $imageName = time() . '.' . $request->image->extension();
-        $request->image->move(public_path('images'), $imageName);
-        $user->image = $imageName;
+    public function manager_edit_profile()
+    {
+        $data = User::all();
+    
+        return view('projectManager.update_profile_pm', compact('data'));
     }
 
-    $user->save();
-
-    toastr()->timeOut(10000)->closeButton()->addSuccess('Your Profile has been Successfully Updated');
-
-    return redirect()->route('projectManager.dashboard');
-}
-
-public function view_profile()
-{
-    $user = Auth::user();
-    $data = User::find($user->id); // Ensure user is logged in
-    return view('projectManager.view_profile', compact('data'));
-}
-
+    public function update_profile(Request $request, $id)
+    {
+        $request->validate([
+            'firstname' => 'required|string|max:255',
+            'lastname' => 'required|string|max:255',
+            'phone' => 'required|string|max:15',
+            'gender' => 'required|string|max:10',
+            'age' => 'required|integer',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        ]);
+    
+        $user = User::find($id);
+    
+        if (!$user || $user->id != Auth::id()) {
+            abort(403, 'Unauthorized');
+        }
+    
+        $user->firstname = $request->firstname;
+        $user->lastname = $request->lastname;
+        $user->phone = $request->phone;
+        $user->gender = $request->gender;
+        $user->age = $request->age;
+    
+        if ($request->hasFile('image')) {
+            $imageName = time() . '.' . $request->image->extension();
+            $request->image->move(public_path('images'), $imageName);
+            $user->image = $imageName;
+        }
+    
+        $user->save();
+    
+        toastr()->timeOut(10000)->closeButton()->addSuccess('Your Profile has been Successfully Updated');
+    
+        return redirect()->route('projectManager.dashboard');
+    }
+    
     
 
   // 
-public function Assigntask()
-{
-    // Fetch the authenticated user
-    $data = Auth::user();
-
-    // Pass the data to the view
-    return view('projectManager.Assigntask', compact('data'));
-}
-
+  public function Assigntask()
+  {
+      // Fetch the authenticated user
+      $data = Auth::user();
+      $projects = Project::orderBy('project_name', 'asc')->get();
+  
+      // Pass the data to the view
+      return view('projectManager.Assigntask', compact('data', 'projects'));
+  }
 
 public function storeTask(Request $request)
 {
@@ -115,7 +129,6 @@ public function createProject()
         return view('projectManager.Create_Project', compact('data' , 'categories'));
     }
 
-<<<<<<< HEAD
     public function add_new_Project(Request $request)
     {
         $request->validate([
@@ -127,19 +140,6 @@ public function createProject()
             'end_date' => 'required|date',
             'Category' => 'required|string',
         ]);
-=======
-    public function add_new_project(Request $request)
-{
-    $request->validate([
-        'project_name' => 'required|string|max:255',
-        'description' => 'required|string',
-        'status' => 'required|string',
-        'start_date' => 'required|date',
-        'end_date' => 'required|date',
-        'deadline' => 'required|date',
-        'project_id' => 'required|string',
-    ]);
->>>>>>> e45607bcaddd26624d7200aebbd2eec3c13162ab
 
         $project = new Project;
         $project->project_name = $request->project_name;

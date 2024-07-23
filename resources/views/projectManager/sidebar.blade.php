@@ -27,25 +27,25 @@
   <li class="nav-item">
     <a class="nav-link" data-bs-toggle="collapse" href="#emails" role="button" aria-expanded="false" aria-controls="emails">
       <i class="link-icon" data-feather="folder-plus"></i>
-      <span class="link-title">Manage Project </span>
+      <span class="link-title"> Project </span>
       <i class="link-arrow" data-feather="chevron-down"></i>
     </a>
     <div class="collapse" id="emails">
       <ul class="nav sub-menu">
         
         <li class="nav-item">
-          <a href="{{url('Create_project')}}" class="nav-link">Create New Project Plan</a>
+          <a href="{{url('Create_project')}}" class="nav-link">Create New Project </a>
         </li>
         <li class="nav-item">
         <a href="{{ url('view_project_list') }}" class="nav-link">View Project List</a>
 
         </li>
         <li class="nav-item">
-        <a href="{{ route('projectmanager.edit_project') }}" class="nav-link">Edit Project plan</a>
+        <a href="{{ route('projectmanager.edit_project') }}" class="nav-link">Edit Project</a>
 
       </li>
         <li class="nav-item">
-          <a href="{{route('projectmanager.delete_project')}}" class="nav-link">delete  project plan</a>
+          <a href="{{route('projectmanager.delete_project')}}" class="nav-link">delete  project</a>
         </li>
      
         <li class="nav-item">
@@ -58,7 +58,7 @@
            <a href="{{ route('projectmanager.delete_task')}}" class="nav-link">Delete Task</a>
            </li>
         <li class="nav-item">
-        <a href="{{ url('view_task_list') }}" class="nav-link">View Project List</a>
+        <a href="{{ url('view_task_list') }}" class="nav-link">View Task List</a>
 
         </li>
         <li class="nav-item">
@@ -69,7 +69,7 @@
   <li class="nav-item">
     <a class="nav-link" data-bs-toggle="collapse" href="#emails" role="button" aria-expanded="false" aria-controls="emails">
       <i class="link-icon" data-feather="users"></i>
-      <span class="link-title">Manage development team </span>
+      <span class="link-title"> development team </span>
       <i class="link-arrow" data-feather="chevron-down"></i>
     </a>
     <div class="collapse" id="emails">
@@ -80,7 +80,7 @@
         </li>
         <li class="nav-item">
         
-          <a href="pages/email/read.html" class="nav-link">track performance of Dev team </a>
+          <a href="pages/email/read.html" class="nav-link">track performance of development team </a>
         </li>
        
       </ul>
@@ -113,6 +113,8 @@
 
 
 
+
+  
 </ul>
 </div>
 </nav>

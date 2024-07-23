@@ -21,25 +21,11 @@ class Project extends Model
         'updater_id'
     ];
 
-<<<<<<< HEAD
     // Define relationships if needed
-=======
-    // Define relationships if applicable
->>>>>>> e45607bcaddd26624d7200aebbd2eec3c13162ab
     public function creator()
     {
         return $this->belongsTo(User::class, 'creator_id');
     }
-<<<<<<< HEAD
-=======
-    use HasFactory;
-
-    public function feedbacks()
-    {
-        return $this->hasMany(Feedback::class, 'projectID');
-    }
-
->>>>>>> e45607bcaddd26624d7200aebbd2eec3c13162ab
 
     public function updater()
     {
