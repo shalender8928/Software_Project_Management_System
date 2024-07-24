@@ -63,23 +63,31 @@ Route::patch('/manager_update_profile/{id}', [ProjectManagerController::class, '
 // Route for editing a project by ID
     Route::get('/Create_project', [ProjectManagerController::class, 'createProject'])->name('projectmanager.create_project');
     Route::post('/add_new_project', [ProjectManagerController::class, 'add_new_Project'])->name('projectmanager.add_new_project');
+
     Route::get('edit_project', [ProjectManagerController::class, 'edit_project'])->name('projectmanager.edit_project');
     Route::get('update_project/{id}', [ProjectManagerController::class, 'update_project'])->name('projectmanager.update_project');
     Route::patch('update_pro_project/{id}', [ProjectManagerController::class, 'update_pro_project'])->name('projectmanager.update_pro_project');
+
     Route::get('delete_project', [ProjectManagerController::class, 'delete_project'])->name('projectmanager.delete_project');
     Route::get('delete_pro_project/{id}', [ProjectManagerController::class, 'delete_pro_project']);
+
     Route::get('/view_project_list', [ProjectManagerController::class, 'view_project_list'])->name('projectmanager.view_project_list');
     Route::get('/view_project_detail/{id}', [ProjectManagerController::class, 'view_project_detail'])->name('projectmanager.view_project_detail');
     Route::get('/view_project_list/{status}', [ProjectManagerController::class, 'viewProjectList'])->name('view_project_list');
     Route::get('/view_project_list/{completed}', [ProjectManagerController::class, 'viewProjectList'])->name('view_project_list');
     Route::get('/view_project_list/{in_progress}', [ProjectManagerController::class, 'viewProjectList'])->name('view_project_list');
    
+// project plan 
 
+Route::get('/create_project_plan', [ProjectManagerController::class, 'createProjectPlan'])->name('projectmanager.create_project_plan');
+Route::post('/add_new_project_plan', [ProjectManagerController::class, 'add_new_Project_plan'])->name('projectmanager.add_new_project_plan');
 
-   // Route::post('store_data', [ProjectController::class, 'store_data']);
+   
+// Task
    
    Route::get('Assigntask', [ProjectManagerController::class, 'Assigntask'])->name('ProjectManager.Assigntask');
    Route::post('Assigntask', [ProjectManagerController::class, 'storeTask'])->name('ProjectManager.storeTask');
+
    Route::get('Edit_Assigntask', [ProjectManagerController::class, 'Edit_Assigntask'])->name('ProjectManager.Edit_Assigntask');
    Route::get('update_assigntask/{id}', [ProjectManagerController::class, 'update_assigntask'])->name('ProjectManager.update_assigntask');
    Route::patch('update_pro_assigntask/{id}', [ProjectManagerController::class, 'update_pro_assigntask'])->name('ProjectManager.update_pro_assigntask');

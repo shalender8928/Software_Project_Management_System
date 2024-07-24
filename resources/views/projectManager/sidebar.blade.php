@@ -67,7 +67,7 @@
         
      
         <li class="nav-item">
-          <a href="ProjectManager.create_project_plan'" class="nav-link"> Create Project Plan</a>
+        <a href="{{ route('projectmanager.create_project_plan') }}" class="nav-link">Create Project Plan</a>
         </li>
         <li class="nav-item">
           <a href="ProjectManager.edit_project_plan" class="nav-link"> Edit Project Plan</a>

@@ -8,6 +8,7 @@ use App\Models\User;
 use App\Models\Task;
 use App\Models\Project;
 use App\Models\Category;
+use App\Models\ProjectPlan;
 use Illuminate\Support\Facades\Log;
 
 
@@ -114,7 +115,7 @@ public function createProject()
         $project->deadline = $request->deadline;
         $project->start_date = $request->start_date;
         $project->end_date = $request->end_date;
-        $project->category_id = $request->Category; // Corrected from project_id to category_id
+        $project->category_id = $request->Category; // Corrected from project_name to category_id
         $project->created_by = auth()->user()->id;
         $project->updated_by = auth()->user()->id;
         $project->save();
@@ -209,7 +210,59 @@ public function view_project_detail($id){
 }
 
 
-  //
+
+
+
+
+
+  //  task assign
+
+
+
+   public function Assigntask()
+{
+
+    $projects = Project::all();
+
+    // Pass the projects to the view
+    return view('projectManager.Assigntask', compact('projects'));
+}
+
+  public function storeTask(Request $request)
+{
+    $validatedData = $request->validate([
+
+        'project_name' => 'required|integer',
+        'task_description' => 'required|string',
+        'priority' => 'required|string',
+    
+        'assign_to' => 'required|string',
+        'deadline' => 'required|date',
+        'start_date' => 'required|date',
+        'end_date' => 'required|date',
+    ]);
+
+    // Adjust the data as needed
+    $taskData = [
+        'project_name' => $validatedData['project_name'],
+        'task_description' => $validatedData['task_description'],
+        'priority' => $validatedData['priority'],
+        
+        'assign_to' => $validatedData['assign_to'],
+        'deadline' => $validatedData['deadline'],
+        'start_date' => $validatedData['start_date'],
+        'end_date' => $validatedData['end_date'],
+        // Add other fields as needed
+    ];
+
+    // Insert data into the tasks table
+    Task::create($taskData);
+
+   
+    toastr()->success('Task created successfully!'); // Success message
+
+    return redirect()->route('projectManager.dashboard');
+}
 
   public function Edit_Assigntask()
   {
@@ -308,7 +361,53 @@ public function view_project_detail($id){
   }
 
 
+
+
+
+
+
+// 
+
+
+
+
+
+
+
+
+  
+public function createProjectPlan()
+{
+    $projects = Project::orderBy('project_name', 'asc')->get();  // Fetching projects
+    return view('projectManager.create_Project_plan', compact('projects'));
 }
+
+public function add_new_Project_plan(Request $request)
+{
+    $validated = $request->validate([
+        'project_name' => 'required|string|exists:projects,project_name',  // Validate project name
+        'plandetails' => 'required|string',
+    ]);
+
+    $projectPlan = new ProjectPlan;
+    $projectPlan->project_name = $request->input('project_name');  // Use project_name
+    $projectPlan->plandetails = $request->input('plandetails');
+    $projectPlan->created_by = Auth::id();
+    $projectPlan->updated_by = Auth::id();
+    $projectPlan->save();
+
+    toastr()->timeOut(1000)->closeButton()->addSuccess('Project plan created successfully.');
+
+    return redirect()->route('projectManager.dashboard');
+}
+
+}
+
+
+
+ 
+ 
+
 
 
 
