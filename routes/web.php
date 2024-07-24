@@ -42,10 +42,14 @@ Route::middleware(['auth'])->group(function () {
 
      Route::get('/projectManager/dashboard', [ProjectManagerController::class, 'dashboard'])->name('projectManager.dashboard');
 
-     Route::get('/projectManager/update_profile_pm', [ProjectManagerController::class, 'update_profile_pm'])->name('projectManager.update_profile_pm');
-     Route::patch('/projectManagerupdate_profile/{id}', [ProjectManagerController::class, 'update_profile']);
-     Route::get('/projectManager/view_profile', [ProjectManagerController::class, 'view_profile'])->name('ProjectManagerController.view_profile');
+     // Route to view profile
+Route::get('/manager_view_profile', [ProjectManagerController::class, 'manager_view_profile'])->name('manager_view_profile');
 
+// Route to edit profile
+Route::get('/manager_edit_profile', [ProjectManagerController::class, 'manager_edit_profile'])->name('manager_edit_profile');
+
+// Route to update profile
+Route::patch('/manager_update_profile/{id}', [ProjectManagerController::class, 'manager_update_profile'])->name('manager_update_profile');
 // create project
 
    

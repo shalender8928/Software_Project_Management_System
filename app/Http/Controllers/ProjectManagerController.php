@@ -41,14 +41,19 @@ class ProjectManagerController extends Controller
 
 
 
-    public function manager_edit_profile()
+    public function manager_view_profile()
     {
-        $data = User::all();
-    
-        return view('projectManager.update_profile_pm', compact('data'));
+        $user = Auth::user();
+        return view('projectManager.manager_view_profile', compact('user'));
     }
 
-    public function update_profile(Request $request, $id)
+    public function manager_edit_profile()
+    {
+        $user = Auth::user();
+        return view('projectManager.manager_edit_profile', compact('user'));
+    }
+
+    public function manager_update_profile(Request $request, $id)
     {
         $request->validate([
             'firstname' => 'required|string|max:255',
@@ -56,67 +61,28 @@ class ProjectManagerController extends Controller
             'phone' => 'required|string|max:15',
             'gender' => 'required|string|max:10',
             'age' => 'required|integer',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:4096',
         ]);
-    
+
         $user = User::find($id);
-    
-        if (!$user || $user->id != Auth::id()) {
-            abort(403, 'Unauthorized');
-        }
-    
         $user->firstname = $request->firstname;
         $user->lastname = $request->lastname;
         $user->phone = $request->phone;
         $user->gender = $request->gender;
         $user->age = $request->age;
-    
+
         if ($request->hasFile('image')) {
             $imageName = time() . '.' . $request->image->extension();
             $request->image->move(public_path('images'), $imageName);
             $user->image = $imageName;
         }
-    
+
         $user->save();
-    
+
         toastr()->timeOut(10000)->closeButton()->addSuccess('Your Profile has been Successfully Updated');
-    
+
         return redirect()->route('projectManager.dashboard');
     }
-    
-    
-
-  // 
-  public function Assigntask()
-  {
-      // Fetch the authenticated user
-      $data = Auth::user();
-      $projects = Project::orderBy('project_name', 'asc')->get();
-  
-      // Pass the data to the view
-      return view('projectManager.Assigntask', compact('data', 'projects'));
-  }
-
-public function storeTask(Request $request)
-{
-    $validatedData = $request->validate([
-        'project_name' => 'required|string|max:255',
-        'task_description' => 'required|string',
-        'priority' => 'required|integer',
-        'assign_to' => 'required|string',
-        'deadline' => 'required|date',
-        'start_date' => 'required|date',
-        'end_date' => 'required|date'
-    ]);
-
-    Task::create($validatedData);
-
-    toastr()->success('Task created successfully.'); // Success message
-
-    return redirect()->route('projectManager.dashboard');
-}
-  
-
 // 
 
 

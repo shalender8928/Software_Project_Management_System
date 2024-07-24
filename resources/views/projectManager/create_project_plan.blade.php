@@ -22,28 +22,32 @@
                     <div class="col-md-12 grid-margin stretch-card">
                         <div class="card">
                             <div class="card-body">
-                                <h6 class="card-title">Create New Project</h6>
+                                <h6 class="card-title">Create Project plan </h6>
                                 @if (session('success'))
                                     <div class="alert alert-success alert-dismissible fade show" role="alert">
                                         {{ session('success') }}
                                         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                                     </div>
                                 @endif
-                                <form class="forms-sample" method="POST" action="{{ route('projectmanager.add_new_project') }}">
+                                <form class="forms-sample" method="POST" action="{{ route('projectmanager.add_new_project_plan') }}">
                                     @csrf
                                     <!-- project Name -->
                                     <div class="mb-3">
                                         <label class="form-label">Project Name</label>
-                                        <input type="text" class="form-control" id="project_name" name="project_name" required>
-                                        @error('project_name')
-                                            <div class="text-danger">{{ $message }}</div>
-                                        @enderror
+                                        <select class="form-control" id="project" name="project" required>
+                                    @foreach($projects as $project)
+                            <option value="{{ $project-plan->id }}">{{ $project-plan->project_name }}</option>
+                           @endforeach
+                             </select>
+                          @error('project')
+                         <div class="text-danger">{{ $message }}</div>
+                        @enderror
                                     </div>
-                                    <!-- description -->
+                                    <!-- plandetails -->
                                     <div class="mb-3">
-                                        <label for="description" class="form-label">Description</label>
-                                        <textarea class="form-control" id="description" name="description"></textarea>
-                                        @error('description')
+                                        <label for="plandetails" class="form-label">plan details</label>
+                                        <textarea class="form-control" id="plandetails" name="plandetails"></textarea>
+                                        @error('plandetails')
                                             <div class="text-danger">{{ $message }}</div>
                                         @enderror
                                     </div>
@@ -83,15 +87,15 @@
                                             <div class="text-danger">{{ $message }}</div>
                                         @enderror
                                     </div>
-                                    <!-- Category -->
+                                    <!-- project -->
                                     <div class="mb-3">
-                                    <label for="Category">Category</label>
-                                    <select class="form-control" id="Category" name="Category" required>
-                                    @foreach($categories as $category)
-                    <option value="{{ $category->id }}">{{ $category->cat_name }}</option>
+                                    <label for="project">project</label>
+                                    <select class="form-control" id="project" name="project" required>
+                                    @foreach($categories as $project)
+                    <option value="{{ $project->id }}">{{ $project->cat_name }}</option>
                 @endforeach
                  </select>
-    @error('Category')
+    @error('project')
         <div class="text-danger">{{ $message }}</div>
     @enderror
                                     </div>
