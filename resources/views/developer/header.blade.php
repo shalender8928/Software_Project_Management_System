@@ -170,11 +170,7 @@
                         </div>
         <ul class="list-unstyled p-1">
           <li class="dropdown-item py-2">
-<<<<<<< HEAD
-          <a href="{{url('edit_profile')}}" class="text-body ms-0">
-=======
           <a href="{{url('dev_view_profile')}}" class="text-body ms-0">
->>>>>>> df9f9bcbcaa6c9db8ceb3888cbb367345557baee
               <i class="me-2 icon-md" data-feather="user"></i>
               <span>Profile</span>
             </a>
@@ -183,11 +179,6 @@
             <a href="{{url('edit_profile')}}" class="text-body ms-0">
               <i class="me-2 icon-md" data-feather="edit"></i>
               <span>Edit Profile</span>
-<<<<<<< HEAD
-            </a>
-          </li>
-=======
->>>>>>> df9f9bcbcaa6c9db8ceb3888cbb367345557baee
           <li class="dropdown-item py-2">
             <a href="javascript:;" class="text-body ms-0">
               <i class="me-2 icon-md" data-feather="repeat"></i>
