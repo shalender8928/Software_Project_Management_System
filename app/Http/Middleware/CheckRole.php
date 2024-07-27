@@ -22,7 +22,6 @@ class CheckRole
             return redirect('login');
         }
         
-        \Log::info('User role: ' . $request->user()->role);
 
         if (!$request->user()->hasRole($role)) {
             abort(403, 'Unauthorized Access');
@@ -30,4 +29,6 @@ class CheckRole
 
         return $next($request);
     }
+
+ 
 }

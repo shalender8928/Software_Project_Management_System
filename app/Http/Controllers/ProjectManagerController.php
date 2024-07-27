@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 use App\Models\Task;
 use App\Models\Project;
-
+use App\Models\Category;
 use Illuminate\Support\Facades\Log;
 
 
@@ -15,131 +15,114 @@ class ProjectManagerController extends Controller
 {
     public function dashboard()
     {
-        return view('projectManager.dashboard');
+     
+    $completedCount = Project::where('status', 'completed')->count();
+    $pendingCount = Project::where('status', 'pending')->count();
+    $in_progress = Project::where('status', 'in_progress')->count();
+
+    // Fetch all projects
+    $projects = Project::all();
+    $projectCount = $projects->count();
+
+    // Pass the projects and project count to the view
+    return view('projectManager.dashboard', compact('projects', 'projectCount', 'pendingCount', 'completedCount', 'in_progress'));
+
     }
-    public function edit_profile()
-{
-    $user = Auth::user(); // Ensure the user is logged in
-    if (!$user) {
-        abort(403, 'Unauthorized');
+    public function viewProjectList($status)
+    {
+        // Fetch projects by status
+        $projects = Project::where('status', $status)->get();
+
+        // Pass projects and status to the view
+        return view('projectManager.projectList', compact('projects', 'status'));
     }
-    $data = User::find($user->id);
-    return view('projectManager.edit_profile', compact('data'));
-}
+   
 
-public function update_profile(Request $request, $id)
-{
-    $request->validate([
-        'firstname' => 'required|string|max:255',
-        'lastname' => 'required|string|max:255',
-        'phone' => 'required|string|max:15',
-        'gender' => 'required|string|max:10',
-        'age' => 'required|integer',
-        'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-    ]);
 
-    $user = User::find($id);
 
-    if (!$user || $user->id != Auth::id()) {
-        abort(403, 'Unauthorized');
-    }
 
-    $user->firstname = $request->firstname;
-    $user->lastname = $request->lastname;
-    $user->phone = $request->phone;
-    $user->gender = $request->gender;
-    $user->age = $request->age;
-
-    if ($request->hasFile('image')) {
-        $imageName = time() . '.' . $request->image->extension();
-        $request->image->move(public_path('images'), $imageName);
-        $user->image = $imageName;
+    public function manager_view_profile()
+    {
+        $user = Auth::user();
+        return view('projectManager.manager_view_profile', compact('user'));
     }
 
-    $user->save();
+    public function manager_edit_profile()
+    {
+        $user = Auth::user();
+        return view('projectManager.manager_edit_profile', compact('user'));
+    }
 
-    toastr()->timeOut(10000)->closeButton()->addSuccess('Your Profile has been Successfully Updated');
+    public function manager_update_profile(Request $request, $id)
+    {
+        $request->validate([
+            'firstname' => 'required|string|max:255',
+            'lastname' => 'required|string|max:255',
+            'phone' => 'required|string|max:15',
+            'gender' => 'required|string|max:10',
+            'age' => 'required|integer',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:4096',
+        ]);
 
-    return redirect()->route('projectManager.dashboard');
-}
+        $user = User::find($id);
+        $user->firstname = $request->firstname;
+        $user->lastname = $request->lastname;
+        $user->phone = $request->phone;
+        $user->gender = $request->gender;
+        $user->age = $request->age;
 
-public function view_profile()
-{
-    $user = Auth::user();
-    $data = User::find($user->id); // Ensure user is logged in
-    return view('projectManager.view_profile', compact('data'));
-}
+        if ($request->hasFile('image')) {
+            $imageName = time() . '.' . $request->image->extension();
+            $request->image->move(public_path('images'), $imageName);
+            $user->image = $imageName;
+        }
 
-    
+        $user->save();
 
-  // 
-public function Assigntask()
-{
-    // Fetch the authenticated user
-    $data = Auth::user();
+        toastr()->timeOut(10000)->closeButton()->addSuccess('Your Profile has been Successfully Updated');
 
-    // Pass the data to the view
-    return view('projectManager.Assigntask', compact('data'));
-}
-
-
-public function storeTask(Request $request)
-{
-    $validatedData = $request->validate([
-        'project_name' => 'required|string|max:255',
-        'task_description' => 'required|string',
-        'priority' => 'required|integer',
-        'assign_to' => 'required|string',
-        'deadline' => 'required|date',
-        'start_date' => 'required|date',
-        'end_date' => 'required|date'
-    ]);
-
-    $task = Task::create($validatedData);
- 
-    toastr()->timeOut(10000)->closeButton()->addSuccess('Task created successfully.');
-    
-
-    return redirect()->route('projectManager.dashboard');
-}
-  
-
+        return redirect()->route('projectManager.dashboard');
+    }
 // 
+
+
+
 public function createProject()
     {
         $data = Auth::user(); // Get the authenticated user's data
-        return view('projectManager.Create_Project', compact('data'));
+
+        $categories= Category:: orderBy('cat_name' , 'asc')->get();
+        return view('projectManager.Create_Project', compact('data' , 'categories'));
     }
 
-    public function add_new_project(Request $request)
-{
-    $request->validate([
-        'project_name' => 'required|string|max:255',
-        'description' => 'required|string',
-        'status' => 'required|string',
-        'start_date' => 'required|date',
-        'end_date' => 'required|date',
-        'deadline' => 'required|date',
-        'project_id' => 'required|string',
-    ]);
+    public function add_new_Project(Request $request)
+    {
+        $request->validate([
+            'project_name' => 'required|string|max:255',
+            'description' => 'required|string',
+            'status' => 'required|string',
+            'deadline' => 'required|date',
+            'start_date' => 'required|date',
+            'end_date' => 'required|date',
+            'Category' => 'required|string',
+        ]);
 
-    $project = new Project();
-    $project->project_name = $request->project_name;
-    $project->description = $request->description;
-    $project->status = $request->status;
-    $project->start_date = $request->start_date;
-    $project->end_date = $request->end_date;
-    $project->deadline = $request->deadline;
-    $project->project_id = $request->project_id;
-    $project->created_by = auth()->user()->id;
-    $project->updated_by = auth()->user()->id;
-    $project->save();
+        $project = new Project;
+        $project->project_name = $request->project_name;
+        $project->description = $request->description;
+        $project->status = $request->status;
+        $project->deadline = $request->deadline;
+        $project->start_date = $request->start_date;
+        $project->end_date = $request->end_date;
+        $project->category_id = $request->Category; // Corrected from project_id to category_id
+        $project->created_by = auth()->user()->id;
+        $project->updated_by = auth()->user()->id;
+        $project->save();
 
-    toastr()->timeOut(10000)->closeButton()->addSuccess('Project created successfully.');
+        toastr()->timeOut(1000)->closeButton()->addSuccess('Project created successfully.');
 
-    return redirect()->route('projectManager.dashboard');
-}
-
+        return redirect()->route('projectManager.dashboard');
+    }
 
 // edit project  
 
@@ -147,7 +130,8 @@ public function createProject()
 public function edit_project() {
     // Retrieve all projects
     $projects = Project::all();
-    
+
+    toastr()->timeOut(10000)->closeButton()->addSuccess('Project edit successfully.');
     // Pass the projects to the view
     return view('projectManager.edit_project', compact('projects'));
 }
@@ -156,12 +140,13 @@ public function edit_project() {
 public function update_Project($id){
     $project = Project::findOrFail($id);
     return view('projectManager.update_project', compact('project'));
+
+    toastr()->timeOut(10000)->closeButton()->addSuccess('Project update successfully.');
 }
 
 // Method to handle the update request
 public function update_pro_Project(Request $request, $id)
 {
-    // Validate incoming request
     $request->validate([
         'project_name' => 'required|string|max:255',
         'description' => 'nullable|string|max:255',
@@ -169,36 +154,18 @@ public function update_pro_Project(Request $request, $id)
         'deadline' => 'nullable|date',
         'start_date' => 'required|date',
         'end_date' => 'required|date',
-        'category_id' => 'required|String', // Adjust type if necessary
+        'category_id' => 'required|string',
     ]);
 
-    $reg_user_id = Auth::id(); // Get the logged-in user ID
-
-    // Find the project
     $project = Project::findOrFail($id);
     $project->update($request->all());
+    $project->updated_by = Auth::id();
+    $project->save();
 
-    if ($project) {
-        // Update project details
-        $project->project_name = $request->input('project_name');
-        $project->description = $request->input('description');
-        $project->status = $request->input('status');
-        $project->deadline = $request->input('deadline');
-        $project->start_date = $request->input('start_date');
-        $project->end_date = $request->input('end_date');
-        $project->category_id = $request->input('category_id');
-        $project->updated_by = $reg_user_id;
+    toastr()->success('Project Details Updated Successfully.'); // Success message
 
-        $project->save();
-
-        // Flash success message and redirect
-        return redirect()->route('projectManager.dashboard')->with('success', 'Project Details Updated Successfully.');
-    } else {
-        // Flash error message and redirect
-        return redirect()->route('projectManager.dashboard')->with('error', 'Project not found.');
-    }
+    return redirect()->route('projectManager.dashboard');
 }
-
 
 public function delete_project()
 {
@@ -226,13 +193,10 @@ public function delete_pro_project($id)
     return redirect()->route('projectmanager.delete_project'); // Redirect to the project list page
 }
 
-public function view_project_list(){
-    $project = Project::all();
-
-    // Pass the projects to the view
-    return view('projectManager.view_project_list', compact('project'));
+public function view_project_list() {
+    $projects = Project::all(); // Fetch projects from the database
+    return view('projectManager.view_project_list', compact('projects'));
 }
-
 public function view_project_detail($id){
     $project = Project::find($id);
 
@@ -261,48 +225,50 @@ public function view_project_detail($id){
   }
   
   public function update_pro_assigntask(Request $request, $id)
-  {
-      // Validate the request
-      $request->validate([
-          'project_name' => 'required|string|max:255',
-          'task_description' => 'required|string|max:255',
-          'priority' => 'required|string|max:255',
-          'assign_to' => 'required|string|max:255',
-          'deadline' => 'required|date',
-          'start_date' => 'required|date',
-          'end_date' => 'required|date',
-      ]);
-  
-      // Find the task by ID
-      $task = Task::find($id);
-  
-      if ($task) {
-          // Update the task with the request data
-          $task->update([
-              'project_name' => $request->project_name,
-              'task_description' => $request->task_description,
-              'priority' => $request->priority,
-              'assign_to' => $request->assign_to,
-              'deadline' => $request->deadline,
-              'start_date' => $request->start_date,
-              'end_date' => $request->end_date,
-          ]);
-  
-          // Redirect with success message
-          return redirect()->route('ProjectManager.Edit_Assigntask', $task->id)
-                           ->with('success', 'Task updated successfully.');
-      }
-  
-      // Redirect with error message if task not found
-      return redirect()->back()->with('error', 'Task not found.');
-  }
-  
+{
+    // Validate the request
+    $request->validate([
+        'project_name' => 'required|string|max:255',
+        'task_description' => 'required|string|max:255',
+        'priority' => 'required|string|max:255',
+        'assign_to' => 'required|string|max:255',
+        'deadline' => 'required|date',
+        'start_date' => 'required|date',
+        'end_date' => 'required|date',
+    ]);
+
+    // Find the task by ID
+    $task = Task::find($id);
+
+    if ($task) {
+        // Update the task with the request data
+        $task->update([
+            'project_name' => $request->project_name,
+            'task_description' => $request->task_description,
+            'priority' => $request->priority,
+            'assign_to' => $request->assign_to,
+            'deadline' => $request->deadline,
+            'start_date' => $request->start_date,
+            'end_date' => $request->end_date,
+        ]);
+
+        // Redirect with success message
+        toastr()->success('Project Details Updated Successfully.');
+
+        return redirect()->route('ProjectManager.Edit_Assigntask');
+    }
+
+    // Redirect with error message if task not found
+    return redirect()->back()->with('error', 'Task not found.');
+}
+
   public function delete_task()
   {
       $tasks = Task::all();
 
       // Pass the tasks to the view
       return view('projectManager.delete_task', compact('tasks'));
+      
   }
 
   // Method to delete a specific task

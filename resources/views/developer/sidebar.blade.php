@@ -1,7 +1,7 @@
 <nav class="sidebar">
 <div class="sidebar-header">
 <a href="#" class="sidebar-brand" style="font-size:5;">
-Developer<span> spms</span>
+  developer<span> spms</span>
 </a>
 <div class="sidebar-toggler not-active">
   <span></span>
@@ -22,7 +22,7 @@ Developer<span> spms</span>
 
   <li class="nav-item nav-category">home</li>
 
-      <!-- start the manager project task-->
+ <!-- start the manage Development team -->
 
   <li class="nav-item">
     <a class="nav-link" data-bs-toggle="collapse" href="#emails" role="button" aria-expanded="false" aria-controls="emails">
@@ -33,38 +33,36 @@ Developer<span> spms</span>
     <div class="collapse" id="emails">
       <ul class="nav sub-menu">
         <li class="nav-item">
-        <a class="nav-link" href="{{url('create_project')}}">View assigned task</a>
-        
-        </li>
-        
-        <li class="nav-item">
-          <a href="pages/email/compose.html" class="nav-link"> View list of project plan</a>
+          <a href="{{url('view_project_plans')}}" class="nav-link">view list of project plan</a>
         </li>
         <li class="nav-item">
-          <a href="pages/email/compose.html" class="nav-link"> Announce task completion</a>
+          <a href="{{ url('view_task_list') }}" class="nav-link">view assigned task</a>
         </li>
         <li class="nav-item">
-          <a href="pages/email/compose.html" class="nav-link">delete new project plan</a>
+          <a href="pages/email/compose.html" class="nav-link">announce task completion</a>
         </li>
-     
+      </ul>
     </div>
+  </li>
+  
+  <!-- End  the manage task -->
+
   <li class="nav-item">
     <a class="nav-link" data-bs-toggle="collapse" href="#emails" role="button" aria-expanded="false" aria-controls="emails">
       <i class="link-icon" data-feather="mail"></i>
-      <span class="link-title"> View feedback  </span>
-      <i class="link-arrow" data-feather="chevron-down"></i>
+      <span class="link-title">view notification</span>
     </a>
-    <div class="collapse" id="emails">
-      <ul class="nav sub-menu">
-        <li class="nav-item">
-          <a href="pages/email/inbox.html" class="nav-link">View feedback of Customer</a>
-        </li>
-       
-      </ul>
-
-      <!-- End the manager project task-->
-    </div>
   </li>
+
+  <li class="nav-item">
+ 
+  <a href="{{url('view_feedback')}}" class="nav-link"> <i class="link-icon" data-feather="mail"></i>
+  <span class="link-title"> 
+  View Feedback</span></a>
+       
+       
+   </li>
+
 
 
 

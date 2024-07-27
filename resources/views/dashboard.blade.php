@@ -12,6 +12,8 @@
                     {{ __("You're logged in!") }}
                 </div>
             </div>
+
+            
         </div>
     </div>
 </x-app-layout>

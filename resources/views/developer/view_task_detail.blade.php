@@ -1,13 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
-  
-@include('projectManager.css')
-     
+<head>
+@include('developer.css')
+</head>
 <body>
 <div class="main-wrapper">
 
 <!-- partial:partials/_sidebar.html -->
-   @include('projectManager.sidebar')
+   @include('developer.sidebar')
 
 <!-- partial -->
 
@@ -15,7 +15,7 @@
             
     <!-- partial:partials/_navbar.html -->
     
-	@include('projectManager.header')
+	@include('developer.header')
 
          
          
@@ -92,8 +92,7 @@
     @enderror
 </div>
 
-                                    <a class="btn btn-primary" href="{{ url('update_assigntask', $task->id) }}">Edit</a>
-                                    <a class="btn btn-secondary" href="{{ route('projectmanager.view_task_list') }}">Back</a>
+                                    <a class="btn btn-secondary" href="{{ route('developer.view_task_list') }}">Back</a>
                                 </form>
                             </div>
                         </div>
@@ -111,7 +110,7 @@
         </div>
     </div>
 			<!-- partial:partials/_footer.html -->
-		@include('projectManager.footer')  
+		@include('developer.footer')  
 			<!-- partial -->
 		
 		</div>
@@ -119,7 +118,7 @@
 	
 
 	<!-- core:js -->
-	@include('projectManager.js')
+	@include('developer.js')
 
 </body>
 </html>

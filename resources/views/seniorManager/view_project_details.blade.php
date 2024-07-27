@@ -1,20 +1,26 @@
 <!DOCTYPE html>
 <html lang="en">
-  
-@include('projectManager.css')
-     
+<head>
+@include('seniorManager.css')
+</head>
 <body>
 <div class="main-wrapper">
 
 <!-- partial:partials/_sidebar.html -->
-@include('projectManager.sidebar')
+@include('seniorManager.sidebar')
+
 <!-- partial -->
 
 <div class="page-wrapper">
+            
     <!-- partial:partials/_navbar.html -->
-    @include('projectManager.header')
-    <div class="page-content" style="margin-left:100px">
-        <div class="row profile-body">
+    
+         @include('seniorManager.header')  
+
+
+         <div class="page-content"  style="margin-left:100px">
+           
+         <div class="row profile-body">
             <!-- left wrapper end -->
             <!-- middle wrapper start -->
             <div class="col-md-8 col-xl-9 middle-wrapper">
@@ -64,8 +70,11 @@
     <input type="text" class="form-control" id="category_id" name="category_id" value="{{ $project->category_id }}" required>
 </div>
 
-                                    <a class="btn btn-primary" href="{{ url('update_project', $project->id) }}">Edit</a>
-                                    <a class="btn btn-secondary" href="{{ route('projectmanager.view_project_list') }}">Back</a>
+        
+                                <a class="btn btn-secondary" href="{{ route('seniorManager.view_project_list') }}">Back</a>
+
+                                <a class="btn btn-success"  href="{{ route('seniorManager.approve_project', $project->id) }}">Approve</a>
+                                <a class="btn btn-danger" href="{{ route('seniorManager.reject_project', $project->id) }}">Reject</a>
                               
                             </div>
                         </div>
@@ -80,15 +89,28 @@
             </div>
             <!-- right wrapper end -->
         </div>
-    </div>
-    <!-- partial:partials/_footer.html -->
-    @include('projectManager.footer')
-    <!-- partial -->
-</div>
-</div>
 
-<!-- core:js -->
-@include('projectManager.js')
+
+
+
+         
+         </div>
+         
+
+
+
+      
+         <!-- partial:partials/_footer.html -->
+
+    @include('seniorManager.footer') 
+
+      <!-- partial -->
+    </div>
+
+  </div>
+
+  <!-- core:js -->
+  @include('seniorManager.js')
 
 </body>
 </html>

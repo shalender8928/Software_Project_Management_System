@@ -1,6 +1,8 @@
 <?php
 namespace App\Http\Controllers;
 
+use App\Models\Project;
+use App\Models\Task;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
@@ -10,11 +12,19 @@ class DeveloperController extends Controller
 {
     public function dashboard()
     {
-        // Fetch user data or any other relevant data
-        $data = Auth::user(); // Assuming you are fetching the authenticated user's data
+        $user = Auth::user();
+        $data = User::find($user->id);
+        // Fetch the count of projects
+        $projects = Project::count();
+       // Fetch the count of pending projects
+        $pending = Project::where('status', 'pending')->count();
+       // Fetch the count of completed projects
+        $completed = Project::where('status', 'completed')->count();
+        
+                    // Fetch the count of tasks
+                    $tasks = Task::count();
 
-        // Pass the data to the view
-        return view('developer.dashboard', compact('data'));
+        return view('developer.dashboard', compact('data','projects','pending','completed','tasks'));
     }
 
    
@@ -94,6 +104,48 @@ class DeveloperController extends Controller
         $data = Category::find($id);
 
         return view('developer.view_feedback_details', compact('data'));
+    }
+    public function view_project_plans()
+    {
+        $user = Auth::user();
+        $user_id = $user->id; // Logged in User ID
+        $data = User::find($user_id);
+
+        // Fetch project plans from the database
+        $projects = Project::all();  // Ensure Project model is correctly imported
+        
+        return view('developer.view_project_plans', compact('data', 'projects'));
+    }
+    public function view_project_detail($id)
+    {
+        $user = Auth::user();
+        $data = User::find($user->id);
+        $project = Project::find($id);
+        $project = Project::find($id);
+
+        return view('developer.view_project_detail', compact('data','project'));
+
+        
+    }
+     //view List the task
+     public function view_task_list()
+     {
+         $user = Auth::user();
+         $user_id = $user->id; // Logged in User ID
+         $data = User::find($user_id);
+ 
+         $tasks = Task::all();
+         return view('developer.view_task_list', compact('data','tasks'));
+     }
+         //Veiw details of the task list
+    public function view_task_detail($id)
+    {
+        $user = Auth::user();
+        $user_id = $user->id; // Logged in User ID
+        $data = User::find($user_id);
+        $task = Task::find($id);
+  
+        return view('developer.view_task_detail', compact('data','task'));
     }
 
 }

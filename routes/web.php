@@ -12,7 +12,6 @@ use App\Http\Controllers\ProjectController;
 
 
 
-
 Route::middleware(['auth'])->group(function () {
     Route::get('/admin/dashboard', [AdminController::class, 'dashboard'])
       ->name('admin.dashboard')
@@ -27,9 +26,9 @@ Route::middleware(['auth'])->group(function () {
         ->name('seniorManager.dashboard')
         ->middleware('CheckRole:Senior Manager');
      
-        Route::get('edit_profile', [ProjectManagerController::class, 'edit_profile'])
+        Route::get('manager_edit_profile', [ProjectManagerController::class, 'manager_edit_profile'])
         ->middleware('CheckRole:projectManager')
-        ->name('projectManager.edit_profile');
+        ->name('projectManager.manager_edit_profile');
 
         Route::get('/projectManager/dashboard', [projectManager::class, 'dashboard'])
         ->name('projectManager.dashboard')
@@ -42,10 +41,15 @@ Route::middleware(['auth'])->group(function () {
 
 
      Route::get('/projectManager/dashboard', [ProjectManagerController::class, 'dashboard'])->name('projectManager.dashboard');
-    Route::get('edit_profile', [ProjectManagerController::class, 'edit_profile'])->name('projectManager.edit_profile');
-    Route::patch('update_profile/{id}', [ProjectManagerController::class, 'update_profile']);
-    Route::get('view_profile', [ProjectManagerController::class, 'view_profile'])->name('ProjectManagerController.view_profile');
 
+     // Route to view profile
+Route::get('/manager_view_profile', [ProjectManagerController::class, 'manager_view_profile'])->name('manager_view_profile');
+
+// Route to edit profile
+Route::get('/manager_edit_profile', [ProjectManagerController::class, 'manager_edit_profile'])->name('manager_edit_profile');
+
+// Route to update profile
+Route::patch('/manager_update_profile/{id}', [ProjectManagerController::class, 'manager_update_profile'])->name('manager_update_profile');
 // create project
 
    
@@ -66,8 +70,11 @@ Route::middleware(['auth'])->group(function () {
     Route::get('delete_pro_project/{id}', [ProjectManagerController::class, 'delete_pro_project']);
     Route::get('/view_project_list', [ProjectManagerController::class, 'view_project_list'])->name('projectmanager.view_project_list');
     Route::get('/view_project_detail/{id}', [ProjectManagerController::class, 'view_project_detail'])->name('projectmanager.view_project_detail');
-
+    Route::get('/view_project_list/{status}', [ProjectManagerController::class, 'viewProjectList'])->name('view_project_list');
+    Route::get('/view_project_list/{completed}', [ProjectManagerController::class, 'viewProjectList'])->name('view_project_list');
+    Route::get('/view_project_list/{in_progress}', [ProjectManagerController::class, 'viewProjectList'])->name('view_project_list');
    
+
 
    // Route::post('store_data', [ProjectController::class, 'store_data']);
    
@@ -227,6 +234,35 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
+    // Developer Routes
+
+Route::middleware(['auth', 'CheckRole:Developer'])->group(function () 
+{
+    Route::get('/developer/dashboard', [DeveloperController::class, 'dashboard'])->name('developer.dashboard');
+
+    Route::get('dev_view_profile', [DeveloperController::class, 'dev_view_profile'])->name('developer.dev_view_profile');
+
+    Route::get('edit_profile', [DeveloperController::class, 'edit_profile'])->name('developer.edit_profile');
+
+    Route::get('view_project_plans', [DeveloperController::class, 'view_project_plans'])->name('developer.view_project_plans');
+
+    Route::get('view_project_detail/{id}', [DeveloperController::class, 'view_project_detail'])->name('developer.view_project_detail');
+    
+    Route::get('view_feedback', [DeveloperController::class, 'view_feedback'])->name('developer.view_feedback');
+
+    Route::get('view_feedback_details/{id}', [DeveloperController::class, 'view_feedback_details'])->name('developer.view_feedback_detail');
+
+    Route::patch('update_profile/{id}', [DeveloperController::class, 'update_profile']);
+
+    Route::get('view_task_list', [DeveloperController::class, 'view_task_list'])->name('developer.view_task_list');
+
+    Route::get('view_task_detail/{id}', [DeveloperController::class, 'view_task_detail'])->name('developer.view_task_detail');
+
+
+
+
+});
+
 // Senior Manager Routes
 Route::middleware(['auth', 'CheckRole:Senior Manager'])->group(function () 
 {
@@ -237,36 +273,28 @@ Route::middleware(['auth', 'CheckRole:Senior Manager'])->group(function ()
     Route::get('mange_view_profile', [SeniorManagerController::class, 'mange_view_profile'])->name('seniorManager.mange_view_profile');
     
     Route::patch('update_profile/{id}', [SeniorManagerController::class, 'update_profile']);
-    
-});
 
-// Developer Routes
-Route::middleware(['auth', 'CheckRole:Developer'])->group(function () {
-    Route::get('/developer/dashboard', [DeveloperController::class, 'dashboard'])->name('developer.dashboard');
-    Route::get('/developer/edit-profile', [DeveloperController::class, 'edit_profile'])->name('developer.edit_profile');
+    Route::get('view_project_list', [SeniorManagerController::class, 'view_project_list'])->name('seniorManager.view_project_list');
 
-});
-// Project Manager Routes
-Route::middleware(['auth', 'CheckRole:Project Manager'])->group(function () {
-    Route::get('/project-manager/dashboard', [ProjectManagerController::class, 'dashboard'])->name('projectManager.dashboard');
-});
+    Route::get('view_project_details/{id}', [SeniorManagerController::class, 'view_project_details'])->name('seniorManager.view_project_details');
 
-        // Developer Routes
+    // ApproveProject and RejectProject
+    Route::get('approve_project/{id}', [SeniorManagerController::class, 'approveProject'])->name('seniorManager.approve_project');
 
-Route::middleware(['auth', 'CheckRole:Developer'])->group(function () 
-{
-    Route::get('/developer/dashboard', [DeveloperController::class, 'dashboard'])->name('developer.dashboard');
+    Route::get('reject_project/{id}', [SeniorManagerController::class, 'rejectProject'])->name('seniorManager.reject_project');
+    // view project manager
 
-    Route::get('dev_view_profile', [DeveloperController::class, 'dev_view_profile'])->name('developer.dev_view_profile');
+    Route::get('view_project_managers', [SeniorManagerController::class, 'view_project_managers'])->name('seniorManager.view_project_managers');
+    // view project manager details 
 
-    Route::get('edit_profile', [DeveloperController::class, 'edit_profile'])->name('developer.edit_profile');
-    
-    Route::get('view_feedback', [DeveloperController::class, 'view_feedback'])->name('developer.view_feedback');
+    Route::get('/view_project_manager_details/{id}', [SeniorManagerController::class, 'viewProjectManagerDetails'])->name('seniorManager.view_project_manager_details');
 
-    Route::get('view_feedback_details/{id}', [DeveloperController::class, 'view_feedback_details'])->name('developer.view_feedback_detail');
+    // the project  manager addresse
+   Route::get('view_project_manager_address/{id}', [SeniorManagerController::class, 'viewProjectManagerAddress'])->name('seniorManager.view_project_manager_address');
+  
+   Route::get('view_list_developere', [SeniorManagerController::class, 'viewListDevelopers'])->name('seniorManager.view_list_developere');
 
-    Route::patch('update_profile/{id}', [DeveloperController::class, 'update_profile']);
-
+   Route::get('/view_projec_developer_details/{id}', [SeniorManagerController::class, 'viewProjectDevelopereDetails'])->name('seniorManager.view_projec_developer_details');
 
 
 
