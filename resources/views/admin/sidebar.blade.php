@@ -69,6 +69,12 @@
         <li class="nav-item">
           <a href="{{url('view_category_list')}}" class="nav-link">View List of Category</a>
         </li>
+        <li class="nav-item">
+          <a href="{{url('assign_category')}}" class="nav-link">Assign Category to Employee</a>
+        </li>
+        <li class="nav-item">
+          <a href="{{url('update_assigned_category')}}" class="nav-link">Update Assigned Category</a>
+        </li>
       </ul>
     </div>
   </li>

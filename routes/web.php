@@ -204,6 +204,20 @@ Route::middleware(['auth', 'CheckRole:Admin'])->group(function ()
     Route::get('view_permission_list', [AdminController::class, 'view_permission_list'])->name('admin.view_permission_list');
     Route::get('view_permitted_user/{id}', [AdminController::class, 'view_permitted_user'])->name('admin.view_permitted_user');
 
+    // Assign Category
+    Route::get('assign_category', [AdminController::class, 'assign_category'])->name('admin.assign_category');
+    Route::get('assign_category_to_selected_user/{id}', [AdminController::class, 'assign_category_to_selected_user'])->name('admin.assign_category_to_selected_user');
+    Route::post('assign_category_post/{id}', [AdminController::class, 'assign_category_post']);
+
+    // View User Under Specific Category
+    Route::get('view_employee_category/{id}', [AdminController::class, 'view_employee_category'])->name('admin.view_employee_category');
+
+    // Update Assigned Employee Category for Developer and Project Manager
+    Route::get('update_assigned_category', [AdminController::class, 'update_assigned_category'])->name('admin.update_assigned_category');
+    Route::get('update_category_assigned/{id}', [AdminController::class, 'update_category_assigned'])->name('admin.update_category_assigned');
+    Route::patch('submit_category_update/{id}', [AdminController::class, 'submit_category_update']);
+
+
 
 });
 

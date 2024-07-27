@@ -28,6 +28,7 @@
                       <th class="pt-0">Created By</th>
                       <th class="pt-0">Updated By</th>
                       <th class="pt-0">View Detail</th>
+                      <th class="pt-0">View Assigned User</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -47,6 +48,9 @@
 
                       <td>
                         <a class="btn btn-secondary" href="{{url('view_category_detail',$datas->id)}}">View</a>
+                      </td>
+                      <td>
+                        <a class="btn btn-primary" href="{{url('view_employee_category',$datas->id)}}">View</a>
                       </td>
 
                     </tr>
