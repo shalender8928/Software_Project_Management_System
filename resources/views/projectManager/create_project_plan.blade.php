@@ -32,24 +32,26 @@
                                 <form class="forms-sample" method="POST" action="{{ route('projectmanager.add_new_project_plan') }}">
     @csrf
     <!-- Project Name -->
+   
     <div class="mb-3">
-        <label class="form-label">Project Name</label>
-        <select class="form-control" id="project_name" name="project_name" required>
-            @foreach($projects as $project)
-                <option value="{{ $project->project_name }}">{{ $project->project_name }}</option>
-            @endforeach
-        </select>
-        @error('project_name')
-            <div class="text-danger">{{ $message }}</div>
-        @enderror
-    </div>
+            <label class="form-label">Project Name</label>
+            <select class="form-control" id="project_id" name="project_id" required>
+                @foreach($projects as $project)
+                    <option value="{{ $project->id }}">{{ $project->project_name }}</option>
+                @endforeach
+            </select>
+            @error('project_id')
+                <div class="text-danger">{{ $message }}</div>
+            @enderror
+        </div>
+
     <!-- Plan Details -->
     <div class="mb-3">
         <label for="plandetails" class="form-label">Plan Details</label>
         <textarea class="form-control" id="plandetails" name="plandetails"></textarea>
         @error('plandetails')
             <div class="text-danger">{{ $message }}</div>
-        @enderror
+        @enderror  2
     </div>
     <button type="submit" class="btn btn-primary me-2">Submit</button>
     <a href="{{ route('projectManager.dashboard') }}" class="btn btn-secondary">Cancel</a>

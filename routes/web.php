@@ -82,7 +82,30 @@ Route::patch('/manager_update_profile/{id}', [ProjectManagerController::class, '
 Route::get('/create_project_plan', [ProjectManagerController::class, 'createProjectPlan'])->name('projectmanager.create_project_plan');
 Route::post('/add_new_project_plan', [ProjectManagerController::class, 'add_new_Project_plan'])->name('projectmanager.add_new_project_plan');
 
-   
+//
+
+Route::get('/create_milestone_project', [ProjectManagerController::class, 'createmilestone'])->name('projectmanager.create_milestone_project');
+Route::post('/add_new_milestone', [ProjectManagerController::class, 'add_new_milestone'])->name('projectmanager.add_new_milestone');
+
+//
+
+Route::get('/create_timelines', [ProjectManagerController::class, 'timelines'])->name('projectmanager.create_timelines');
+Route::post('/add_new_timelines', [ProjectManagerController::class, 'add_new_timelines'])->name('projectmanager.add_new_timelines');
+
+// 
+
+Route::get('/create_resources', [ProjectManagerController::class, 'resources'])->name('projectmanager.create_resources');
+Route::post('/add_new_resources', [ProjectManagerController::class, 'add_new_resources'])->name('projectmanager.add_new_resources');
+//
+Route::get('/create_deliverable', [ProjectManagerController::class, 'derivables'])->name('projectmanager.create_deliverable');
+Route::post('/add_new_deliverable', [ProjectManagerController::class, 'add_new_derivables'])->name('projectmanager.add_new_deliverable');
+
+//
+
+Route::get('/create_dependencies', [ProjectManagerController::class, 'dependencies'])->name('projectmanager.create_dependencies');
+Route::post('/add_new_dependencies', [ProjectManagerController::class, 'add_new_dependencies'])->name('projectmanager.add_new_dependencies');
+
+
 // Task
    
    Route::get('Assigntask', [ProjectManagerController::class, 'Assigntask'])->name('ProjectManager.Assigntask');

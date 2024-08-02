@@ -13,13 +13,14 @@ return new class extends Migration
     {
         Schema::create('project_plans', function (Blueprint $table) {
             $table->id();
-         
-            $table->string('project_name');// Assuming a projects table exists
+            $table->unsignedBigInteger('project_id'); // Foreign key to projects table
             $table->text('plandetails');
             $table->unsignedBigInteger('created_by');
             $table->unsignedBigInteger('updated_by');
             $table->timestamps();
-           
+
+            // Define foreign key relationships
+            $table->foreign('project_id')->references('id')->on('projects')->onDelete('cascade');
             $table->foreign('created_by')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('updated_by')->references('id')->on('users')->onUpdate('cascade');
         });

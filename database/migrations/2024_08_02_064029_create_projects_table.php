@@ -19,14 +19,15 @@ return new class extends Migration
             $table->date('deadline');
             $table->date('start_date');
             $table->date('end_date');
-            $table->string('category_id');
+            $table->unsignedBigInteger('category_id'); // Changed to unsignedBigInteger
             $table->unsignedBigInteger('created_by');
             $table->unsignedBigInteger('updated_by');
             $table->timestamps();
-            
+
+            // Foreign key constraints
+            $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade');
             $table->foreign('created_by')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('updated_by')->references('id')->on('users')->onUpdate('cascade');
-          
         });
     }
 
@@ -38,6 +39,4 @@ return new class extends Migration
         Schema::dropIfExists('projects');
     }
 };
-
-
 

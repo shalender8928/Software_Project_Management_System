@@ -9,6 +9,12 @@ use App\Models\Task;
 use App\Models\Project;
 use App\Models\Category;
 use App\Models\ProjectPlan;
+use App\Models\Milestone;
+use App\Models\Timeline;
+use App\Models\Resource;
+use App\Models\Deliverable;
+use App\Models\Dependency;
+
 use Illuminate\Support\Facades\Log;
 
 
@@ -370,11 +376,6 @@ public function view_project_detail($id){
 
 
 
-
-
-
-
-
   
 public function createProjectPlan()
 {
@@ -384,22 +385,185 @@ public function createProjectPlan()
 
 public function add_new_Project_plan(Request $request)
 {
-    $validated = $request->validate([
-        'project_name' => 'required|string|exists:projects,project_name',  // Validate project name
+    $validatedData = $request->validate([
+        'project_id' => 'required|exists:projects,id',
         'plandetails' => 'required|string',
     ]);
 
+    // Create a new ProjectPlan
     $projectPlan = new ProjectPlan;
-    $projectPlan->project_name = $request->input('project_name');  // Use project_name
-    $projectPlan->plandetails = $request->input('plandetails');
+    $projectPlan->project_id = $validatedData['project_id'];
+    $projectPlan->plandetails = $validatedData['plandetails'];
     $projectPlan->created_by = Auth::id();
     $projectPlan->updated_by = Auth::id();
     $projectPlan->save();
 
-    toastr()->timeOut(1000)->closeButton()->addSuccess('Project plan created successfully.');
+    toastr()->addSuccess('Your Profile has been Successfully Updated');
 
-    return redirect()->route('projectManager.dashboard');
+    return redirect()->route('projectmanager.create_project_plan');
 }
+
+
+// milestone
+
+
+  
+public function createmilestone()
+{
+    $projects = Project::join('project_plans', 'projects.id', '=', 'project_plans.project_id')
+    ->select('projects.id as project_id', 'projects.project_name', 'project_plans.id as project_plan_id')
+    ->get();
+ return view('projectmanager.create_milestone_project', compact('projects'));
+}
+
+public function add_new_milestone(Request $request)
+{
+        $validatedData = $request->validate([
+        'project_plan_id' => 'required|exists:project_plans,id',
+        'milestoneName' => 'required|string',
+        'milestoneDate' => 'required|date',
+    ]);
+
+    $milestone = new Milestone();
+    $milestone->project_plan_id = $validatedData['project_plan_id'];
+    $milestone->milestoneName = $validatedData['milestoneName'];
+    $milestone->milestoneDate = $validatedData['milestoneDate'];
+
+    $milestone->save();
+
+    toastr()->addSuccess('Milestone has been successfully added');
+    return redirect()->route('projectmanager.create_milestone_project');
+}
+
+
+
+//  timelines
+
+
+
+
+public function timelines()
+{
+    $projects = Project::join('project_plans', 'projects.id', '=', 'project_plans.project_id')
+        ->select('projects.id as project_id', 'projects.project_name', 'project_plans.id as project_plan_id')
+        ->get();
+    return view('projectmanager.create_timelines', compact('projects'));
+}
+
+public function add_new_timelines(Request $request)
+{
+    $validatedData = $request->validate([
+        'project_plan_id' => 'required|exists:project_plans,id',
+        'taskName' => 'required|string',
+        'taskDate' => 'required|date',
+    ]);
+
+    $timeline = new Timeline();
+    $timeline->project_plan_id = $validatedData['project_plan_id'];
+    $timeline->taskName = $validatedData['taskName'];
+    $timeline->taskDate = $validatedData['taskDate'];
+
+    $timeline->save();
+
+    toastr()->addSuccess('Timeline has been successfully added');
+    return redirect()->route('projectmanager.create_timelines');
+}
+
+
+
+
+
+public function resources()
+{
+    $projects = Project::join('project_plans', 'projects.id', '=', 'project_plans.project_id')
+        ->select('projects.id as project_id', 'projects.project_name', 'project_plans.id as project_plan_id')
+        ->get();
+    return view('projectmanager.create_resources', compact('projects'));
+}
+
+public function add_new_resources(Request $request)
+{
+    $validatedData = $request->validate([
+        'project_plan_id' => 'required|exists:project_plans,id',
+        'resourcename' => 'required|string',
+        'resourcetype' => 'required|string',
+        'quantity' => 'required|string',
+    ]);
+
+    $resource= new resource();
+    $resource->project_plan_id = $validatedData['project_plan_id'];
+    $resource->resourcename = $validatedData['resourcename'];
+    $resource->resourcetype = $validatedData['resourcetype'];
+    $resource->quantity = $validatedData['quantity'];
+
+    $resource->save();
+
+    toastr()->addSuccess('resources has been successfully added');
+    return redirect()->route('projectmanager.create_resources');
+}
+//  derivable 
+
+
+public function derivables()
+{
+    $projects = Project::join('project_plans', 'projects.id', '=', 'project_plans.project_id')
+        ->select('projects.id as project_id', 'projects.project_name', 'project_plans.id as project_plan_id')
+        ->get();
+    return view('projectmanager.create_deliverable', compact('projects'));
+}
+
+
+public function add_new_derivables(Request $request)
+{
+    $validatedData = $request->validate([
+        'project_plan_id' => 'required|exists:project_plans,id',
+        'deliverableName' => 'required|string',
+        'description' => 'nullable|string',
+        'deadline' => 'required|date',
+    ]);
+
+    $deliverable = new Deliverable();
+    $deliverable->project_plan_id = $validatedData['project_plan_id'];
+    $deliverable->deliverableName = $validatedData['deliverableName'];
+    $deliverable->description = $validatedData['description'];
+    $deliverable->deadline = $validatedData['deadline'];
+
+    $deliverable->save();
+
+    toastr()->addSuccess('Deliverable has been successfully added');
+    return redirect()->route('projectmanager.create_deliverable');
+}
+
+// dependency
+
+
+public function dependencies()
+{
+    $projects = Project::join('project_plans', 'projects.id', '=', 'project_plans.project_id')
+        ->select('projects.id as project_id', 'projects.project_name', 'project_plans.id as project_plan_id')
+        ->get();
+    return view('projectmanager.create_dependencies', compact('projects'));
+}
+
+
+public function add_new_dependencies(Request $request)
+{
+    $validatedData = $request->validate([
+        'project_plan_id' => 'required|exists:project_plans,id',
+        'dependent_task' => 'required|integer',
+        'preceding_task' => 'required|integer',
+    ]);
+
+    $dependency = new Dependency();
+    $dependency->project_plan_id = $validatedData['project_plan_id'];
+    $dependency->dependent_task = $validatedData['dependent_task'];
+    $dependency->preceding_task = $validatedData['preceding_task'];
+    $dependency->save();
+
+    toastr()->addSuccess('Dependency has been successfully added');
+    return redirect()->route('projectmanager.create_dependencies');
+}
+
 
 }
 

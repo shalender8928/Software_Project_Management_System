@@ -9,7 +9,7 @@ class ProjectPlan extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['project_name', 'plandetails', 'created_by', 'updated_by'];
+    protected $fillable = ['project_id', 'plandetails', 'created_by', 'updated_by'];
 
     public function creator()
     {
@@ -19,5 +19,9 @@ class ProjectPlan extends Model
     public function updater()
     {
         return $this->belongsTo(User::class, 'updated_by');
+    }
+    public function project()
+    {
+        return $this->belongsTo(Project::class);
     }
 }

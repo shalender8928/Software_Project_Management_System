@@ -15,7 +15,7 @@ class CreateTasksTable extends Migration
     {
         Schema::create('tasks', function (Blueprint $table) {
             $table->id();
-            $table->string('project_name'); // Add this line if it's missing
+            $table->unsignedBigInteger('project_name'); // Add this line if it's missing
             $table->text('task_description');
             $table->integer('priority');
             $table->string('assign_to');
@@ -23,6 +23,7 @@ class CreateTasksTable extends Migration
             $table->date('start_date');
             $table->date('end_date');
             $table->timestamps();
+            $table->foreign('project_name')->references('id')->on('projects')->onDelete('cascade');
         });
     }
 
@@ -36,3 +37,4 @@ class CreateTasksTable extends Migration
         Schema::dropIfExists('tasks');
     }
 }
+
