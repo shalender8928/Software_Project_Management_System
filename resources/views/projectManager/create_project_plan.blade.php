@@ -51,7 +51,7 @@
         <textarea class="form-control" id="plandetails" name="plandetails"></textarea>
         @error('plandetails')
             <div class="text-danger">{{ $message }}</div>
-        @enderror  2
+        @enderror  
     </div>
     <button type="submit" class="btn btn-primary me-2">Submit</button>
     <a href="{{ route('projectManager.dashboard') }}" class="btn btn-secondary">Cancel</a>

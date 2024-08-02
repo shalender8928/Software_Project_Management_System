@@ -82,6 +82,10 @@ Route::patch('/manager_update_profile/{id}', [ProjectManagerController::class, '
 Route::get('/create_project_plan', [ProjectManagerController::class, 'createProjectPlan'])->name('projectmanager.create_project_plan');
 Route::post('/add_new_project_plan', [ProjectManagerController::class, 'add_new_Project_plan'])->name('projectmanager.add_new_project_plan');
 
+Route::get('/update_projectplan', [ProjectManagerController::class, 'update_ProjectPlan'])->name('projectmanager.update_ProjectPlan');
+Route::patch('/update_projectplan/{id}', [ProjectManagerController::class, 'update_pro_projectplan'])->name('projectmanager.update_pro_projectplan');
+
+
 //
 
 Route::get('/create_milestone_project', [ProjectManagerController::class, 'createmilestone'])->name('projectmanager.create_milestone_project');

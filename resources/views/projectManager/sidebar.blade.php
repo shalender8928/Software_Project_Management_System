@@ -57,20 +57,16 @@
           <i class="link-arrow" data-feather="chevron-down"></i>
         </a>
         <div class="collapse" id="project-plan">
-          <ul class="nav sub-menu">
-            <li class="nav-item">
-              <a href="{{ route('projectmanager.create_project_plan') }}" class="nav-link">Create Project Plan</a>
-            </li>
-            <li class="nav-item">
-              <a href="ProjectManager.edit_project_plan" class="nav-link">Edit Project Plan</a>
-            </li>
-            <li class="nav-item">
-              <a href="projectmanager.delete_project_plan" class="nav-link">Delete Project Plan</a>
-            </li>
-            <li class="nav-item">
-              <a href="view_project_plan_list" class="nav-link">View Project Plan List</a>
-            </li>
-          </ul>
+        <ul class="nav sub-menu">
+    <li class="nav-item">
+        <a href="{{ route('projectmanager.create_project_plan') }}" class="nav-link">Create Project Plan</a>
+    </li>
+  
+    <li class="nav-item">
+        <a href="{{ route('projectmanager.update_ProjectPlan') }}" class="nav-link">Update Plan</a>
+    </li>
+
+</ul>
         </div>
       </li>
 

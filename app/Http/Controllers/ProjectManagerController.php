@@ -372,15 +372,17 @@ public function view_project_detail($id){
 
 
 
-// 
+//  craete project plan 
+
 
 
 
   
 public function createProjectPlan()
 {
-    $projects = Project::orderBy('project_name', 'asc')->get();  // Fetching projects
-    return view('projectManager.create_Project_plan', compact('projects'));
+    $projects = Project::orderBy('project_name', 'asc')->get();
+    $projectplan = ProjectPlan::all(); // Example of fetching all project plans  // Fetching projects
+    return view('projectManager.create_Project_plan', compact('projects','projectplan'));
 }
 
 public function add_new_Project_plan(Request $request)
@@ -398,14 +400,43 @@ public function add_new_Project_plan(Request $request)
     $projectPlan->updated_by = Auth::id();
     $projectPlan->save();
 
-    toastr()->addSuccess('Your Profile has been Successfully Updated');
+    toastr()->addSuccess('project plan has been Successfully Updated');
 
     return redirect()->route('projectmanager.create_project_plan');
 }
 
+// Method to display the project update form
+public function update_ProjectPlan($id)
+{
+    $projectPlans = ProjectPlan::all(); 
+    return view('projectManager.update_projectplan', compact('projectPlans'));
+}
+
+
+public function update_pro_projectplan(Request $request, $id)
+{
+    $request->validate([
+        'project_id' => 'required|exists:projects,id',
+        'plandetails' => 'required|string|max:5000',
+    ]);
+
+    $projectPlan = ProjectPlan::findOrFail($id);
+
+    $projectPlan->project_id = $request->input('project_id');
+    $projectPlan->plandetails = $request->input('plandetails');
+    $projectPlan->save();
+
+    return redirect()->route('projectmanager.update_projectplan', ['id' => $projectPlan->id])
+     ->with('success', 'Project plan updated successfully!');
+}
+
+
+
+
+
+
 
 // milestone
-
 
   
 public function createmilestone()
