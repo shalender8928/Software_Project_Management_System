@@ -21,5 +21,10 @@ class Category extends Model
     public function updater(){
         return $this->hasOne('App\Models\User', 'id', 'updated_by');
     }
+
+    public function users(): BelongsToMany
+    {
+        return $this->belongsToMany(User::class, 'user_categories');
+    }
 }
 

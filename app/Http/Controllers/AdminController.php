@@ -8,6 +8,7 @@ use App\Models\User;
 use App\Models\Address;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
+use App\Models\user_category;
 
 use App\Models\Category;
 
@@ -711,7 +712,99 @@ public function update_role_db(Request $request, $id){
         // Return the view with the users and permission
         return view('admin.view_permitted_user', compact('permission', 'users'));
     }
-    
 
+        public function assign_category()
+        {
+            $roles = ['Developer', 'Project Manager'];
+
+            // Get users with specified roles who don't have any categories
+            $users = User::whereHas('roles', function ($query) use ($roles) {
+                $query->whereIn('name', $roles);
+            })->doesntHave('categories')->get();
+
+            return view('admin.assign_category', compact('users'));
+        }
+
+        public function assign_category_to_selected_user($id){
+            $user = User::findOrFail($id);
+            $category = Category::orderBy('cat_name' , 'asc')->get();
+            return view('admin.assign_category_to_selected_user', compact('user', 'category'));
+        }
+
+        public function assign_category_post(Request $request, $id)
+        {
+            $user = User::find($id);
+            $category_id = $request->category;
+        
+            // Assign the new category
+            $user->categories()->attach($category_id);
+        
+            toastr()->success('Category assigned successfully.');
+            return redirect()->route('admin.assign_category');
+        }
+        
+
+        public function view_employee_category($id)
+        {
+            // Find the category by ID
+            $category = Category::find($id);
+        
+            // Define the roles you want to filter by
+            $roles = ['Developer', 'Project Manager'];
+        
+            // Get users with specified roles who are assigned to the selected category
+            $users = User::whereHas('roles', function ($query) use ($roles) {
+                $query->whereIn('name', $roles);
+            })->whereHas('categories', function ($query) use ($id) {
+                $query->where('category_id', $id);
+            })->get();
+
+            if ($users->isEmpty()) {
+                toastr()->timeOut(10000)->closeButton()->warning('There is no Assigned Employee Under this Category Yet.');
+                return redirect()->back();
+            }
+            
+
+                return view('admin.view_employee_category', compact('users', 'category'));
+
+        
+        }
+
+        public function update_assigned_category()
+        {
+            $roles = ['Developer', 'Project Manager'];
+        
+            // Get users with specified roles and their single category
+            $users = User::whereHas('roles', function ($query) use ($roles) {
+                $query->whereIn('name', $roles);
+            })->whereHas('categories')->with('categories')->get();
+        
+            return view('admin.update_assigned_category', compact('users'));
+        }
+
+        public function update_category_assigned($id){
+            $user = User:: find($id);
+            $categories = Category::orderBy('cat_name' , 'asc')->get();
+            return view('admin.update_category_assigned' , compact('user' , 'categories'));
+        }
+        
+        public function submit_category_update(Request $request, $id)
+        {
+            $user = User::find($id);
+            $category_id = $request->category;
+
+            // Assuming you have a UserCategory model to manage the pivot table
+            // First, remove the current category if exists
+            $user->categories()->detach();
+
+            // Then, assign the new category
+            $user->categories()->attach($category_id);
+
+            toastr()->success('Category Updated successfully.');
+            return redirect()->route('admin.update_assigned_category');
+        }
+
+        
+        
 
 }
