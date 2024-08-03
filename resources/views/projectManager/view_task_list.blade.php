@@ -1,64 +1,66 @@
 <!DOCTYPE html>
 <html lang="en">
-  
-@include('projectManager.css')
-     
+  @include('projectManager.css')
+
 <body>
 <div class="main-wrapper">
 
-    <!-- partial:partials/_sidebar.html -->
-    @include('projectManager.sidebar')
-    <!-- partial -->
+  <!-- partial:partials/_sidebar.html -->
+  @include('projectManager.sidebar')
 
-    <div class="page-wrapper">
-        <!-- partial:partials/_navbar.html -->
-        @include('projectManager.header')
-        <div class="page-content" style="margin-left:100px">
-            <div class="table-responsive">
-                <table class="table table-hover mb-0">
-                <thead>
-                    <tr>
-                    <th>#</th>
-                        <th>Project Name</th>
-                        <th>Description</th>
-                        <th>Priority</th>
-                        <th>Assign To</th>
-                        <th>Deadline</th>
-                        <th>Start Date</th>
-                        <th>End Date</th>
-                        <th>Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-    @php
-        $count = 0; // Initialize the $count variable
-    @endphp
-    @foreach($tasks as $task)
-        @php
-            $count++;
-        @endphp
-        <tr>
-            <td>{{ $count }}</td>
-            <td>{{ $task->project_name }}</td>
-            <td>{{ $task->task_description }}</td>
-            <td>{{ $task->priority }}</td>
-            <td>{{ $task->assign_to }}</td>
-            <td>{{ $task->deadline }}</td>
-            <td>{{ $task->start_date }}</td>
-            <td>{{ $task->end_date }}</td>
-            <td>
-            <a class="btn btn-success" href="{{ url('view_task_detail', ['id' => $task->id]) }}">View</a>
+  <!-- partial -->
 
-            </td>
-        </tr>
-    @endforeach
-</tbody>
-            </table>
-            </div>
-        </div>
-        @include('projectManager.footer')
-        <!-- partial -->
+  <div class="page-wrapper">
+    <!-- partial:partials/_navbar.html -->
+    @include('projectManager.header')  
+
+    <div class="page-content"  style="margin-left:100px">
+      <div class="table-responsive">
+        <table class="table table-hover mb-0">
+          <thead>
+            <tr>
+              <th class="pt-0">S. NO</th>
+              <th class="pt-0">Task Name</th>
+              <th class="pt-0">Project</th>
+              <th class="pt-0">Description</th>
+              <th class="pt-0">Start Date</th>
+              <th class="pt-0">Deadline</th>
+              <th class="pt-0">Status</th>
+              <th class="pt-0">Progress</th>
+              <th class="pt-0">View Detail</th>
+            </tr>
+          </thead>
+          <tbody>
+            @php
+            $count = 0;
+            @endphp
+            @foreach($tasks as $task)
+            @php
+                $count++;
+            @endphp
+            <tr>
+              <td>{{$count}}</td>
+              <td>{!! Str::limit($task->name, 20) !!}</td>
+              <td>{!! $task->project ? Str::limit($task->project->name, 15) : 'N/A' !!}</td>
+              <td>{!! Str::limit($task->description, 20) !!}</td>
+              <td>{{$task->start_date}}</td>
+              <td>{{$task->deadline}}</td>
+              <td>{{$task->status}}</td>
+              <td>{{$task->completion}}%</td>
+              <td>
+                <a class="btn btn-success" href="{{url('view_task_detail',$task->id)}}">View</a>
+              </td>
+            </tr>
+            @endforeach
+          </tbody>
+        </table>
+      </div>
     </div>
+
+    <!-- partial:partials/_footer.html -->
+    @include('projectManager.footer')  
+    <!-- partial -->
+  </div>
 </div>
 
 <!-- core:js -->

@@ -11,16 +11,16 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('project_plans', function (Blueprint $table) {
+        Schema::create('qualifications', function (Blueprint $table) {
             $table->id();
-            $table->text('planDetails');
-            $table->string('project_name');
+            $table->string('name');
             $table->unsignedBigInteger('created_by');
             $table->unsignedBigInteger('updated_by');
-
+            $table->timestamps();
+        
+            // Adding foreign key constraints
             $table->foreign('created_by')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('updated_by')->references('id')->on('users')->onUpdate('cascade');
-            $table->timestamps();
         });
     }
 
@@ -29,6 +29,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('project_plans');
+        Schema::dropIfExists('qualifications');
     }
 };

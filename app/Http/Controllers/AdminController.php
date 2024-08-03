@@ -9,6 +9,10 @@ use App\Models\Address;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
 use App\Models\user_category;
+use App\Models\Qualification;
+use App\Models\user_has_qualification;
+
+
 
 use App\Models\Category;
 
@@ -804,7 +808,146 @@ public function update_role_db(Request $request, $id){
             return redirect()->route('admin.update_assigned_category');
         }
 
+
+        public function add_new_qualification(){
+            return view('admin.add_new_qualification');
+        }
+
+        public function create_qualification(Request $request){
+
+            $request->validate([
+                'qualification' => 'required|string|max:255',
+            ]);
+    
+            $logged_user = Auth::user();
+            $logged_id  = $logged_user->id;
+    
+            $there = $request->qualification;
+            $count = Qualification::where('name',$there)->count();
+    
+            if($count>0){
+                toastr()->timeOut(10000)->closeButton()->warning('This Qualification Already Exists.');
+                return redirect()->back();
+            }
+    
+            else{
+            $user =  new Qualification;
+            $user->name = $request->qualification;
+            $user->created_by = $logged_id;
+            $user->updated_by = $logged_id;
+    
+            $user->save();
+            toastr()->timeOut(10000)->closeButton()->addSuccess('New Qualification Added Successfully.');
+            return redirect()->back();
+            }
+        }
+
+        public function edit_qualification(){
+            $qualification = Qualification::orderBy('name' , 'asc')->get();
+            return view('admin.edit_qualification' , compact('qualification'));
+        }
+
+        public function update_qualifications($id){
+            $qualification = Qualification:: find($id);
+            return view('admin.update_qualifications' , compact('qualification'));
+        }
+
+        public function update_qualification_db(Request $request , $id){
+            $qualification = Qualification::find($id);
+            $count = Qualification::where('name' , $request->qualification)->count();
+
+            if($count>0){
+            toastr()->timeOut(10000)->closeButton()->warning('This Qualification has already exist');
+            return redirect()->back();
+
+        }
+
+        else{
+             $qualification->name = $request->qualification;
+             $qualification->save();
+            toastr()->timeOut(10000)->closeButton()->addSuccess('Qualification Updated Successfully');
+
+        return redirect()->route('admin.edit_qualification');
+        }   
+        }
+
+        public function delete_qualification(){
+            $qualification = Qualification:: orderBy('name' , 'asc')->get();
+            return view('admin.delete_qualification' , compact('qualification'));
+        }
+
+        public function delete_qualifications_added($id){
+            $qualification = Qualification:: find($id);
+            $qualification->delete();
+            toastr()->timeOut(10000)->closeButton()->addSuccess('Qualification Deleted Successfully');
+
+            return redirect()->back();
+        }
+
+        public function view_qualification_list(){
+            $qualification = Qualification:: orderBy('name' , 'asc')->get();
+            return view('admin.view_qualification_list' , compact('qualification'));
+        }
+
+
+        public function assign_qualification(){
+            $roles = ['Developer', 'Project Manager'];
+
+            // Get users with specified roles who don't have any categories
+            $role = Role::whereIn('name', ['Project Manager', 'Developer'])->get();
+
+            return view('admin.assign_qualification', compact('role'));
+        }
+
+        public function view_user_of_such_role_qualification($id){
+            $role = Role::find($id);
+
+        if (!$role) {
+            Toastr::timeOut(10000)->closeButton()->error('Role does not exist.');
+            return redirect()->back();
+        }
+
+        // Assuming 'roles' is the relationship name in the User model
+        $employees = User::whereHas('roles', function ($query) use ($role) {
+            $query->where('name', $role->name);
+        })->get();
+
+              return view('admin.view_user_of_such_role_qualification' , compact('employees', 'role'));
+        }
+
+        public function assign_qualifiaction_for_selected_user($id){
+            $qualification = Qualification::orderBy('name', 'asc')->get();
+            $user = User::find($id);
+            $userQualification = $user->qualifications->pluck('id')->toArray(); // Get IDs of assigned permissions
+            
+            return view('admin.assign_qualifiaction_for_selected_user', compact('qualification', 'user', 'userQualification'));
+        }
         
+        public function update_qualification_for_selected_user(Request $request , $id){
+            $user = User::find($id);
+            $user->qualifications()->sync($request->qualification); // Sync the selected qualifications
+            toastr()->timeOut(10000)->closeButton()->addSuccess('Qualification Assigned Successfully.');
+            return redirect()->back();
+        }
+
+        public function view_qualified_user($id){
+            // Find the permission by its ID
+            $qualification = Qualification::find($id);
+        
+            // Check if the permission exists
+            if (!$qualification) {
+                toastr()->timeOut()->closeButton()->error('Qualification not found.');
+                return redirect()->back();
+            }
+        
+            // Get users who have the specified permission
+            $users = User::whereHas('qualifications', function ($query) use ($id) {
+                $query->where('qualifications.id', $id); // Specify the table for the id column
+            })->get();
+        
+            // Return the view with the users and permission
+            return view('admin.view_qualified_user', compact('qualification', 'users'));
+        }
         
 
 }

@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
-  
+<head>
 @include('projectManager.css')
-     
+</head>
 <body>
 <div class="main-wrapper">
 
@@ -28,6 +28,7 @@
 
 	<!-- core:js -->
 	@include('projectManager.js')
+
 </body>
 </html>    
 

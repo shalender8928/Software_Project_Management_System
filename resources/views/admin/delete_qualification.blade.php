@@ -23,7 +23,7 @@
                     <thead>
                       <tr>
                         <th class="pt-0">S.NO</th>
-                        <th class="pt-0">Permission Name</th>
+                        <th class="pt-0">Qualification Name</th>
                         <th class="pt-0">Delete</th>
                       </tr>
                     </thead>
@@ -31,15 +31,15 @@
                         @php
                         $count = 0;
                         @endphp
-                        @foreach($permission as $datas)
+                        @foreach($qualification as $qualifications)
                         @php
                             $count++;
                         @endphp
                         <tr>
                             <td>{{ $count }}</td>
-                            <td>{{ $datas->name }}</td>
+                            <td>{{ $qualifications->name }}</td>
                             <td>
-                                <a class="btn btn-danger" onclick="confirmation(event)" href="{{ url('delete_permission_added', $datas->id) }}">Delete</a>
+                                <a class="btn btn-danger" onclick="confirmation(event)" href="{{ url('delete_qualifications_added', $qualifications->id) }}">Delete</a>
                             </td>
   
                       </tr>
@@ -64,7 +64,7 @@
 			console.log(urlToRedirect);
 		
 			swal({
-				title: "Are you sure you want to delete this Permission ?",
+				title: "Are you sure you want to delete this Qualification ?",
 				text: "This action will be permanent.",
 				icon: "error",
 				buttons: true,

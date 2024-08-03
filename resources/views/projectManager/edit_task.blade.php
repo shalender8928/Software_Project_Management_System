@@ -27,7 +27,7 @@
               <th class="pt-0">Deadline</th>
               <th class="pt-0">Status</th>
               <th class="pt-0">Progress</th>
-              <th class="pt-0">Delete</th>
+              <th class="pt-0">Edit</th>
             </tr>
           </thead>
           <tbody>
@@ -48,7 +48,7 @@
               <td>{{$task->status}}</td>
               <td>{{$task->completion}}%</td>
               <td>
-                <a class="btn btn-danger" onclick="confirmation(event)" href="{{url('delete_task_post',$task->id)}}">Delete</a>
+                <a class="btn btn-success" href="{{url('update_task',$task->id)}}">Edit</a>
               </td>
             </tr>
             @endforeach
@@ -65,27 +65,6 @@
 
 <!-- core:js -->
 @include('projectManager.js')
-
-<script>
-    function confirmation(ev) {
-        ev.preventDefault();
-        var urlToRedirect = ev.currentTarget.getAttribute('href');
-        console.log(urlToRedirect);
-    
-        swal({
-            title: "Are you sure you want to delete this Project ?",
-            text: "This action will be permanent.",
-            icon: "error",
-            buttons: true,
-            dangerMode: true,
-        })
-        .then((willDelete) => {
-            if (willDelete) {
-                window.location.href = urlToRedirect;
-            }
-        });
-    }
-    </script>
 
 </body>
 </html>

@@ -136,5 +136,34 @@
     </div>
   </li>
 
+  <li class="nav-item">
+    <a class="nav-link" data-bs-toggle="collapse" href="#emails" role="button" aria-expanded="false" aria-controls="emails">
+      <i class="link-icon" data-feather="user-check"></i>
+      <span class="link-title">Qualifications</span>
+      <i class="link-arrow" data-feather="chevron-down"></i>
+    </a>
+    <div class="collapse" id="emails">
+      <ul class="nav sub-menu">
+        <li class="nav-item">
+          <a href="{{url('add_new_qualification')}}" class="nav-link">Add New Qualification</a>
+        </li>
+        <li class="nav-item">
+          <a href="{{url('edit_qualification')}}" class="nav-link">Edit Qualification</a>
+        </li>
+        <li class="nav-item">
+          <a href="{{url('delete_qualification')}}" class="nav-link">Delete Qualification</a>
+        </li>
+        <li class="nav-item">
+          <a href="{{url('view_qualification_list')}}" class="nav-link">View List of Qualification</a>
+        </li>
+        <li class="nav-item">
+          <a href="{{url('assign_qualification')}}" class="nav-link">Assign Qualification</a>
+        </li>
+
+        
+      </ul>
+    </div>
+  </li>
+
 </div>
 </nav>
