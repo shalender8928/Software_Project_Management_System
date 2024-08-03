@@ -33,72 +33,6 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/projectManager/dashboard', [projectManagerController::class, 'dashboard'])
         ->name('/projectManager/dashboard')
         ->middleware('CheckRole:projectManager');
-<<<<<<< HEAD
-     
-=======
-        // Project Manager Routes
-
-    Route::middleware(['auth', 'CheckRole:Project Manager'])->group(function () 
-    {
-        
-
-
-     Route::get('/projectManager/dashboard', [ProjectManagerController::class, 'dashboard'])->name('projectManager.dashboard');
-
-     // Route to view profile
-Route::get('/manager_view_profile', [ProjectManagerController::class, 'manager_view_profile'])->name('manager_view_profile');
-
-// Route to edit profile
-Route::get('/manager_edit_profile', [ProjectManagerController::class, 'manager_edit_profile'])->name('manager_edit_profile');
-
-// Route to update profile
-Route::patch('/manager_update_profile/{id}', [ProjectManagerController::class, 'manager_update_profile'])->name('manager_update_profile');
-// create project
-
-   
-
-// edit project
-     // routes/web.php
-   // routes/web.php
-
-// Route for listing projects
-
-// Route for editing a project by ID
-    
-// project plan 
-
-
-//
-
-Route::get('/create_milestone_project', [ProjectManagerController::class, 'createmilestone'])->name('projectmanager.create_milestone_project');
-Route::post('/add_new_milestone', [ProjectManagerController::class, 'add_new_milestone'])->name('projectmanager.add_new_milestone');
-
-//
-
-Route::get('/create_timelines', [ProjectManagerController::class, 'timelines'])->name('projectmanager.create_timelines');
-Route::post('/add_new_timelines', [ProjectManagerController::class, 'add_new_timelines'])->name('projectmanager.add_new_timelines');
-
-// 
-
-Route::get('/create_resources', [ProjectManagerController::class, 'resources'])->name('projectmanager.create_resources');
-Route::post('/add_new_resources', [ProjectManagerController::class, 'add_new_resources'])->name('projectmanager.add_new_resources');
-//
-Route::get('/create_deliverable', [ProjectManagerController::class, 'derivables'])->name('projectmanager.create_deliverable');
-Route::post('/add_new_deliverable', [ProjectManagerController::class, 'add_new_derivables'])->name('projectmanager.add_new_deliverable');
-
-//
-
-Route::get('/create_dependencies', [ProjectManagerController::class, 'dependencies'])->name('projectmanager.create_dependencies');
-Route::post('/add_new_dependencies', [ProjectManagerController::class, 'add_new_dependencies'])->name('projectmanager.add_new_dependencies');
-
-
-// Task
-   
-
-
-    });
-        
->>>>>>> 206e5991b5dc43eef9ca94c85505ca864c46b609
 
     Route::get('/developer/dashboard', [DeveloperController::class, 'dashboard'])
         ->name('developer.dashboard')
@@ -113,12 +47,6 @@ Route::post('/add_new_dependencies', [ProjectManagerController::class, 'add_new_
 Route::get('/', function () {
     return view('welcome');
 });
-
-// Route::middleware(['auth', 'verified'])->group(function () {
-//     Route::get('/dashboard', function () {
-//         return view('dashboard');
-//     })->name('dashboard');
-// });
 
 Route::middleware(['auth', 'CheckRole:Admin'])->group(function () 
 {
@@ -396,37 +324,6 @@ Route::middleware(['auth', 'CheckRole:Customer'])->group(function () {
    Route::get('assign_task', [ProjectManagerController::class, 'assign_task'])->name('projectManager.assign_task');
    
    
-   // Route::get('edit_project', [ProjectManagerController::class, 'edit_project'])->name('projectmanager.edit_project');
-   // Route::get('update_project/{id}', [ProjectManagerController::class, 'update_project'])->name('projectmanager.update_project');
-   // Route::patch('update_pro_project/{id}', [ProjectManagerController::class, 'update_pro_project'])->name('projectmanager.update_pro_project');
-   // Route::get('delete_project', [ProjectManagerController::class, 'delete_project'])->name('projectmanager.delete_project');
-   // Route::get('delete_pro_project/{id}', [ProjectManagerController::class, 'delete_pro_project']);
-   // Route::get('/view_project_list', [ProjectManagerController::class, 'view_project_list'])->name('projectmanager.view_project_list');
-   // Route::get('/view_project_detail/{id}', [ProjectManagerController::class, 'view_project_detail'])->name('projectmanager.view_project_detail');
-   // Route::get('/view_project_list/{status}', [ProjectManagerController::class, 'viewProjectList'])->name('view_project_list');
-   // Route::get('/view_project_list/{completed}', [ProjectManagerController::class, 'viewProjectList'])->name('view_project_list');
-   // Route::get('/view_project_list/{in_progress}', [ProjectManagerController::class, 'viewProjectList'])->name('view_project_list');
-  
-
-
-  // Route::post('store_data', [ProjectController::class, 'store_data']);
-  
-//    Route::get('Assigntask', [ProjectManagerController::class, 'Assigntask'])->name('ProjectManager.Assigntask');
-//    Route::post('Assigntask', [ProjectManagerController::class, 'storeTask'])->name('ProjectManager.storeTask');
-//    Route::get('Edit_Assigntask', [ProjectManagerController::class, 'Edit_Assigntask'])->name('ProjectManager.Edit_Assigntask');
-//    Route::get('update_assigntask/{id}', [ProjectManagerController::class, 'update_assigntask'])->name('ProjectManager.update_assigntask');
-//    Route::patch('update_pro_assigntask/{id}', [ProjectManagerController::class, 'update_pro_assigntask'])->name('ProjectManager.update_pro_assigntask');
- 
-//    Route::get('delete_task', [ProjectManagerController::class, 'delete_task'])->name('projectmanager.delete_task');
-//    Route::get('delete_pro_assigntask/{id}', [ProjectManagerController::class, ' delete_pro_assigntask']);
-
-//    Route::get('/view_task_list', [ProjectManagerController::class, 'view_task_list'])->name('projectmanager.view_task_list');
-//    Route::get('/view_task_detail/{id}', [ProjectManagerController::class, 'view_task_detail'])->name('projectmanager.view_task_detail');
-
-
-
-
-
    });
        
 
