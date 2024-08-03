@@ -33,7 +33,72 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/projectManager/dashboard', [projectManagerController::class, 'dashboard'])
         ->name('/projectManager/dashboard')
         ->middleware('CheckRole:projectManager');
+<<<<<<< HEAD
      
+=======
+        // Project Manager Routes
+
+    Route::middleware(['auth', 'CheckRole:Project Manager'])->group(function () 
+    {
+        
+
+
+     Route::get('/projectManager/dashboard', [ProjectManagerController::class, 'dashboard'])->name('projectManager.dashboard');
+
+     // Route to view profile
+Route::get('/manager_view_profile', [ProjectManagerController::class, 'manager_view_profile'])->name('manager_view_profile');
+
+// Route to edit profile
+Route::get('/manager_edit_profile', [ProjectManagerController::class, 'manager_edit_profile'])->name('manager_edit_profile');
+
+// Route to update profile
+Route::patch('/manager_update_profile/{id}', [ProjectManagerController::class, 'manager_update_profile'])->name('manager_update_profile');
+// create project
+
+   
+
+// edit project
+     // routes/web.php
+   // routes/web.php
+
+// Route for listing projects
+
+// Route for editing a project by ID
+    
+// project plan 
+
+
+//
+
+Route::get('/create_milestone_project', [ProjectManagerController::class, 'createmilestone'])->name('projectmanager.create_milestone_project');
+Route::post('/add_new_milestone', [ProjectManagerController::class, 'add_new_milestone'])->name('projectmanager.add_new_milestone');
+
+//
+
+Route::get('/create_timelines', [ProjectManagerController::class, 'timelines'])->name('projectmanager.create_timelines');
+Route::post('/add_new_timelines', [ProjectManagerController::class, 'add_new_timelines'])->name('projectmanager.add_new_timelines');
+
+// 
+
+Route::get('/create_resources', [ProjectManagerController::class, 'resources'])->name('projectmanager.create_resources');
+Route::post('/add_new_resources', [ProjectManagerController::class, 'add_new_resources'])->name('projectmanager.add_new_resources');
+//
+Route::get('/create_deliverable', [ProjectManagerController::class, 'derivables'])->name('projectmanager.create_deliverable');
+Route::post('/add_new_deliverable', [ProjectManagerController::class, 'add_new_derivables'])->name('projectmanager.add_new_deliverable');
+
+//
+
+Route::get('/create_dependencies', [ProjectManagerController::class, 'dependencies'])->name('projectmanager.create_dependencies');
+Route::post('/add_new_dependencies', [ProjectManagerController::class, 'add_new_dependencies'])->name('projectmanager.add_new_dependencies');
+
+
+// Task
+   
+
+
+    });
+        
+>>>>>>> 206e5991b5dc43eef9ca94c85505ca864c46b609
 
     Route::get('/developer/dashboard', [DeveloperController::class, 'dashboard'])
         ->name('developer.dashboard')
