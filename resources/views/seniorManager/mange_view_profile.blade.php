@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+  
 	@include('seniorManager.css')
 
 <body>
@@ -32,7 +33,9 @@
                        <div class="card-body">
                         <div class="d-flex flex-column align-items-center border-bottom px-5 py-3">
                             <div class="mb-2">
-                                <img class="wd-250 ht-250 rounded-circle" src="{{ asset('images/' . Auth::user()->image) }}" alt="">
+                            <a href="{{ url('image_edit') }}">
+                          <img id="profile-image" class="wd-250 ht-250 rounded-circle" src="{{ asset('images/' . Auth::user()->image) }}" alt="">
+                           </a>
                             </div>
                             <div class="text-center">
                                 <p class="tx-16 fw-bolder">{{(Auth::user() -> firstname)}}</p>

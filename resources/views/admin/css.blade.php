@@ -6,7 +6,7 @@
         <meta name="author" content="NobleUI">
         <meta name="keywords" content="nobleui, bootstrap, bootstrap 5, bootstrap5, admin, dashboard, template, responsive, css, sass, html, theme, front-end, ui kit, web">
     
-        <title>SPMS</title>
+        <title>Software Project Managementing System</title>
     
       <!-- Fonts -->
       
@@ -32,7 +32,7 @@
         <link rel="stylesheet" href="{{asset('/assets/css/demo2/style.css')}}">
       <!-- End layout styles -->
     
-      <link rel="shortcut icon" href="{{asset('./assets/images/favicon.png.')}}" />
+      <link rel="shortcut icon" href="{{asset('./assets/images/Hawii1.jpg')}}" />
 
       
     </head>

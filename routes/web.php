@@ -51,7 +51,10 @@ Route::get('/', function () {
 Route::middleware(['auth', 'CheckRole:Admin'])->group(function () 
 {
     Route::get('/admin/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
-    Route::get('edit_profile', [AdminController::class, 'edit_profile'])->name('admin.edit_profile');
+     // Define route for editing profile image
+    Route::get('admin_image_edit', [AdminController::class, 'admin_image_edit'])->name('admin.admin_image_edit');
+    Route::patch('update_admin_profile_image/{id}', [AdminController::class, 'update_admin_profile_image']);
+    Route::get('admin_edit_profile', [AdminController::class, 'admin_edit_profile'])->name('admin.admin_edit_profile');
     Route::get('add_employee', [AdminController::class, 'add_employee'])->name('admin.add_employee');
     Route::get('edit', [AdminController::class, 'edit'])->name('admin.edit');
     Route::get('delete', [AdminController::class, 'delete'])->name('admin.delete');
@@ -81,7 +84,8 @@ Route::middleware(['auth', 'CheckRole:Admin'])->group(function ()
     Route::get('delete_pro_category/{id}', [AdminController::class, 'delete_pro_category']);
 
 
-    Route::patch('update_profile/{id}', [AdminController::class, 'update']);
+    Route::patch('admin_update_profile/{id}', [AdminController::class, 'admin_update_profile']);
+
     Route::patch('update_employee_profile/{id}', [AdminController::class, 'update_employee_profile']);
     Route::patch('update_pro_category/{id}', [AdminController::class, 'update_pro_category']);
 
@@ -192,19 +196,23 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-    // Developer Routes
+    // Developer Routes Start ❤🧡💛💚
 
 Route::middleware(['auth', 'CheckRole:Developer'])->group(function () 
 {
     Route::get('/developer/dashboard', [DeveloperController::class, 'dashboard'])->name('developer.dashboard');
 
     Route::get('dev_view_profile', [DeveloperController::class, 'dev_view_profile'])->name('developer.dev_view_profile');
+       // Define route for editing profile image
+    Route::get('developer_image_edit', [DeveloperController::class, 'developer_image_edit'])->name('developer.developer_image_edit');
 
-    Route::get('edit_profile', [DeveloperController::class, 'edit_profile'])->name('developer.edit_profile');
+    Route::patch('update_developer_image/{id}', [DeveloperController::class, 'update_developer_image']);
+
+    Route::get('edit_developer_profile', [DeveloperController::class, 'edit_developer_profile'])->name('developer.edit_developer_profile');
 
     Route::get('view_project_plans', [DeveloperController::class, 'view_project_plans'])->name('developer.view_project_plans');
 
-    Route::get('view_project_detail/{id}', [DeveloperController::class, 'view_project_detail'])->name('developer.view_project_detail');
+    Route::get('view_details_project/{id}', [DeveloperController::class, 'view_details_project'])->name('developer.view_details_project');
     
     Route::get('view_feedback', [DeveloperController::class, 'view_feedback'])->name('developer.view_feedback');
 
@@ -221,7 +229,9 @@ Route::middleware(['auth', 'CheckRole:Developer'])->group(function ()
 
 });
 
-// Senior Manager Routes
+          // Developer Routes End ❤🧡💛💚
+
+          // Senior Manager Routes Start 🌹🌹🌹🌹
 Route::middleware(['auth', 'CheckRole:Senior Manager'])->group(function () 
 {
     Route::get('/senior-manager/dashboard', [SeniorManagerController::class, 'dashboard'])->name('seniorManager.dashboard');
@@ -236,10 +246,6 @@ Route::middleware(['auth', 'CheckRole:Senior Manager'])->group(function ()
 
     Route::get('view_project_details/{id}', [SeniorManagerController::class, 'view_project_details'])->name('seniorManager.view_project_details');
 
-    // ApproveProject and RejectProject
-    Route::get('approve_project/{id}', [SeniorManagerController::class, 'approveProject'])->name('seniorManager.approve_project');
-
-    Route::get('reject_project/{id}', [SeniorManagerController::class, 'rejectProject'])->name('seniorManager.reject_project');
     // view project manager
 
     Route::get('view_project_managers', [SeniorManagerController::class, 'view_project_managers'])->name('seniorManager.view_project_managers');
@@ -254,16 +260,31 @@ Route::middleware(['auth', 'CheckRole:Senior Manager'])->group(function ()
 
    Route::get('/view_projec_developer_details/{id}', [SeniorManagerController::class, 'viewProjectDevelopereDetails'])->name('seniorManager.view_projec_developer_details');
 
+   Route::get('view_projects_by_category/{id}', [SeniorManagerController::class, 'viewProjectsByCategory'])->name('seniorManager.view_projects_by_category');
+
+   Route::get('approve_project/{id}', [SeniorManagerController::class, 'approve_project'])->name('seniorManager.approve_project');
+
+   Route::get('reject_project/{id}', [SeniorManagerController::class,'reject_project'])->name('seniorManager.reject_project');
+
+   // Define route for editing profile image
+  Route::get('image_edit', [SeniorManagerController::class, 'editImage'])->name('seniorManager.image_edit');
+
+  Route::patch('update_profile_image/{id}', [SeniorManagerController::class, 'update_profile_image']);
 
 
 });
-// Customer Routes
+
+       // Senior Manager Routes End 🌹🌹🌹🌹
+    
+       // Customer Routes Start 👩‍👩‍👦‍👦👩‍👩‍👦👩‍👩‍👧👩‍👩‍👧‍👦
 Route::middleware(['auth', 'CheckRole:Customer'])->group(function () {
     Route::get('/customer/dashboard', [CustomerController::class, 'dashboard'])->name('customer.dashboard');
 });
 
+       // Customer Routes End 👩‍👩‍👦‍👦👩‍👩‍👦👩‍👩‍👧👩‍👩‍👧‍👦
 
-   // Project Manager Routes
+
+       // Project Manager Routes Start 🧗‍♂️🧗‍♂️🧗‍♀️🕺
 
    Route::middleware(['auth', 'CheckRole:Project Manager'])->group(function () 
    {
@@ -323,8 +344,20 @@ Route::middleware(['auth', 'CheckRole:Customer'])->group(function () {
    // Assign Task to Developer
    Route::get('assign_task', [ProjectManagerController::class, 'assign_task'])->name('projectManager.assign_task');
    
+   Route::get('project_manger_view_profile', [ProjectManagerController::class, 'project_manger_view_profile'])->name('projectManager.project_manger_view_profile');
+
+      // Define route for editing profile image
+  Route::get('change_image', [ProjectManagerController::class, 'changeImage'])->name('projectManager.change_image');
+
+  Route::patch('project_man_update_profile_image/{id}', [ProjectManagerController::class, 'project_man_update_profile_image']);
+
+  Route::get('pro_man_edit_profile', [ProjectManagerController::class, 'pro_man_edit_profile'])->name('projectManager.pro_man_edit_profile');
+
+  Route::patch('pro_manager_update_profile/{id}', [ProjectManagerController::class, 'pro_manager_update_profile']);
+
    
    });
        
+   // Project Manager Routes End 🧗‍♂️🧗‍♂️🧗‍♀️🕺
 
 require __DIR__.'/auth.php';

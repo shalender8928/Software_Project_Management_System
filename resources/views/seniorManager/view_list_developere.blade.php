@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    @include('seniorManager.css')
-</head>
+
+@include('seniorManager.css')
+
 <body>
 <div class="main-wrapper">
     @include('seniorManager.sidebar')

@@ -26,5 +26,9 @@ class Category extends Model
     {
         return $this->belongsToMany(User::class, 'user_categories');
     }
+    public function projects()
+    {
+        return $this->hasMany(Project::class);
+    }
 }
 

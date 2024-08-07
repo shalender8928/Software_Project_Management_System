@@ -1,12 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
-  @include('admin.css')
+
+@include('developer.css')
 
 <body>
 <div class="main-wrapper">
 
 <!-- partial:partials/_sidebar.html -->
-   @include('admin.sidebar')
+   @include('developer.sidebar')
 
 <!-- partial -->
 
@@ -14,7 +15,7 @@
             
     <!-- partial:partials/_navbar.html -->
     
-         @include('admin.header')  
+         @include('developer.header')  
 
 
          <div class="page-content"  style="margin-left:100px">
@@ -51,7 +52,6 @@
                                                 <div class="text-danger">{{ $message }}</div>
                                             @enderror
                                         </div>
-
                             
                                         <!-- Phone -->
                                         <div class="mb-3">
@@ -82,7 +82,7 @@
 
                                         <div class="mb-3">
                                           <label for="img">Current Image :</label>
-                                          <img class="wd-200 ht-200 rounded-circle"  src="images/{{$data->image}}"  alt="image not available">
+                                          <img class="wd-150 ht-150 rounded-circle"  src="/images/{{$data->image}}"  alt="image not available">
                                       </div>
                             
                                         <!--New Image -->
@@ -95,7 +95,7 @@
                                         </div>
                             
                                         <button type="submit" class="btn btn-primary me-2">Submit</button>
-                                        <a href="{{ route('admin.dashboard') }}" class="btn btn-secondary">Cancel</a>
+                                        <a href="{{ route('developer.dashboard') }}" class="btn btn-secondary">Cancel</a>
                                     </form>
                     </div>
                   </div>
@@ -114,13 +114,13 @@
          </div>
          
 			<!-- partial:partials/_footer.html -->
-		@include('admin.footer')  
+		@include('developer.footer')  
 			<!-- partial -->
 		</div>
 	</div>
 
 	<!-- core:js -->
-	@include('admin.js')
+	@include('developer.js')
 
 </body>
 </html>    

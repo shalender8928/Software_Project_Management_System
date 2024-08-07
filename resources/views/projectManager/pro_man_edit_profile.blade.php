@@ -1,13 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
-
-@include('seniorManager.css')
-
+<head>
+@include('projectManager.css')
+</head>
 <body>
 <div class="main-wrapper">
 
 <!-- partial:partials/_sidebar.html -->
-   @include('seniorManager.sidebar')
+   @include('projectManager.sidebar')
 
 <!-- partial -->
 
@@ -15,7 +15,7 @@
             
     <!-- partial:partials/_navbar.html -->
     
-         @include('seniorManager.header')  
+         @include('projectManager.header')  
 
 
          <div class="page-content"  style="margin-left:100px">
@@ -31,7 +31,7 @@
       
                                       <h6 class="card-title">Update Profile</h6>
       
-                                      <form class="forms-sample" method="POST" action="{{ url('update_profile', $data->id) }}" enctype="multipart/form-data">
+                                      <form class="forms-sample" method="POST" action="{{ url('pro_manager_update_profile', $data->id) }}" enctype="multipart/form-data">
                                         @csrf
                                         @method('PATCH')
                             
@@ -95,7 +95,7 @@
                                         </div>
                             
                                         <button type="submit" class="btn btn-primary me-2">Submit</button>
-                                        <a href="{{ route('seniorManager.dashboard') }}" class="btn btn-secondary">Cancel</a>
+                                        <a href="{{ route('projectManager.dashboard') }}" class="btn btn-secondary">Cancel</a>
                                     </form>
                     </div>
                   </div>
@@ -114,13 +114,13 @@
          </div>
          
 			<!-- partial:partials/_footer.html -->
-		@include('seniorManager.footer')  
+		@include('projectManager.footer')  
 			<!-- partial -->
 		</div>
 	</div>
 
 	<!-- core:js -->
-	@include('seniorManager.js')
+	@include('projectManager.js')
 
 </body>
 </html>    

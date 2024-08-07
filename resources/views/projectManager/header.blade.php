@@ -170,13 +170,13 @@
                         </div>
         <ul class="list-unstyled p-1">
           <li class="dropdown-item py-2">
-            <a href="{{url('/view_profile')}}" class="text-body ms-0">
+            <a href="{{url('project_manger_view_profile')}}" class="text-body ms-0">
               <i class="me-2 icon-md" data-feather="user"></i>
-              <span>View Profile</span>
+              <span>Profile</span>
             </a>
           </li>
           <li class="dropdown-item py-2">
-            <a href="{{url('edit_profile')}}" class="text-body ms-0">
+            <a href="{{url('pro_man_edit_profile')}}" class="text-body ms-0">
               <i class="me-2 icon-md" data-feather="edit"></i>
               <span>Edit Profile</span>
             </a>
