@@ -41,6 +41,84 @@ class ProjectManagerController extends Controller
     return view('projectManager.dashboard', compact('projects', 'projectCount', 'pendingCount', 'completedCount', 'in_progress'));
 
     }
+    // project_manger_view_profile
+    public function project_manger_view_profile()
+    {
+        $user = Auth::user();
+        $user_id = $user->id;    // logged in User Id
+        $data = User::find($user_id);
+        return view('projectManager.project_manger_view_profile', compact('data'));
+    }
+    
+    public function changeImage()
+    {
+        $user = Auth::user();
+        $user_id = $user->id;    // logged in User Id
+        $data = User::find($user_id);
+        return view('projectManager.change_image', compact('data'));
+         // Ensure you have a corresponding view file
+    }
+    public function project_man_update_profile_image(Request $request, $id)
+    {
+        $request->validate([
+          'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        ]);
+        $user = User::find($id);
+        if ($request->hasFile('image')) 
+        {
+           $imageName = time().'.'.$request->image->extension();
+           $request->image->move(public_path('images'), $imageName);
+           $user->image = $imageName;
+        }
+        $user->save();
+
+        toastr()->timeOut(10000)->closeButton()->addSuccess('Your Profile has been Successfully Updated');
+
+        return redirect()->route('projectManager.dashboard');
+
+    }
+    public function pro_man_edit_profile()
+    {
+        $user = Auth::user();
+        $user_id = $user->id;    // logged in User Id
+        $data = User::find($user_id);
+        return view('projectManager.pro_man_edit_profile', compact('data'));
+
+    }
+    //update profile
+    public function pro_manager_update_profile(Request $request, $id)
+    {
+      $request->validate(
+       [
+       'firstname' => 'required|string|max:255',
+       'lastname' => 'required|string|max:255',
+       'phone' => 'required|string|max:15',
+       'gender' => 'required|string|max:10',
+       'age' => 'required|integer',
+       'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+       ]);
+
+       $user = User::find($id);
+       $user->firstname = $request->firstname;
+       $user->lastname = $request->lastname;
+       $user->phone = $request->phone;
+       $user->gender = $request->gender;
+       $user->age = $request->age;
+
+   if ($request->hasFile('image')) 
+    {
+       $imageName = time().'.'.$request->image->extension();
+       $request->image->move(public_path('images'), $imageName);
+       $user->image = $imageName;
+    }
+   
+       $user->save();
+
+       toastr()->timeOut(10000)->closeButton()->addSuccess('Your Profile has been Successfully Updated');
+
+       return redirect()->route('projectManager.dashboard');
+
+   }
 
    
 

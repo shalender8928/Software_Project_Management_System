@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
+
 @include('seniorManager.css')
-</head>
+
 <body>
 <div class="main-wrapper">
 
@@ -73,8 +73,8 @@
         
                                 <a class="btn btn-secondary" href="{{ route('seniorManager.view_project_list') }}">Back</a>
 
-                                <a class="btn btn-success"  href="{{ route('seniorManager.approve_project', $project->id) }}">Approve</a>
-                                <a class="btn btn-danger" href="{{ route('seniorManager.reject_project', $project->id) }}">Reject</a>
+                                
+                                
                               
                             </div>
                         </div>

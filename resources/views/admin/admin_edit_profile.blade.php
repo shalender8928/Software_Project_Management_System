@@ -1,13 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-@include('developer.css')
-</head>
+  @include('admin.css')
+
 <body>
 <div class="main-wrapper">
 
 <!-- partial:partials/_sidebar.html -->
-   @include('developer.sidebar')
+   @include('admin.sidebar')
 
 <!-- partial -->
 
@@ -15,7 +14,7 @@
             
     <!-- partial:partials/_navbar.html -->
     
-         @include('developer.header')  
+         @include('admin.header')  
 
 
          <div class="page-content"  style="margin-left:100px">
@@ -31,7 +30,7 @@
       
                                       <h6 class="card-title">Update Profile</h6>
       
-                                      <form class="forms-sample" method="POST" action="{{ url('update_profile', $data->id) }}" enctype="multipart/form-data">
+                                      <form class="forms-sample" method="POST" action="{{ url('admin_update_profile', $data->id) }}" enctype="multipart/form-data">
                                         @csrf
                                         @method('PATCH')
                             
@@ -52,6 +51,7 @@
                                                 <div class="text-danger">{{ $message }}</div>
                                             @enderror
                                         </div>
+
                             
                                         <!-- Phone -->
                                         <div class="mb-3">
@@ -82,7 +82,7 @@
 
                                         <div class="mb-3">
                                           <label for="img">Current Image :</label>
-                                          <img class="wd-150 ht-150 rounded-circle"  src="/images/{{$data->image}}"  alt="image not available">
+                                          <img class="wd-200 ht-200 rounded-circle"  src="images/{{$data->image}}"  alt="image not available">
                                       </div>
                             
                                         <!--New Image -->
@@ -95,7 +95,7 @@
                                         </div>
                             
                                         <button type="submit" class="btn btn-primary me-2">Submit</button>
-                                        <a href="{{ route('developer.dashboard') }}" class="btn btn-secondary">Cancel</a>
+                                        <a href="{{ route('admin.dashboard') }}" class="btn btn-secondary">Cancel</a>
                                     </form>
                     </div>
                   </div>
@@ -114,13 +114,13 @@
          </div>
          
 			<!-- partial:partials/_footer.html -->
-		@include('developer.footer')  
+		@include('admin.footer')  
 			<!-- partial -->
 		</div>
 	</div>
 
 	<!-- core:js -->
-	@include('developer.js')
+	@include('admin.js')
 
 </body>
 </html>    

@@ -51,7 +51,10 @@ Route::get('/', function () {
 Route::middleware(['auth', 'CheckRole:Admin'])->group(function () 
 {
     Route::get('/admin/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
-    Route::get('edit_profile', [AdminController::class, 'edit_profile'])->name('admin.edit_profile');
+     // Define route for editing profile image
+    Route::get('admin_image_edit', [AdminController::class, 'admin_image_edit'])->name('admin.admin_image_edit');
+    Route::patch('update_admin_profile_image/{id}', [AdminController::class, 'update_admin_profile_image']);
+    Route::get('admin_edit_profile', [AdminController::class, 'admin_edit_profile'])->name('admin.admin_edit_profile');
     Route::get('add_employee', [AdminController::class, 'add_employee'])->name('admin.add_employee');
     Route::get('edit', [AdminController::class, 'edit'])->name('admin.edit');
     Route::get('delete', [AdminController::class, 'delete'])->name('admin.delete');
@@ -81,7 +84,8 @@ Route::middleware(['auth', 'CheckRole:Admin'])->group(function ()
     Route::get('delete_pro_category/{id}', [AdminController::class, 'delete_pro_category']);
 
 
-    Route::patch('update_profile/{id}', [AdminController::class, 'update']);
+    Route::patch('admin_update_profile/{id}', [AdminController::class, 'admin_update_profile']);
+
     Route::patch('update_employee_profile/{id}', [AdminController::class, 'update_employee_profile']);
     Route::patch('update_pro_category/{id}', [AdminController::class, 'update_pro_category']);
 
@@ -192,19 +196,23 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-    // Developer Routes
+    // Developer Routes Start ❤🧡💛💚
 
 Route::middleware(['auth', 'CheckRole:Developer'])->group(function () 
 {
     Route::get('/developer/dashboard', [DeveloperController::class, 'dashboard'])->name('developer.dashboard');
 
     Route::get('dev_view_profile', [DeveloperController::class, 'dev_view_profile'])->name('developer.dev_view_profile');
+       // Define route for editing profile image
+    Route::get('developer_image_edit', [DeveloperController::class, 'developer_image_edit'])->name('developer.developer_image_edit');
 
-    Route::get('edit_profile', [DeveloperController::class, 'edit_profile'])->name('developer.edit_profile');
+    Route::patch('update_developer_image/{id}', [DeveloperController::class, 'update_developer_image']);
+
+    Route::get('edit_developer_profile', [DeveloperController::class, 'edit_developer_profile'])->name('developer.edit_developer_profile');
 
     Route::get('view_project_plans', [DeveloperController::class, 'view_project_plans'])->name('developer.view_project_plans');
 
-    Route::get('view_project_detail/{id}', [DeveloperController::class, 'view_project_detail'])->name('developer.view_project_detail');
+    Route::get('view_details_project/{id}', [DeveloperController::class, 'view_details_project'])->name('developer.view_details_project');
     
     Route::get('view_feedback', [DeveloperController::class, 'view_feedback'])->name('developer.view_feedback');
 
@@ -221,7 +229,9 @@ Route::middleware(['auth', 'CheckRole:Developer'])->group(function ()
 
 });
 
-// Senior Manager Routes
+          // Developer Routes End ❤🧡💛💚
+
+          // Senior Manager Routes Start 🌹🌹🌹🌹
 Route::middleware(['auth', 'CheckRole:Senior Manager'])->group(function () 
 {
     Route::get('/senior-manager/dashboard', [SeniorManagerController::class, 'dashboard'])->name('seniorManager.dashboard');
@@ -236,10 +246,6 @@ Route::middleware(['auth', 'CheckRole:Senior Manager'])->group(function ()
 
     Route::get('view_project_details/{id}', [SeniorManagerController::class, 'view_project_details'])->name('seniorManager.view_project_details');
 
-    // ApproveProject and RejectProject
-    Route::get('approve_project/{id}', [SeniorManagerController::class, 'approveProject'])->name('seniorManager.approve_project');
-
-    Route::get('reject_project/{id}', [SeniorManagerController::class, 'rejectProject'])->name('seniorManager.reject_project');
     // view project manager
 
     Route::get('view_project_managers', [SeniorManagerController::class, 'view_project_managers'])->name('seniorManager.view_project_managers');
@@ -254,16 +260,31 @@ Route::middleware(['auth', 'CheckRole:Senior Manager'])->group(function ()
 
    Route::get('/view_projec_developer_details/{id}', [SeniorManagerController::class, 'viewProjectDevelopereDetails'])->name('seniorManager.view_projec_developer_details');
 
+   Route::get('view_projects_by_category/{id}', [SeniorManagerController::class, 'viewProjectsByCategory'])->name('seniorManager.view_projects_by_category');
+
+   Route::get('approve_project/{id}', [SeniorManagerController::class, 'approve_project'])->name('seniorManager.approve_project');
+
+   Route::get('reject_project/{id}', [SeniorManagerController::class,'reject_project'])->name('seniorManager.reject_project');
+
+   // Define route for editing profile image
+  Route::get('image_edit', [SeniorManagerController::class, 'editImage'])->name('seniorManager.image_edit');
+
+  Route::patch('update_profile_image/{id}', [SeniorManagerController::class, 'update_profile_image']);
 
 
 });
-// Customer Routes
+
+       // Senior Manager Routes End 🌹🌹🌹🌹
+    
+       // Customer Routes Start 👩‍👩‍👦‍👦👩‍👩‍👦👩‍👩‍👧👩‍👩‍👧‍👦
 Route::middleware(['auth', 'CheckRole:Customer'])->group(function () {
     Route::get('/customer/dashboard', [CustomerController::class, 'dashboard'])->name('customer.dashboard');
 });
 
+       // Customer Routes End 👩‍👩‍👦‍👦👩‍👩‍👦👩‍👩‍👧👩‍👩‍👧‍👦
 
-   // Project Manager Routes
+
+       // Project Manager Routes Start 🧗‍♂️🧗‍♂️🧗‍♀️🕺
 
    Route::middleware(['auth', 'CheckRole:Project Manager'])->group(function () 
    {
@@ -321,53 +342,9 @@ Route::middleware(['auth', 'CheckRole:Customer'])->group(function () {
    Route::get('view_task_detail/{id}', [ProjectManagerController::class, 'view_task_detail'])->name('projectManager.view_task_detail');
 
    // Assign Task to Developer
-   Route::get('select_category_assign_task', [ProjectManagerController::class, 'select_category_assign_task'])->name('projectManager.select_category_assign_task');
-   Route::get('select_project_to_assign_task/{id}', [ProjectManagerController::class, 'select_project_to_assign_task'])->name('projectManager.select_project_to_assign_task');
-   Route::get('assign_task/{id}', [ProjectManagerController::class, 'assign_task'])->name('projectManager.assign_task');
-   Route::get('select_user_to_assign_task/{id}', [ProjectManagerController::class, 'select_user_to_assign_task'])->name('projectManager.select_user_to_assign_task');
-   Route::post('assign_task_post/{id}', [ProjectManagerController::class, 'assign_task_post']);
-
-   //Update Assiged TAsk for Developer
-   Route::get('select_category_update_task', [ProjectManagerController::class, 'select_category_update_task'])->name('projectManager.select_category_update_task');
-   Route::get('select_project_to_update_assigned_task/{id}', [ProjectManagerController::class, 'select_project_to_update_assigned_task'])->name('projectManager.select_project_to_update_assigned_task');
-   Route::get('select_task/{id}', [ProjectManagerController::class, 'select_task'])->name('projectManager.select_task');
-   Route::get('select_assigned_user/{id}', [ProjectManagerController::class, 'select_assigned_user'])->name('projectManager.select_assigned_user');
-   Route::post('assign_task_update_post/{id}', [ProjectManagerController::class, 'assign_task_update_post']);
-
-
-   //Adding Project Plan
-   Route::get('select_category_to_add_pro_plan', [ProjectManagerController::class, 'select_category_to_add_pro_plan'])->name('projectManager.select_category_to_add_pro_plan');
-   Route::get('select_project_to_add_pro_plan/{id}', [ProjectManagerController::class, 'select_project_to_add_pro_plan'])->name('projectManager.select_project_to_add_pro_plan');
-   Route::get('add_new_pro_plan/{id}', [ProjectManagerController::class, 'add_new_pro_plan'])->name('projectManager.add_new_pro_plan');
-   Route::post('create_project_plan', [ProjectManagerController::class, 'create_project_plan'])->name('projectManager.create_project_plan');
-
-   // Adding Project Objective
-   Route::get('go_to_objective/{id}', [ProjectManagerController::class, 'go_to_objective'])->name('projectManager.go_to_objective');
-    Route::post('store_project_objective', [ProjectManagerController::class, 'store_project_objective'])->name('projectManager.store_project_objective');
-
-
-    // Adding Project Scope
-   Route::get('go_to_scope/{id}', [ProjectManagerController::class, 'go_to_scope'])->name('projectManager.go_to_scope');
-   Route::post('store_project_scope', [ProjectManagerController::class, 'store_project_scope'])->name('projectManager.store_project_scope');
+   Route::get('assign_task', [ProjectManagerController::class, 'assign_task'])->name('projectManager.assign_task');
    
-   //Adding Project Deliverable
-   Route::get('go_to_deliverable/{id}', [ProjectManagerController::class, 'go_to_deliverable'])->name('projectManager.go_to_deliverable');
-   Route::post('store_project_deliverable', [ProjectManagerController::class, 'store_project_deliverable'])->name('projectManager.store_project_deliverable');
-
-   // Adding Project Dependency
-   Route::get('go_to_dependencies/{id}', [ProjectManagerController::class, 'go_to_dependencies'])->name('projectManager.go_to_dependencies');
-   Route::post('store_project_dependency', [ProjectManagerController::class, 'store_project_dependency'])->name('projectManager.store_project_dependency');
-
-   // Adding Poject Resource
-   Route::get('go_to_resources/{id}', [ProjectManagerController::class, 'go_to_resources'])->name('projectManager.go_to_resources');
-   Route::post('store_project_resource', [ProjectManagerController::class, 'store_project_resource'])->name('projectManager.store_project_resource');
-
-   //Adding Project Milesones
-   Route::get('go_to_milestones/{id}', [ProjectManagerController::class, 'go_to_milestones'])->name('projectManager.go_to_milestones');
-   Route::post('store_project_milestone', [ProjectManagerController::class, 'store_project_milestone'])->name('projectManager.store_project_milestone');
-
-
-
+   
    });
        
 

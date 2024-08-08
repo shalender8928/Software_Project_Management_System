@@ -36,14 +36,13 @@ class DeveloperController extends Controller
         return view('developer.dev_view_profile', compact('data'));
     }
     //edit profile 
-    public function edit_profile()
+    public function edit_developer_profile()
     {
         $user = Auth::user();
         $user_id = $user->id;    // logged in User Id
         $data = User::find($user_id);
 
-
-        return view('developer.edit_profile', compact('data'));
+        return view('developer.edit_developer_profile', compact('data'));
 
     }
 
@@ -116,14 +115,14 @@ class DeveloperController extends Controller
         
         return view('developer.view_project_plans', compact('data', 'projects'));
     }
-    public function view_project_detail($id)
+    public function view_details_project($id)
     {
         $user = Auth::user();
         $data = User::find($user->id);
         $project = Project::find($id);
         $project = Project::find($id);
 
-        return view('developer.view_project_detail', compact('data','project'));
+        return view('developer.view_details_project', compact('data','project'));
 
         
     }
@@ -147,5 +146,33 @@ class DeveloperController extends Controller
   
         return view('developer.view_task_detail', compact('data','task'));
     }
+    // edite developer 
+    public function developer_image_edit()
+    {
+        $user = Auth::user();
+        $user_id = $user->id;    // logged in User Id
+        $data = User::find($user_id);
+        return view('developer.developer_image_edit', compact('data'));
+         // Ensure you have a corresponding view file
+    }
+        // developer Image edit
+    public function update_developer_image(Request $request, $id)
+    {
+            $request->validate([
+                'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+              ]);
+              $user = User::find($id);
+              if ($request->hasFile('image')) 
+              {
+                 $imageName = time().'.'.$request->image->extension();
+                 $request->image->move(public_path('images'), $imageName);
+                 $user->image = $imageName;
+              }
+              $user->save();
+    
+              toastr()->timeOut(10000)->closeButton()->addSuccess('Your Profile has been Successfully Updated');
+    
+              return redirect()->route('developer.dashboard');
+        }
 
 }
