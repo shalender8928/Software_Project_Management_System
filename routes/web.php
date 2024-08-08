@@ -342,10 +342,71 @@ Route::middleware(['auth', 'CheckRole:Customer'])->group(function () {
    Route::get('view_task_detail/{id}', [ProjectManagerController::class, 'view_task_detail'])->name('projectManager.view_task_detail');
 
    // Assign Task to Developer
+
+   Route::get('select_category_assign_task', [ProjectManagerController::class, 'select_category_assign_task'])->name('projectManager.select_category_assign_task');
+   Route::get('select_project_to_assign_task/{id}', [ProjectManagerController::class, 'select_project_to_assign_task'])->name('projectManager.select_project_to_assign_task');
+   Route::get('assign_task/{id}', [ProjectManagerController::class, 'assign_task'])->name('projectManager.assign_task');
+   Route::get('select_user_to_assign_task/{id}', [ProjectManagerController::class, 'select_user_to_assign_task'])->name('projectManager.select_user_to_assign_task');
+   Route::post('assign_task_post/{id}', [ProjectManagerController::class, 'assign_task_post']);
+
+   //Update Assiged TAsk for Developer
+   Route::get('select_category_update_task', [ProjectManagerController::class, 'select_category_update_task'])->name('projectManager.select_category_update_task');
+   Route::get('select_project_to_update_assigned_task/{id}', [ProjectManagerController::class, 'select_project_to_update_assigned_task'])->name('projectManager.select_project_to_update_assigned_task');
+   Route::get('select_task/{id}', [ProjectManagerController::class, 'select_task'])->name('projectManager.select_task');
+   Route::get('select_assigned_user/{id}', [ProjectManagerController::class, 'select_assigned_user'])->name('projectManager.select_assigned_user');
+   Route::post('assign_task_update_post/{id}', [ProjectManagerController::class, 'assign_task_update_post']);
+
+
+   //Adding Project Plan
+   Route::get('select_category_to_add_pro_plan', [ProjectManagerController::class, 'select_category_to_add_pro_plan'])->name('projectManager.select_category_to_add_pro_plan');
+   Route::get('select_project_to_add_pro_plan/{id}', [ProjectManagerController::class, 'select_project_to_add_pro_plan'])->name('projectManager.select_project_to_add_pro_plan');
+   Route::get('add_new_pro_plan/{id}', [ProjectManagerController::class, 'add_new_pro_plan'])->name('projectManager.add_new_pro_plan');
+   Route::post('create_project_plan', [ProjectManagerController::class, 'create_project_plan'])->name('projectManager.create_project_plan');
+
+   // Adding Project Objective
+   Route::get('go_to_objective/{id}', [ProjectManagerController::class, 'go_to_objective'])->name('projectManager.go_to_objective');
+    Route::post('store_project_objective', [ProjectManagerController::class, 'store_project_objective'])->name('projectManager.store_project_objective');
+
+
+    // Adding Project Scope
+   Route::get('go_to_scope/{id}', [ProjectManagerController::class, 'go_to_scope'])->name('projectManager.go_to_scope');
+   Route::post('store_project_scope', [ProjectManagerController::class, 'store_project_scope'])->name('projectManager.store_project_scope');
+
    Route::get('assign_task', [ProjectManagerController::class, 'assign_task'])->name('projectManager.assign_task');
    
+   Route::get('project_manger_view_profile', [ProjectManagerController::class, 'project_manger_view_profile'])->name('projectManager.project_manger_view_profile');
+
+      // Define route for editing profile image
+  Route::get('change_image', [ProjectManagerController::class, 'changeImage'])->name('projectManager.change_image');
+
+  Route::patch('project_man_update_profile_image/{id}', [ProjectManagerController::class, 'project_man_update_profile_image']);
+
+  Route::get('pro_man_edit_profile', [ProjectManagerController::class, 'pro_man_edit_profile'])->name('projectManager.pro_man_edit_profile');
+
+  Route::patch('pro_manager_update_profile/{id}', [ProjectManagerController::class, 'pro_manager_update_profile']);
+
+
    
+   //Adding Project Deliverable
+   Route::get('go_to_deliverable/{id}', [ProjectManagerController::class, 'go_to_deliverable'])->name('projectManager.go_to_deliverable');
+   Route::post('store_project_deliverable', [ProjectManagerController::class, 'store_project_deliverable'])->name('projectManager.store_project_deliverable');
+
+   // Adding Project Dependency
+   Route::get('go_to_dependencies/{id}', [ProjectManagerController::class, 'go_to_dependencies'])->name('projectManager.go_to_dependencies');
+   Route::post('store_project_dependency', [ProjectManagerController::class, 'store_project_dependency'])->name('projectManager.store_project_dependency');
+
+   // Adding Poject Resource
+   Route::get('go_to_resources/{id}', [ProjectManagerController::class, 'go_to_resources'])->name('projectManager.go_to_resources');
+   Route::post('store_project_resource', [ProjectManagerController::class, 'store_project_resource'])->name('projectManager.store_project_resource');
+
+   //Adding Project Milesones
+   Route::get('go_to_milestones/{id}', [ProjectManagerController::class, 'go_to_milestones'])->name('projectManager.go_to_milestones');
+   Route::post('store_project_milestone', [ProjectManagerController::class, 'store_project_milestone'])->name('projectManager.store_project_milestone');
+
+
+
    });
        
+   // Project Manager Routes End 
 
 require __DIR__.'/auth.php';
