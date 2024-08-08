@@ -14,37 +14,37 @@
     <!-- partial:partials/_navbar.html -->
     @include('projectManager.header')  
 
-    <div class="page-content"  style="margin-left:100px">
+    <div class="page-content" style="margin-left:100px">
       <div class="table-responsive">
         <table class="table table-hover mb-0">
           <thead>
             <tr>
               <th class="pt-0">S. NO</th>
               <th class="pt-0">Task Name</th>
-              <th class="pt-0">Project</th>
-              <th class="pt-0">Description</th>
-              <th class="pt-0">Status</th>
-              <th class="pt-0">Progress</th>
-              <th class="pt-0">Assign Task</th>
+              <th class="pt-0">Project Name</th>
+              <th class="pt-0">Category</th>
+              <th class="pt-0">Task Status</th>
+              <th class="pt-0">Developer Name</th>
+              <th class="pt-0">Select Task</th>
             </tr>
           </thead>
           <tbody>
             @php
-            $count = 0;
+              $count = 0;
             @endphp
             @foreach($tasks as $task)
             @php
-                $count++;
+              $count++;
             @endphp
             <tr>
-              <td>{{$count}}</td>
-              <td>{!! Str::limit($task->name, 20) !!}</td>
-              <td>{!! $task->project ? Str::limit($task->project->name, 15) : 'N/A' !!}</td>
-              <td>{!! Str::limit($task->description, 20) !!}</td>
-              <td>{{$task->status}}</td>
-              <td>{{$task->completion}}%</td>
+              <td>{{ $count }}</td>
+              <td>{{$task->name}}</td>
+              <td>{{ $task->project->name }}</td>
+              <td>{{ $task->project->category->cat_name }}</td>
+              <td>{{ $task->status }}</td>
+              <td>{{ $task->developerHasTasks->first()->user->firstname }} {{ $task->developerHasTasks->first()->user->lastname }}</td>
               <td>
-                <a class="btn btn-success" href="{{url('select_user_to_assign_task',$task->id)}}">Assign</a>
+                <a class="btn btn-success" href="{{ url('select_assigned_user', $task->id) }}">Select</a>
               </td>
             </tr>
             @endforeach

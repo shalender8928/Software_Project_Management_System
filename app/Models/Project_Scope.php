@@ -5,13 +5,15 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Timeline extends Model
+class Project_Scope extends Model
 {
     use HasFactory;
-    
+
+    protected $table = 'project__scopes';
+
+    // Define the fillable attributes for mass assignment
     protected $fillable = [
-        'project_plan_id',
-        'taskName',
-        'taskDate',
+        'plan_id',
+        'description',
     ];
 }

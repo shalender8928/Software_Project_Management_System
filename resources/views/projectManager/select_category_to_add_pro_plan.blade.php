@@ -41,7 +41,7 @@
                       <td>{{$datas->cat_name}}</td>
                       <td>{!! Str::limit($datas->description,30)!!}</td>
                       <td>
-                        <a class="btn btn-primary" href="{{url('select_project_to_view_task',$datas->id)}}">Select</a>
+                        <a class="btn btn-primary" href="{{url('select_project_to_add_pro_plan',$datas->id)}}">Select</a>
                       </td>
 
                     </tr>

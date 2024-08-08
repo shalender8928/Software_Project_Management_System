@@ -11,14 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('dependencies', function (Blueprint $table) {
+        Schema::create('project__objectives', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('project_plan_id');
-            $table->integer('dependent_task');
-            $table->integer('preceding_task');
+            $table->unsignedBigInteger('plan_id');
+            $table->text('description');
             $table->timestamps();
 
-            $table->foreign('project_plan_id')->references('id')->on('project_plans')->onDelete('cascade');
+            // Foreign key constraint
+            $table->foreign('plan_id')->references('id')->on('project__plans')->onDelete('cascade');
         });
     }
 
@@ -27,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('dependencies');
+        Schema::dropIfExists('project__objectives');
     }
 };

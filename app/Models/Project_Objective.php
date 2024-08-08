@@ -5,14 +5,15 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Deliverable extends Model
+class Project_Objective extends Model
 {
     use HasFactory;
 
+    protected $table = 'project__objectives';
+
+    // Define the fillable attributes for mass assignment
     protected $fillable = [
-        'project_plan_id',
-        'derivableName',
+        'plan_id',
         'description',
-        'deadline',
     ];
 }

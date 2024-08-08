@@ -50,34 +50,6 @@
       </div>
     </li>
 
-    
-
-    <li class="nav-item">
-      <a class="nav-link" data-bs-toggle="collapse" href="#emails" role="button" aria-expanded="false" aria-controls="emails">
-        <i class="link-icon" data-feather="users"></i>
-        <span class="link-title"> Project Plan </span>
-        <i class="link-arrow" data-feather="chevron-down"></i>
-      </a>
-      <div class="collapse" id="emails">
-        <ul class="nav sub-menu">
-          <li class="nav-item">
-        
-            <a href="#" class="nav-link">Create New Project Plan</a>
-          </li>
-          <li class="nav-item">
-            <a href="#" class="nav-link">Edit Project Plan </a>
-          </li>
-          <li class="nav-item">
-            <a href="#" class="nav-link">Delete Project Plan </a>
-          </li>
-          
-         
-        </ul>
-  
-        <!-- End the manager project task-->
-      </div>
-    </li>
-
     <li class="nav-item">
       <a class="nav-link" data-bs-toggle="collapse" href="#emails" role="button" aria-expanded="false" aria-controls="emails">
         <i class="link-icon" data-feather="folder-plus"></i>
@@ -104,9 +76,38 @@
           </li>
 
           <li class="nav-item">
-            <a href="{{url('assign_task')}}" class="nav-link">Assign Task to Developer</a>
+            <a href="{{url('select_category_assign_task')}}" class="nav-link">Assign Task to Developer</a>
+          </li>
+          <li class="nav-item">
+            <a href="{{url('select_category_update_task')}}" class="nav-link">Update Assigned Task </a>
           </li>
         </ul>
+      </div>
+    </li>
+
+    <li class="nav-item">
+      <a class="nav-link" data-bs-toggle="collapse" href="#emails" role="button" aria-expanded="false" aria-controls="emails">
+        <i class="link-icon" data-feather="users"></i>
+        <span class="link-title"> Project Plan </span>
+        <i class="link-arrow" data-feather="chevron-down"></i>
+      </a>
+      <div class="collapse" id="emails">
+        <ul class="nav sub-menu">
+          <li class="nav-item">
+        
+            <a href="{{url('select_category_to_add_pro_plan')}}" class="nav-link">Add Project Plan</a>
+          </li>
+          <li class="nav-item">
+            <a href="#" class="nav-link">Edit Project Plan </a>
+          </li>
+          <li class="nav-item">
+            <a href="#" class="nav-link">Delete Project Plan </a>
+          </li>
+          
+         
+        </ul>
+  
+        <!-- End the manager project task-->
       </div>
     </li>
 

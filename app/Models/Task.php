@@ -27,9 +27,19 @@ class Task extends Model
     return $this->hasMany(Developer_has_Task::class);
 }
 
+    // In Task model
+    public function developerHasTasks()
+    {
+        return $this->hasMany(Developer_has_Task::class, 'task_id');
+    }
 
-    // public function project(){
-    //     return $this->hasOne('App\Models\Project', 'id', 'project_id');
 
-    // }
+
+    public function category()
+    {
+        return $this->belongsTo(Category::class);
+    }
+
+  
+
 }

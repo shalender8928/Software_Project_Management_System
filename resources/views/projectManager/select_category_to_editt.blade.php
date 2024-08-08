@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
-  @include('admin.css')
+  @include('projectManager.css')
 
 <body>
 <div class="main-wrapper">
 
 <!-- partial:partials/_sidebar.html -->
-   @include('admin.sidebar')
+   @include('projectManager.sidebar')
 
 <!-- partial -->
 
@@ -14,7 +14,7 @@
             
     <!-- partial:partials/_navbar.html -->
     
-         @include('admin.header')  
+         @include('projectManager.header')  
 
 
          <div class="page-content"  style="margin-left:100px">
@@ -52,13 +52,13 @@
          </div>
          
 			<!-- partial:partials/_footer.html -->
-		@include('admin.footer')  
+		@include('projectManager.footer')  
 			<!-- partial -->
 		</div>
 	</div>
 
 	<!-- core:js -->
-	@include('admin.js')
+	@include('projectManager.js')
 
 </body>
 </html>    

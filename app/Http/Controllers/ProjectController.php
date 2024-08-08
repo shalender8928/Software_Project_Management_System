@@ -42,4 +42,6 @@ class ProjectController extends Controller
         toastr()->timeOut(100)->closeButton()->addSuccess('Project created successfully');
          return redirect()->back();
     }
+
+
 }

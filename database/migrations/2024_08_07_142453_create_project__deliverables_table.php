@@ -11,17 +11,17 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('deliverables', function (Blueprint $table) {
+        Schema::create('project__deliverables', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('project_plan_id');
-            $table->string('deliverableName');
+            $table->unsignedBigInteger('plan_id');
+            $table->string('name');
             $table->text('description')->nullable();
-    
             $table->date('deadline');
-            
+            $table->date('date_delivered')->nullable();
             $table->timestamps();
 
-            $table->foreign('project_plan_id')->references('id')->on('project_plans')->onDelete('cascade');
+            // Foreign key constraint
+            $table->foreign('plan_id')->references('id')->on('project__plans')->onDelete('cascade');
         });
     }
 
@@ -30,6 +30,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('deliverables');
+        Schema::dropIfExists('project__deliverables');
     }
 };

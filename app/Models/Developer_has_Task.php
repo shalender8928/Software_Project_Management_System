@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Developer_has_Task extends Model
 {
     use HasFactory;
-    protected $table = 'developer_has_task';
+    protected $table = 'developer_has__tasks';
 
     protected $fillable = [
         'user_id',
@@ -16,9 +16,6 @@ class Developer_has_Task extends Model
         'assigned_on',
         'status',
     ];
-    const STATUS_ASSIGNED = 'assigned';
-    const STATUS_ACCEPTED = 'accepted';
-    const STATUS_REJECTED = 'rejected';
 
     public function user()
     {

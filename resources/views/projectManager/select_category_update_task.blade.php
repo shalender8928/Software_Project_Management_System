@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
-  @include('projectManager.css')
+  @include('admin.css')
 
 <body>
 <div class="main-wrapper">
 
 <!-- partial:partials/_sidebar.html -->
-   @include('projectManager.sidebar')
+   @include('admin.sidebar')
 
 <!-- partial -->
 
@@ -14,7 +14,7 @@
             
     <!-- partial:partials/_navbar.html -->
     
-         @include('projectManager.header')  
+         @include('admin.header')  
 
 
          <div class="page-content"  style="margin-left:100px">
@@ -41,7 +41,7 @@
                       <td>{{$datas->cat_name}}</td>
                       <td>{!! Str::limit($datas->description,30)!!}</td>
                       <td>
-                        <a class="btn btn-primary" href="{{url('select_project_to_view_task',$datas->id)}}">Select</a>
+                        <a class="btn btn-primary" href="{{url('select_project_to_update_assigned_task',$datas->id)}}">Select</a>
                       </td>
 
                     </tr>
@@ -52,13 +52,13 @@
          </div>
          
 			<!-- partial:partials/_footer.html -->
-		@include('projectManager.footer')  
+		@include('admin.footer')  
 			<!-- partial -->
 		</div>
 	</div>
 
 	<!-- core:js -->
-	@include('projectManager.js')
+	@include('admin.js')
 
 </body>
 </html>    

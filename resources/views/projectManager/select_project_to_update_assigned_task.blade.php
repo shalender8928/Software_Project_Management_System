@@ -23,25 +23,30 @@
                   <thead>
                     <tr>
                       <th class="pt-0">S. NO</th>
-                      <th class="pt-0">Category Name</th>
+                      <th class="pt-0">Project Name</th>
+                      <th class="pt-0">Category</th>
                       <th class="pt-0">Description</th>
-                      <th class="pt-0">Select Project Category</th>
+                      <th class="pt-0">Status</th>
+                      <th class="pt-0">Select Project</th>
                     </tr>
                   </thead>
                   <tbody>
                     @php
                     $count = 0;
                     @endphp
-                    @foreach($category as $datas)
+                    @foreach($project as $datas)
                     @php
                         $count++;
                     @endphp
                     <tr>
                       <td>{{$count}}</td>
-                      <td>{{$datas->cat_name}}</td>
-                      <td>{!! Str::limit($datas->description,30)!!}</td>
+                      <td>{{$datas->name}}</td>
+                      <td>{{$datas->category->cat_name}}</td>
+                      <td>{!! Str::limit($datas->description,20)!!}</td>
+                      <td>{{$datas->status}}</td>
+
                       <td>
-                        <a class="btn btn-primary" href="{{url('select_project_to_view_task',$datas->id)}}">Select</a>
+                        <a class="btn btn-success" href="{{url('select_task',$datas->id)}}">Select</a>
                       </td>
 
                     </tr>

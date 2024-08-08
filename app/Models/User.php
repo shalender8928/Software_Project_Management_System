@@ -70,5 +70,12 @@ class User extends Authenticatable
             return $this->hasMany(Developer_has_Task::class);
         }
 
+   
+        public function developerHasTasks()
+        {
+            return $this->hasMany(Developer_has_Task::class, 'user_id');
+        }
+        
+        
 
 }
