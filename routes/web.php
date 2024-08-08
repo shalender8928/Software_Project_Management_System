@@ -3,6 +3,7 @@
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\SeniorManagerController;
 use App\Http\Controllers\ProjectManagerController;
 use App\Http\Controllers\DeveloperController;
@@ -44,9 +45,10 @@ Route::middleware(['auth'])->group(function () {
 });
 
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// the home controller or landing page controller page start
+     Route::get('/', [HomeController::class, 'index'])->name('home.index');
+
+    
 
 Route::middleware(['auth', 'CheckRole:Admin'])->group(function () 
 {
