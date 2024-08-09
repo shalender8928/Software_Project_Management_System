@@ -11,6 +11,18 @@ use Spatie\Permission\Models\Permission;
 use App\Models\user_category;
 use App\Models\Qualification;
 use App\Models\user_has_qualification;
+use App\Mail\EmployeeRegistered;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\DB;
+
+use Illuminate\Support\Facades\Hash;
+
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Str;
+
+
+
+
 
 
 
@@ -19,7 +31,7 @@ use App\Models\Category;
 
 use Illuminate\Support\Facades\Auth;
 
-use Illuminate\Support\Facades\Hash;
+
 
 
 class AdminController extends Controller
@@ -96,58 +108,40 @@ class AdminController extends Controller
     return redirect()->route('admin.dashboard');
 }
 
+public function add_employee()
+{
+    // Logic to display the form or handle employee addition
+    return view('admin.add_employee');
+}
 
-    public function add_employee()
-    {
-        return view('admin.add_employee');
-    }
 
-    public function register_employee(Request $request)
-    {
-        $request->validate([
-            'firstname' => 'required|string|max:255',
-            'lastname' => 'required|string|max:255',
-            'phone' => 'required|string|max:15',
-            'gender' => 'required|string|max:10',
-            'age' => 'required|integer',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-        ]);
+public function register_employee(Request $request)
+{
+    $request->validate([
+        'firstname' => 'required|string|max:255',
+        'lastname' => 'required|string|max:255',
+        'email' => 'required|email|unique:users',
+        'phone' => 'required|string|max:15',
+        'gender' => 'required|string|max:10',
+        'age' => 'required|integer',
+    ]);
 
-    $reg_user = Auth::user();
-    $reg_user_id = $reg_user->id; // logged in User Id
+    // Generate a random password
+    $randomPassword = Str::random(8); // Adjust the length as needed
 
-    // Check if the user already exists
-    $user = User::where('email', $request->email)->first();
+    DB::beginTransaction();
 
-    if (!$user) {
-        // Create new user if not exists
+    try {
         $user = new User;
         $user->firstname = $request->firstname;
         $user->lastname = $request->lastname;
         $user->email = $request->email;
-        $user->password = Hash::make($request->password);
+        $user->password = Hash::make($randomPassword);
         $user->phone = $request->phone;
         $user->gender = $request->gender;
         $user->age = $request->age;
-        $user->registered_by = $reg_user_id;
-        $user->updated_by = $reg_user_id;
         $user->save();
-    } else {
-        // Update existing user details
-        $user->firstname = $request->firstname;
-        $user->lastname = $request->lastname;
-        $user->phone = $request->phone;
-        $user->gender = $request->gender;
-        $user->age = $request->age;
-        $user->updated_by = $reg_user_id;
-        $user->save();
-    }
 
-    // Check if address already exists for the user
-    $address = Address::where('user_id', $user->id)->first();
-
-    if (!$address) {
-        // Create new address if not exists
         $address = new Address;
         $address->user_id = $user->id;
         $address->street = $request->street;
@@ -155,20 +149,24 @@ class AdminController extends Controller
         $address->state = $request->state;
         $address->zip_code = $request->zip_code;
         $address->country = $request->country;
-    } else {
-        // Update existing address details
-        $address->street = $request->street;
-        $address->city = $request->city;
-        $address->state = $request->state;
-        $address->zip_code = $request->zip_code;
-        $address->country = $request->country;
+        $address->save();
+
+        // Send registration email with the generated password
+        Mail::to($user->email)->send(new EmployeeRegistered($user, $randomPassword));
+
+        DB::commit();
+        toastr()->timeOut(10000)->closeButton()->addSuccess('Employee registered successfully.');
+        return redirect()->route('admin.dashboard');
+
+    } catch (\Exception $e) {
+        DB::rollback();
+        Log::error($e->getMessage());
+        return redirect()->back()->with('error', 'Registration failed.');
     }
+}
 
-    $address->save();
-    toastr()->timeOut(10000)->closeButton()->addSuccess('New Employee Added Successfully.');
-    return redirect()->route('admin.dashboard');
 
-}    
+  
 public function edit()
 {
     $roles = ['Developer', 'Senior Manager', 'Project Manager'];

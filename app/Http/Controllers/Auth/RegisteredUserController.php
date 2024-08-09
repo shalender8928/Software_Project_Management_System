@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
@@ -35,6 +36,8 @@ class RegisteredUserController extends Controller
             'country' => 'nullable|string|max:255',
         ]);
     
+        // Get the authenticated user's ID
+        $reg_user_id = Auth::id();
     
         // Check if the user already exists
         $user = User::where('email', $request->email)->first();
@@ -57,7 +60,11 @@ class RegisteredUserController extends Controller
             $user->phone = $request->phone;
             $user->gender = $request->gender;
             $user->age = $request->age;
-            $user->updated_by = $reg_user_id;
+
+            // Update the user details only if $reg_user_id is defined
+            if ($reg_user_id) {
+                $user->updated_by = $reg_user_id;
+            }
             $user->save();
         }
     
@@ -83,10 +90,16 @@ class RegisteredUserController extends Controller
         }
     
         $address->save();
-        toastr()->timeOut(10000)->closeButton()->addSuccess('You Have Successfully Registered.');
+        
+        // Add success message
+        
+        
         // Assign role to user
         $user->assignRole('Customer'); // Assign the role as required
+        
+        // Add another success message
         toastr()->timeOut(10000)->closeButton()->addSuccess('You Have Successfully Registered.');
+        
         return redirect()->route('login');
     }
 }

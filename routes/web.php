@@ -43,6 +43,9 @@ Route::middleware(['auth'])->group(function () {
         ->middleware('role:Customer');
 });
 
+Route::get('/add_employee', [App\Http\Controllers\AdminController::class, 'add_employee'])
+    ->name('admin.add_employee')
+    ->middleware(['web', 'auth', 'CheckRole:Admin']);
 
 Route::get('/', function () {
     return view('welcome');
@@ -52,7 +55,11 @@ Route::middleware(['auth', 'CheckRole:Admin'])->group(function ()
 {
     Route::get('/admin/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
     Route::get('edit_profile', [AdminController::class, 'edit_profile'])->name('admin.edit_profile');
+  
+
     Route::get('add_employee', [AdminController::class, 'add_employee'])->name('admin.add_employee');
+    Route::post('register_employee', [AdminController::class, 'register_employee'])->name('register_employee');
+    
     Route::get('edit', [AdminController::class, 'edit'])->name('admin.edit');
     Route::get('delete', [AdminController::class, 'delete'])->name('admin.delete');
     Route::get('delete_category', [AdminController::class, 'delete_category'])->name('admin.delete_category');

@@ -1,107 +1,176 @@
-<x-guest-layout>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="description" content="Responsive HTML Admin Dashboard Template based on Bootstrap 5">
+    <meta name="author" content="NobleUI">
+    <meta name="keywords" content="nobleui, bootstrap, bootstrap 5, bootstrap5, admin, dashboard, template, responsive, css, sass, html, theme, front-end, ui kit, web">
 
-    <form method="POST" action="{{ route('register') }}">
-        @csrf
+    <title>NobleUI - HTML Bootstrap 5 Admin Dashboard Template</title>
 
-        <!-- First Name -->
-        <div>
-            <x-input-label for="firstname" :value="__('First Name')" />
-            <x-text-input id="firstname" class="block mt-1 w-full" type="text" name="firstname" :value="old('firstname')" required autofocus autocomplete="firstname" />
-            <x-input-error :messages="$errors->get('firstname')" class="mt-2" />
-        </div>
-        
-         <!-- Last Name -->
-         <div>
-            <x-input-label for="lastname" :value="__('Last Name')" />
-            <x-text-input id="lastname" class="block mt-1 w-full" type="text" name="lastname" :value="old('lastname')" required autofocus autocomplete="lastname" />
-            <x-input-error :messages="$errors->get('lastname')" class="mt-2" />
-        </div>
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    <!-- End fonts -->
 
-        <!-- Email Address -->
-        <div class="mt-4">
-            <x-input-label for="email" :value="__('Email')" />
-            <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autocomplete="username" />
-            <x-input-error :messages="$errors->get('email')" class="mt-2" />
-        </div>
+    <!-- core:css -->
+    <link rel="stylesheet" href="{{ asset('assets/vendors/core/core.css') }}">
+    <!-- endinject -->
 
-         <!-- Phone -->
-         <div>
-            <x-input-label for="phone" :value="__('Phone')" />
-            <x-text-input id="phone" class="block mt-1 w-full" type="text" name="phone" :value="old('phone')" required autofocus autocomplete="phone" />
-            <x-input-error :messages="$errors->get('phone')" class="mt-2" />
-        </div>
+    <!-- Plugin css for this page -->
+    <!-- End plugin css for this page -->
 
-        <!-- Password -->
-        <div class="mt-4">
-            <x-input-label for="password" :value="__('Password')" />
+    <!-- inject:css -->
+    <link rel="stylesheet" href="{{ asset('assets/fonts/feather-font/css/iconfont.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/vendors/flag-icon-css/css/flag-icon.min.css') }}">
+    <!-- endinject -->
 
-            <x-text-input id="password" class="block mt-1 w-full"
-                            type="password"
-                            name="password"
-                            required autocomplete="new-password" />
+    <!-- Layout styles -->
+    <link rel="stylesheet" href="{{ asset('assets/css/demo2/style.css') }}">
+    <!-- End layout styles -->
 
-            <x-input-error :messages="$errors->get('password')" class="mt-2" />
-        </div>
+    <link rel="shortcut icon" href="{{ asset('assets/images/favicon.png') }}" />
+</head>
+<body>
+	<div class="main-wrapper">
+		<div class="page-wrapper full-page">
+			<div class="page-content d-flex align-items-center justify-content-center">
 
-        <!-- Confirm Password -->
-        <div class="mt-4">
-            <x-input-label for="password_confirmation" :value="__('Confirm Password')" />
+				<div class="row w-100 mx-0 auth-page">
+					<div class="col-md-6 col-xl-8 mx-auto">
+						<div class="card">
+							<div class="row">
+                <div class="col-md-2 pe-md-0">
+                
+                </div>
+                <div class="col-md-8 ps-md-0">
+                  <div class="auth-form-wrapper px-4 py-5">
+                    <a href="#" class="noble-ui-logo logo-light d-block mb-2">Noble<span>UI</span></a>
+                    <h5 class="text-muted fw-normal mb-4">Create a free account.</h5>
+                  
 
-            <x-text-input id="password_confirmation" class="block mt-1 w-full"
-                            type="password"
-                            name="password_confirmation" required autocomplete="new-password" />
+                    <form method="POST" action="{{ route('register') }}">
+                                            @csrf
 
-            <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
-        </div>
+                                            <!-- First Name -->
+                                            <div class="mb-3">
+                                                <label for="firstname" class="form-label">First Name</label>
+                                                <input type="text" class="form-control" id="firstname" name="firstname" required>
+                                                @error('firstname')
+                                                <div class="text-danger">{{ $message }}</div>
+                                                @enderror
+                                            </div>
 
-         <!-- Gender -->
-         <div>
-            <x-input-label for="gender" :value="__('Gender')" />
-            <x-text-input id="gender" class="block mt-1 w-full" type="text" name="gender" :value="old('gender')" required autofocus autocomplete="gender" />
-            <x-input-error :messages="$errors->get('gender')" class="mt-2" />
-        </div>
+                                            <!-- Last Name -->
+                                            <div class="mb-3">
+                                                <label for="lastname" class="form-label">Last Name</label>
+                                                <input type="text" class="form-control" id="lastname" name="lastname" required>
+                                                @error('lastname')
+                                                <div class="text-danger">{{ $message }}</div>
+                                                @enderror
+                                            </div>
 
-        <!-- age -->
-        <div>
-            <x-input-label for="age" :value="__('Age')" />
-            <x-text-input id="age" class="block mt-1 w-full" type="number" name="age" :value="old('age')" required autofocus autocomplete="age" />
-            <x-input-error :messages="$errors->get('age')" class="mt-2" />
-        </div>
+                                            <!-- Email -->
+                                            <div class="mb-3">
+                                                <label for="email" class="form-label">Email</label>
+                                                <input type="email" class="form-control" id="email" name="email" required>
+                                                @error('email')
+                                                <div class="text-danger">{{ $message }}</div>
+                                                @enderror
+                                            </div>
 
-        <!-- street -->
-        <div>
-            <x-input-label for="street" :value="__('Street')" />
-            <x-text-input id="street" class="block mt-1 w-full" type="text" name="street" :value="old('street')" required autofocus autocomplete="street" />
-            <x-input-error :messages="$errors->get('street')" class="mt-2" />
-        </div>
+                                            <!-- Password -->
+                                            <div class="mb-3">
+                                                <label for="password" class="form-label">Password</label>
+                                                <input type="password" class="form-control" id="password" name="password" required>
+                                                @error('password')
+                                                <div class="text-danger">{{ $message }}</div>
+                                                @enderror
+                                            </div>
 
-        <!-- city -->
-        <div>
-            <x-input-label for="city" :value="__('City')" />
-            <x-text-input id="city" class="block mt-1 w-full" type="text" name="city" :value="old('city')" required autofocus autocomplete="city" />
-            <x-input-error :messages="$errors->get('city')" class="mt-2" />
-        </div>
+                                            <!-- Confirm Password -->
+                                            <div class="mb-3">
+                                                <label for="password_confirmation" class="form-label">Confirm Password</label>
+                                                <input type="password" class="form-control" id="password_confirmation" name="password_confirmation" required>
+                                                @error('password_confirmation')
+                                                <div class="text-danger">{{ $message }}</div>
+                                                @enderror
+                                            </div>
 
-        <!-- State -->
-        <div>
-            <x-input-label for="state" :value="__('State')" />
-            <x-text-input id="state" class="block mt-1 w-full" type="text" name="state" :value="old('state')" required autofocus autocomplete="state" />
-            <x-input-error :messages="$errors->get('state')" class="mt-2" />
-        </div>
+                                            <!-- Phone -->
+                                            <div class="mb-3">
+                                                <label for="phone" class="form-label">Phone</label>
+                                                <input type="text" class="form-control" id="phone" name="phone" required>
+                                                @error('phone')
+                                                <div class="text-danger">{{ $message }}</div>
+                                                @enderror
+                                            </div>
 
-        <!-- Zip-Code -->
-        <div>
-            <x-input-label for="zip_code" :value="__('Zip Code')" />
-            <x-text-input id="zip_code" class="block mt-1 w-full" type="text" name="zip_code" :value="old('zip_code')" required autofocus autocomplete="zip_code" />
-            <x-input-error :messages="$errors->get('zip_code')" class="mt-2" />
-        </div>
+                                            <!-- Gender -->
+                                            <div class="mb-3">
+                                                <label for="gender" class="form-label">Gender</label>
+                                                <input type="text" class="form-control" id="gender" name="gender" required>
+                                                @error('gender')
+                                                <div class="text-danger">{{ $message }}</div>
+                                                @enderror
+                                            </div>
 
-        <!-- Country -->
-        <div>
-            <x-input-label for="country" :value="__('Country')" />
-            <x-text-input id="country" class="block mt-1 w-full" type="text" name="country" :value="old('country')" required autofocus autocomplete="country" />
-            <x-input-error :messages="$errors->get('country')" class="mt-2" />
-        </div>
+                                            <!-- Age -->
+                                            <div class="mb-3">
+                                                <label for="age" class="form-label">Age</label>
+                                                <input type="number" class="form-control" id="age" name="age" required>
+                                                @error('age')
+                                                <div class="text-danger">{{ $message }}</div>
+                                                @enderror
+                                            </div>
+
+                                            <!-- Street -->
+                                            <div class="mb-3">
+                                                <label for="street" class="form-label">Street</label>
+                                                <input type="text" class="form-control" id="street" name="street">
+                                                @error('street')
+                                                <div class="text-danger">{{ $message }}</div>
+                                                @enderror
+                                            </div>
+
+                                            <!-- City -->
+                                            <div class="mb-3">
+                                                <label for="city" class="form-label">City</label>
+                                                <input type="text" class="form-control" id="city" name="city">
+                                                @error('city')
+                                                <div class="text-danger">{{ $message }}</div>
+                                                @enderror
+                                            </div>
+
+                                            <!-- State -->
+                                            <div class="mb-3">
+                                                <label for="state" class="form-label">State</label>
+                                                <input type="text" class="form-control" id="state" name="state">
+                                                @error('state')
+                                                <div class="text-danger">{{ $message }}</div>
+                                                @enderror
+                                            </div>
+
+                                            <!-- Zip Code -->
+                                            <div class="mb-3">
+                                                <label for="zip_code" class="form-label">Zip Code</label>
+                                                <input type="text" class="form-control" id="zip_code" name="zip_code">
+                                                @error('zip_code')
+                                                <div class="text-danger">{{ $message }}</div>
+                                                @enderror
+                                            </div>
+
+                                            <!-- Country -->
+                                            <div class="mb-3">
+                                                <label for="country" class="form-label">Country</label>
+                                                <input type="text" class="form-control" id="country" name="country">
+                                                @error('country')
+                                                <div class="text-danger">{{ $message }}</div>
+                                                @enderror
+                                            </div>
 
         <div class="flex items-center justify-end mt-4">
             <a class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" href="{{ route('login') }}">
@@ -113,4 +182,33 @@
             </x-primary-button>
         </div>
     </form>
-</x-guest-layout>
+
+
+                  </div>
+                </div>
+              </div>
+						</div>
+					</div>
+				</div>
+
+			</div>
+		</div>
+	</div>
+
+ <!-- core:js -->
+ <script src="{{ asset('assets/vendors/core/core.js') }}"></script>
+    <!-- endinject -->
+
+    <!-- Plugin js for this page -->
+    <!-- End plugin js for this page -->
+
+    <!-- inject:js -->
+    <script src="{{ asset('assets/vendors/feather-icons/feather.min.js') }}"></script>
+    <script src="{{ asset('assets/js/template.js') }}"></script>
+    <!-- endinject -->
+
+    <!-- Custom js for this page -->
+    <!-- End custom js for this page -->
+
+</body>
+</html>
