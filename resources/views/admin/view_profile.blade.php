@@ -32,7 +32,9 @@
                        <div class="card-body">
                         <div class="d-flex flex-column align-items-center border-bottom px-5 py-3">
                             <div class="mb-2">
-                                <img class="wd-250 ht-250 rounded-circle" src="{{ asset('images/' . Auth::user()->image) }}" alt="">
+                            <a href="{{ url('admin_image_edit') }}">
+                          <img id="profile-image" class="wd-250 ht-250 rounded-circle" src="{{ asset('images/' . Auth::user()->image) }}" alt="">
+                           </a>
                             </div>
                             <div class="text-center">
                                 <p class="tx-16 fw-bolder">{{(Auth::user() -> firstname)}}</p>
@@ -91,7 +93,7 @@
                                                 <input type="number" class="form-control"  value="{{ $data->age }}" readonly>
                                             </div>
                                 
-                                             <a  class="btn btn-primary" href="{{url('/edit_profile')}}">Edit Profile</a>
+                                             <a  class="btn btn-primary" href="{{url('/admin_edit_profile')}}" >Edit Profile</a>
                                              <a class="btn btn-secondary" href="{{ route('admin.dashboard') }}">Cancel</a>
                                          </form>
                                         </div>

@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
+
 @include('seniorManager.css')
-</head>
+
 <body>
 <div class="main-wrapper">
 

@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
+
 @include('developer.css')
-</head>
+
 <body>
 <div class="main-wrapper">
 
@@ -57,7 +57,7 @@
                                 <td>{{ $project->creator ? $project->creator->firstname : 'N/A' }}</td>
                                 <td>{{ $project->updater ? $project->updater->firstname : 'N/A' }}</td>
                                 <td>
-                                    <a class="btn btn-success" href="{{url('view_project_detail', ['id' => $project->id]) }}">view</a>
+                                    <a class="btn btn-success" href="{{url('view_details_project', ['id' => $project->id]) }}">view</a>
                                    
                                 </td>
                             </tr>

@@ -66,18 +66,47 @@ class AdminController extends Controller
     
         return view('admin.dashboard', compact('employee','customer', 'role_num', 'permissions', 'category', 'unAssigned'));
     }
+            // Show the form to edit the profile image
+    public function admin_image_edit()
+    {
+                $user = Auth::user();
+                $user_id = $user->id;    // logged in User Id
+                $data = User::find($user_id);
+                return view('admin.admin_image_edit', compact('data'));
+                 // Ensure you have a corresponding view file
+    }
+    public function update_admin_profile_image(Request $request, $id)
+        {
+            $request->validate([
+              'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            ]);
+            $user = User::find($id);
+            if ($request->hasFile('image')) 
+            {
+               $imageName = time().'.'.$request->image->extension();
+               $request->image->move(public_path('images'), $imageName);
+               $user->image = $imageName;
+            }
+            $user->save();
+ 
+            toastr()->timeOut(10000)->closeButton()->addSuccess('Your Profile has been Successfully Updated');
+    
+            return redirect()->route('admin.dashboard');
 
-    public function edit_profile()
+        }
+
+
+    public function admin_edit_profile()
     {
         $user = Auth::user();
         $user_id = $user->id;    // logged in User Id
         $data = User::find($user_id);
 
-        return view('admin.edit_profile', compact('data'));
+        return view('admin.admin_edit_profile', compact('data'));
 
     }
 
-    public function update(Request $request, $id)
+    public function admin_update_profile(Request $request, $id)
 {
     $request->validate([
         'firstname' => 'required|string|max:255',
