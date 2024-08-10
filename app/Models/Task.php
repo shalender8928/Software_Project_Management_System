@@ -40,6 +40,16 @@ class Task extends Model
         return $this->belongsTo(Category::class);
     }
 
+    public function precedingDependencies()
+    {
+        return $this->hasMany(Project_Dependency::class, 'preceding_task_id');
+    }
+
+    public function dependentDependencies()
+    {
+        return $this->hasMany(Project_Dependency::class, 'dependent_task_id');
+    }
+
   
 
 }

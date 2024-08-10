@@ -372,6 +372,7 @@ Route::middleware(['auth', 'CheckRole:Customer'])->group(function () {
    Route::get('go_to_scope/{id}', [ProjectManagerController::class, 'go_to_scope'])->name('projectManager.go_to_scope');
    Route::post('store_project_scope', [ProjectManagerController::class, 'store_project_scope'])->name('projectManager.store_project_scope');
 
+
    Route::get('assign_task', [ProjectManagerController::class, 'assign_task'])->name('projectManager.assign_task');
    
    Route::get('project_manger_view_profile', [ProjectManagerController::class, 'project_manger_view_profile'])->name('projectManager.project_manger_view_profile');
@@ -404,8 +405,60 @@ Route::middleware(['auth', 'CheckRole:Customer'])->group(function () {
    Route::post('store_project_milestone', [ProjectManagerController::class, 'store_project_milestone'])->name('projectManager.store_project_milestone');
 
 
+   // Editing Project Plan
+    Route::get('select_category_to_edit_pp' , [ProjectManagerController:: class, 'select_category_to_edit_pp'])->name('projectManager.select_category_to_edit_pp');
+    Route::get('select_project_to_edit_pp/{id}' , [ProjectManagerController:: class, 'select_project_to_edit_pp'])->name('projectManager.select_project_to_edit_pp');
+    Route::get('select_project_plan/{id}' , [ProjectManagerController:: class, 'select_project_plan'])->name('projectManager.select_project_plan');
+  
+    //Edit PPlan
+    Route::get('edit_plan/{id}' , [ProjectManagerController:: class, 'edit_plan'])->name('projectManager.edit_plan');
+   Route::patch('update_project_plan/{id}', [ProjectManagerController::class, 'update_project_plan']);
 
-   });
+   // Edit Objective 
+   Route::get('edit_objective/{id}' , [ProjectManagerController:: class, 'edit_objective'])->name('projectManager.edit_objective');
+   Route::patch('update_project_objective/{id}', [ProjectManagerController::class, 'update_project_objective']);
+
+
+   // Edit Scope
+   Route::get('edit_scope/{id}' , [ProjectManagerController:: class, 'edit_scope'])->name('projectManager.edit_scope');
+   Route::patch('update_project_scope/{id}', [ProjectManagerController::class, 'update_project_scope']);
+
+   // Edit Deliverables
+   Route::get('edit_deliverable/{id}' , [ProjectManagerController:: class, 'edit_deliverable'])->name('projectManager.edit_deliverable');
+   Route::get('edit_deliverable_form/{id}' , [ProjectManagerController:: class, 'edit_deliverable_form'])->name('projectManager.edit_deliverable_form');
+   Route::patch('update_project_deliverable/{id}', [ProjectManagerController::class, 'update_project_deliverable']);
+
+   // Edit Dependency
+   Route::get('edit_dependency/{id}' , [ProjectManagerController:: class, 'edit_dependency'])->name('projectManager.edit_dependency');
+   Route::get('edit_dependency_form/{id}' , [ProjectManagerController:: class, 'edit_dependency_form'])->name('projectManager.edit_dependency_form');
+   Route::patch('update_project_dependency/{id}', [ProjectManagerController::class, 'update_project_dependency']);
+
+   // Edit Milestone
+   Route::get('edit_milestone/{id}' , [ProjectManagerController:: class, 'edit_milestone'])->name('projectManager.edit_milestone');
+   Route::get('edit_milestone_form/{id}' , [ProjectManagerController:: class, 'edit_milestone_form'])->name('projectManager.edit_milestone_form');
+   Route::patch('update_project_milestone/{id}', [ProjectManagerController::class, 'update_project_milestone']);
+
+
+   // Edit Resource
+   Route::get('edit_resource/{id}' , [ProjectManagerController:: class, 'edit_resource'])->name('projectManager.edit_resource');
+   Route::get('edit_resource_form/{id}' , [ProjectManagerController:: class, 'edit_resource_form'])->name('projectManager.edit_resource_form');
+   Route::patch('update_project_resource/{id}', [ProjectManagerController::class, 'update_project_resource']);
+
+
+   // Delete Project Plan
+   Route::get('select_category_to_delete_pp', [ProjectManagerController::class, 'select_category_to_delete_pp'])->name('projectManager.select_category_to_delete_pp');
+   Route::get('select_project_to_delete_pp/{id}', [ProjectManagerController::class, 'select_project_to_delete_pp'])->name('projectManager.select_project_to_delete_pp');
+   Route::get('select_project_plan_to_delete/{id}', [ProjectManagerController::class, 'select_project_plan_to_delete'])->name('projectManager.select_project_plan_to_delete');
+
+
+   // Delete Plan
+   Route::get('delete_plan/{id}', [ProjectManagerController::class, 'delete_plan'])->name('projectManager.delete_plan');
+   
+   // Delete Objective
+   Route::get('delete_objective/{id}', [ProjectManagerController::class, 'delete_plan'])->name('projectManager.delete_plan');
+
+
+});
        
    // Project Manager Routes End 
 

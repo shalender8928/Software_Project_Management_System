@@ -98,10 +98,10 @@
             <a href="{{url('select_category_to_add_pro_plan')}}" class="nav-link">Add Project Plan</a>
           </li>
           <li class="nav-item">
-            <a href="#" class="nav-link">Edit Project Plan </a>
+            <a href="{{url('select_category_to_edit_pp')}}" class="nav-link">Edit Project Plan </a>
           </li>
           <li class="nav-item">
-            <a href="#" class="nav-link">Delete Project Plan </a>
+            <a href="{{url('select_category_to_delete_pp')}}" class="nav-link">Delete Project Plan </a>
           </li>
           
          

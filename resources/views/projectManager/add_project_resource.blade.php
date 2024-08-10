@@ -39,7 +39,7 @@
 
                                         <!-- Type field -->
                                         <div class="mb-3">
-                                            <label class="form-label">Type</label>
+                                            <label class="form-label">Resource Type</label>
                                             <select class="form-control" name="type" required>
                                                 <option value="material">Select Project Resource</option>
                                                 <option value="material">Material</option>

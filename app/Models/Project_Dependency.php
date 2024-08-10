@@ -17,4 +17,16 @@ class Project_Dependency extends Model
         'dependent_task_id',
         'dependency_type',
     ];
+
+
+    public function precedingTask()
+    {
+        return $this->belongsTo(Task::class, 'preceding_task_id');
+    }
+
+    // Define the relationship to the dependent task
+    public function dependentTask()
+    {
+        return $this->belongsTo(Task::class, 'dependent_task_id');
+    }
 }

@@ -845,7 +845,14 @@ public function assign_task_update_post(Request $request, $id)
             }
 
             // Create a new ProjectDeliverable using the validated data
-            Project_Deliverable::create($validated);
+
+            Project_Deliverable::create([
+                'plan_id' => $validated['plan_id'],
+                'name' => $validated['name'],
+                'description' => $validated['description'],
+                'deadline' => $validated['deadline'],
+
+            ]);
 
             // Display a success message using toastr
             toastr()->timeOut(10000)->closeButton()->addSuccess('Project deliverable added successfully!');
@@ -981,10 +988,597 @@ public function assign_task_update_post(Request $request, $id)
                 // Redirect to a relevant page (e.g., dashboard or another view)
                 return redirect()->back();
             }
-            
+
+
+            public function select_category_to_edit_pp(){
+                $category = Category:: orderBy('cat_name' , 'asc')->get();
+                return view('projectManager.select_category_to_edit_pp' , compact('category'));
+            }
+
+            public function select_project_to_edit_pp($id){
+                $project = Project::where('category_id', $id)->orderBy('name', 'asc')->get();
+                $category = Category::find($id);
+
+                if ($project->isEmpty()) {
+                    toastr()->timeOut(10000)->closeButton()->warning('No projects found under the selected category.');
+                    return redirect()->back();
+                }
+
+                return view('projectManager.select_project_to_edit_pp', compact('project', 'category'));
+            }
+
+            public function select_project_plan($id)
+                {
+                    // Check if the project plan exists
+                    $projectPlan = Project_Plan::where('project_id', $id)->first();
+
+                    if (!$projectPlan) {
+                        // If the project plan does not exist, display a message and suggest creating one
+                        toastr()->timeOut(10000)->closeButton()->warning('Project plan not found. Please create a project plan first.');
+                        return redirect()->back();
+                    }
+
+                    
+
+                    // Return the view with the project plan and its components
+                    return view('projectManager.select_project_plan', compact('projectPlan'));
+                }
+
+                public function edit_plan($id){
+                    $projectPlan = Project_Plan::where('id', $id)->first();
+                    $project = Project::where('id',$projectPlan->project_id )->first();
+
+                    if (!$projectPlan) {
+                        // If the project plan does not exist, display a message and suggest creating one
+                        toastr()->timeOut(10000)->closeButton()->warning('Project plan not found. Please create a project plan first.');
+                        return redirect()->back();
+                    }
+
+                    return view('projectManager.edit_plan', compact('projectPlan', 'project'));
+
+                }
+
+                public function update_project_plan(Request $request, $id)
+                {
+                    // Validate the incoming request data
+                    $validatedData = $request->validate([
+                        'name' => 'required|string|max:255',
+                        'description' => 'nullable|string',
+                        'start_date' => 'required|date',
+                        'deadline' => 'required|date|after_or_equal:start_date',
+                    ]);
+
+                    // Find the project plan by ID
+                    $projectPlan = Project_Plan::find($id);
+
+                    // Check if a project plan with the same name exists within the same project
+                    $planExists = Project_Plan::where('name', $request->input('name'))
+                                        ->where('project_id', $projectPlan->project_id)
+                                        ->where('id', '!=', $id)
+                                        ->exists();
+
+                    if ($planExists) {
+                        toastr()->timeOut(10000)->closeButton()->warning('A project plan with this name already exists in the selected project.');
+                        return redirect()->back()->withInput();
+                    }
+
+                    // Check if there are any changes
+                    $noChanges = $projectPlan->name === $request->input('name') &&
+                                $projectPlan->description === $request->input('description') &&
+                                $projectPlan->start_date === $request->input('start_date') &&
+                                $projectPlan->deadline === $request->input('deadline');
+
+                    if ($noChanges) {
+                        toastr()->timeOut(10000)->closeButton()->info('No changes made to the project plan.');
+                        return redirect()->back();
+                    }
+
+                    // Update the project plan
+                    $projectPlan->name = $request->input('name');
+                    $projectPlan->description = $request->input('description');
+                    $projectPlan->start_date = $request->input('start_date');
+                    $projectPlan->deadline = $request->input('deadline');
+                    $projectPlan->save();
+
+                    toastr()->timeOut(10000)->closeButton()->success('Project plan updated successfully.');
+                    return redirect()->back();
+                }
+
+
+                public function edit_objective($id)
+                {
+                    $objective = Project_Objective::where('plan_id', $id)->first();
+                    $projectPlan = Project_Plan::find($id);
+                    $project = Project:: where('id' ,$projectPlan->project_id )->first();
+                
+                    if (!$objective) {
+                        toastr()->timeOut(10000)->closeButton()->warning('No project objective found for this project plan. Please create a project objective first.');
+                        return redirect()->back();
+                    }
+                
+                    return view('projectManager.edit_objective', compact('objective', 'projectPlan' , 'project'));
+                }
+
+                public function update_project_objective(Request $request, $id) {
+                    $validatedData = $request->validate([
+                        'description' => 'required|string',
+                    ]);
+                
+                    $objective = Project_Objective::find($id);
+                
+                    if (!$objective) {
+                        toastr()->timeOut(10000)->closeButton()->warning('Project objective not found.');
+                        return redirect()->back();
+                    }
+                
+                   
+                
+                    // Check if there are any changes
+                    $noChanges =$objective->description === $request->input('description');
+                
+                    if ($noChanges) {
+                        toastr()->timeOut(10000)->closeButton()->info('No changes made to the project objective.');
+                        return redirect()->back();
+                    }
+                
+                    // Update the project objective
+                    $objective->description = $request->input('description');
+                    $objective->save();
+                
+                    toastr()->timeOut(10000)->closeButton()->success('Project objective updated successfully.');
+                    return redirect()->back();
+                }
+
+
+                public function edit_scope($id){
+                    $scope = Project_Scope::where('plan_id', $id)->first();
+                    $projectPlan = Project_Plan::find($id);
+                    $project = Project:: where('id' ,$projectPlan->project_id )->first();
+                
+                    if (!$scope) {
+                        toastr()->timeOut(10000)->closeButton()->warning('No project scope found for this project plan. Please create a project scope first.');
+                        return redirect()->back();
+                    }
+                
+                    return view('projectManager.edit_scope', compact('scope', 'projectPlan' , 'project'));
+                }
+
+
+                public function update_project_scope(Request $request , $id){
+                    $validatedData = $request->validate([
+                        'description' => 'required|string',
+                    ]);
+                
+                    $scope = Project_Scope::find($id);
+                
+                    if (!$scope) {
+                        toastr()->timeOut(10000)->closeButton()->warning('Project scope not found.');
+                        return redirect()->back();
+                    }
+                
+                   
+                
+                    // Check if there are any changes
+                    $noChanges = $scope->description === $request->input('description');
+                
+                    if ($noChanges) {
+                        toastr()->timeOut(10000)->closeButton()->info('No changes made to the project scope.');
+                        return redirect()->back();
+                    }
+                
+                    // Update the project objective
+                    $scope->description = $request->input('description');
+                    $scope->save();
+                
+                    toastr()->timeOut(10000)->closeButton()->success('Project scope updated successfully.');
+                    return redirect()->back();
+                }
 
 
 
+                public function edit_deliverable($id){
+                    $projectPlan = Project_Plan::find($id);
+                
+                    if (!$projectPlan) {
+                        toastr()->timeOut(10000)->closeButton()->warning('Project plan not found.');
+                        return redirect()->back();
+                    }
+                
+                    $deliverables = Project_Deliverable::where('plan_id', $id)->get();
+                
+                    if ($deliverables->isEmpty()) {
+                        toastr()->timeOut(10000)->closeButton()->warning('No project deliverables found for this project plan. Please create project deliverables first.');
+                        return redirect()->back();
+                    }
+                
+                    $project = Project::where('id', $projectPlan->project_id)->first();
+                
+                    return view('projectManager.edit_deliverable', compact('deliverables', 'projectPlan', 'project'));
+                }
+
+
+                public function edit_deliverable_form($id){
+                    $deliverable = Project_Deliverable:: find($id);
+                    $projectPlan = Project_Plan::where('id' , $deliverable->plan_id)->first();
+                    $project = Project::where('id', $projectPlan->project_id)->first();
+
+
+                    return view('projectManager.edit_deliverable_form' , compact('deliverable','projectPlan', 'project'));
+                }
+
+
+                public function update_project_deliverable(Request $request, $id)
+                {
+                    // Validate the incoming request data
+                    $request->validate([
+                        'name' => 'required|string|max:255',
+                        'description' => 'required|string',
+                        'deadline' => 'required|date',
+                    ]);
+                
+                    // Retrieve the deliverable to be updated
+                    $deliverable = Project_Deliverable::findOrFail($id);
+                
+                    // Check if there are no changes made
+                    if (
+                        $deliverable->name === $request->name &&
+                        $deliverable->description === $request->description &&
+                        $deliverable->deadline === $request->deadline
+                    ) {
+                        toastr()->info('No changes were made to the deliverable.');
+                        return redirect()->back();
+                    }
+                
+                    // Check if there is another deliverable with the same name under the same project plan
+                    $existingDeliverable = Project_Deliverable::where('plan_id', $deliverable->plan_id)
+                        ->where('name', $request->name)
+                        ->where('id', '!=', $id) // Exclude the current deliverable
+                        ->first();
+                
+                    if ($existingDeliverable) {
+                        toastr()->error('A deliverable with the same name already exists under this project plan.');
+                        return redirect()->back();
+                    }
+                
+                    // Update the deliverable with new data
+                    $deliverable->name = $request->name;
+                    $deliverable->description = $request->description;
+                    $deliverable->deadline = $request->deadline;
+                    $deliverable->save();
+                
+                    // Success message and redirect
+                    toastr()->success('Deliverable updated successfully.');
+                    return redirect()->back();
+                }
+
+                public function edit_dependency($id)
+                    {
+                        $projectPlan = Project_Plan::find($id);
+
+                        if (!$projectPlan) {
+                            toastr()->timeOut(10000)->closeButton()->warning('Project plan not found.');
+                            return redirect()->back();
+                        }
+
+                        $dependencies = Project_Dependency::where('plan_id', $id)->with(['precedingTask', 'dependentTask'])->get();
+
+                        if ($dependencies->isEmpty()) {
+                            toastr()->timeOut(10000)->closeButton()->warning('No project dependencies found for this project plan. Please create project dependencies first.');
+                            return redirect()->back();
+                        }
+
+                        $project = Project::where('id', $projectPlan->project_id)->first();
+
+                        return view('projectManager.edit_dependency', compact('dependencies', 'projectPlan', 'project'));
+                    }
+
+                    public function edit_dependency_form($id)
+                    {
+                        // Find the project dependency by ID
+                        $dependency = Project_Dependency::find($id);
+
+                        if (!$dependency) {
+                            toastr()->timeOut(10000)->closeButton()->warning('Dependency not found.');
+                            return redirect()->back();
+                        }
+
+                        // Find the project plan
+                        $projectPlan = Project_Plan::find($dependency->plan_id);
+                        $project = Project::where('id', $projectPlan->project_id)->first();
+
+
+                        if (!$projectPlan) {
+                            toastr()->timeOut(10000)->closeButton()->warning('Project plan not found.');
+                            return redirect()->back();
+                        }
+
+                        // Get all tasks related to the project
+                        $tasks = Task::where('project_id', $projectPlan->project_id)->get();
+
+                        return view('projectManager.edit_dependency_form', compact('dependency', 'projectPlan', 'tasks', 'project'));
+                    }
+
+                    public function update_project_dependency(Request $request, $id)
+                    {
+                        // Validate the input data
+                        $request->validate([
+                            'preceding_task_id' => 'required|exists:tasks,id',
+                            'dependent_task_id' => 'required|different:preceding_task_id|exists:tasks,id',
+                            'dependency_type' => 'required|in:start_to_start,finished_to_start,start_to_finish,finished_to_finish',
+                        ]);
+
+                        // Find the project dependency by ID
+                        $dependency = Project_Dependency::find($id);
+
+                        if (!$dependency) {
+                            toastr()->timeOut(10000)->closeButton()->warning('Dependency not found.');
+                            return redirect()->back();
+                        }
+
+                        // Check if there are any changes
+                        $hasChanges = (
+                            $dependency->preceding_task_id != $request->preceding_task_id ||
+                            $dependency->dependent_task_id != $request->dependent_task_id ||
+                            $dependency->dependency_type != $request->dependency_type
+                        );
+
+                        if (!$hasChanges) {
+                            toastr()->timeOut(10000)->closeButton()->info('No changes detected.');
+                            return redirect()->back();
+                        }
+
+                        // Check if another dependency exists with the same preceding and dependent tasks under the same plan
+                        $existingDependency = Project_Dependency::where('plan_id', $dependency->plan_id)
+                            ->where('preceding_task_id', $request->preceding_task_id)
+                            ->where('dependent_task_id', $request->dependent_task_id)
+                            ->where('id', '!=', $id)
+                            ->first();
+
+                        if ($existingDependency) {
+                            toastr()->timeOut(10000)->closeButton()->error('A dependency with the same preceding and dependent tasks already exists.');
+                            return redirect()->back();
+                        }
+
+                        // Update the project dependency
+                        $dependency->preceding_task_id = $request->preceding_task_id;
+                        $dependency->dependent_task_id = $request->dependent_task_id;
+                        $dependency->dependency_type = $request->dependency_type;
+                        $dependency->save();
+
+                        toastr()->timeOut(10000)->closeButton()->success('Dependency updated successfully.');
+                        return redirect()->back(); // Redirect to a relevant route
+                    }
+
+
+                    public function edit_milestone($id){
+
+                        $projectPlan = Project_Plan::find($id);
+
+                        if (!$projectPlan) {
+                            toastr()->timeOut(10000)->closeButton()->warning('Project plan not found.');
+                            return redirect()->back();
+                        }
+
+                        $milestone = Project_Milestone::where('plan_id', $id)->get();
+
+                        if ($milestone->isEmpty()) {
+                            toastr()->timeOut(10000)->closeButton()->warning('No project milestones found for this project plan. Please create project milestone first.');
+                            return redirect()->back();
+                        }
+
+                        $project = Project::where('id', $projectPlan->project_id)->first();
+
+                        return view('projectManager.edit_milestone', compact('milestone', 'projectPlan', 'project'));
+                    }
+
+                    public function edit_milestone_form($id){
+                        $milestone = Project_Milestone:: find($id);
+                        $projectPlan = Project_Plan::where('id' , $milestone->plan_id)->first();
+                        $project = Project::where('id', $projectPlan->project_id)->first();
+    
+    
+                        return view('projectManager.edit_milestone_form' , compact('milestone','projectPlan', 'project'));
+
+                    }
+
+                    public function update_project_milestone(Request $request, $id)
+                    {
+                        // Validate the input data
+                        $request->validate([
+                            'name' => 'required|string|max:255',
+                            'description' => 'required|string',
+                            'deadline' => 'required|date|after_or_equal:today',
+                        ]);
+                    
+                        // Find the milestone by ID
+                        $milestone = Project_Milestone::find($id);
+                    
+                        if (!$milestone) {
+                            toastr()->timeOut(10000)->closeButton()->warning('Milestone not found.');
+                            return redirect()->back();
+                        }
+                    
+                        // Check for changes
+                        $hasChanges = (
+                            $milestone->name != $request->name ||
+                            $milestone->description != $request->description ||
+                            $milestone->deadline != $request->deadline
+                        );
+                    
+                        if (!$hasChanges) {
+                            toastr()->timeOut(10000)->closeButton()->info('No changes detected.');
+                            return redirect()->back();
+                        }
+                    
+                        // Check if another milestone with the same name exists under the same project plan
+                        $existingMilestone = Project_Milestone::where('plan_id', $milestone->plan_id)
+                            ->where('name', $request->name)
+                            ->where('id', '!=', $id)
+                            ->first();
+                    
+                        if ($existingMilestone) {
+                            toastr()->timeOut(10000)->closeButton()->error('A milestone with the same name already exists under this project plan.');
+                            return redirect()->back();
+                        }
+                    
+                        // Update the milestone
+                        $milestone->name = $request->name;
+                        $milestone->description = $request->description;
+                        $milestone->deadline = $request->deadline;
+                        $milestone->save();
+                    
+                        toastr()->timeOut(10000)->closeButton()->success('Milestone updated successfully.');
+                        return redirect()->back();
+                    }
+
+                    public function edit_resource($id){
+                        $projectPlan = Project_Plan::find($id);
+
+                        if (!$projectPlan) {
+                            toastr()->timeOut(10000)->closeButton()->warning('Project plan not found.');
+                            return redirect()->back();
+                        }
+
+                        $resource = Project_Resource::where('plan_id', $id)->get();
+
+                        if ($resource->isEmpty()) {
+                            toastr()->timeOut(10000)->closeButton()->warning('No project resources found for this project plan. Please create project resource first.');
+                            return redirect()->back();
+                        }
+
+                        $project = Project::where('id', $projectPlan->project_id)->first();
+
+                        return view('projectManager.edit_resource', compact('resource', 'projectPlan', 'project'));
+                    }
+
+                    public function edit_resource_form($id){
+                        $resource = Project_Resource:: find($id);
+                        $projectPlan = Project_Plan::where('id' , $resource->plan_id)->first();
+                        $project = Project::where('id', $projectPlan->project_id)->first();
+    
+    
+                        return view('projectManager.edit_resource_form' , compact('resource','projectPlan', 'project'));
+                    }
+
+
+
+
+                    public function update_project_resource(Request $request, $id)
+                    {
+                        // Validate the incoming request data
+                        $request->validate([
+                            'name' => 'required|string|max:255',
+                            'type' => 'required|string',
+                            'cost_per_unit' => 'required|numeric',
+                            'availability' => 'required|numeric',
+                        ]);
+                    
+                        // Find the resource to be updated
+                        $resource = Project_Resource::find($id);
+                    
+                        if (!$resource) {
+                            toastr()->timeOut(10000)->closeButton()->error('Resource not found.', 'Error');
+                            return redirect()->back();
+                        }
+                    
+                        // Check if the new name already exists under the same project plan
+                        $existingResource = Project_Resource::where('plan_id', $resource->plan_id)
+                            ->where('name', $request->name)
+                            ->where('id', '!=', $id)
+                            ->first();
+                    
+                        if ($existingResource) {
+                            toastr()->timeOut(10000)->closeButton()->error('A resource with the same name already exists under this project plan.');
+                            return redirect()->back();
+                        }
+                    
+                        // Check if there are any changes
+                        $hasChanges = $resource->name != $request->name ||
+                                      $resource->type != $request->type ||
+                                      $resource->cost_per_unit != $request->cost_per_unit ||
+                                      $resource->availability != $request->availability;
+                    
+                        if (!$hasChanges) {
+                            toastr()->timeOut(10000)->closeButton()->info('No changes were made to the resource.');
+                            return redirect()->back();
+                        }
+                    
+                        // Update the resource details if changes were made
+                        $resource->name = $request->name;
+                        $resource->type = $request->type;
+                        $resource->cost_per_unit = $request->cost_per_unit;
+                        $resource->availability = $request->availability;
+                        $resource->save();
+                    
+                        // Display success message and redirect
+                        toastr()->timeOut(10000)->closeButton()->success('Resource updated successfully.');
+                        return redirect()->back();
+                    }
+
+
+                    public function select_category_to_delete_pp(){
+                        $category = Category:: orderBy('cat_name' , 'asc')->get();
+                        return view('projectManager.select_category_to_delete_pp' , compact('category'));
+                    }
+                    
+                    public function select_project_to_delete_pp($id){
+                        $project = Project::where('category_id', $id)->orderBy('name', 'asc')->get();
+                        $category = Category::find($id);
+
+                        if ($project->isEmpty()) {
+                            toastr()->timeOut(10000)->closeButton()->warning('No projects found under the selected category.');
+                            return redirect()->back();
+                        }
+
+                        return view('projectManager.select_project_to_delete_pp', compact('project', 'category'));
+                    }
+
+                    public function select_project_plan_to_delete($id){
+                        {
+                            // Check if the project plan exists
+                            $projectPlan = Project_Plan::where('project_id', $id)->first();
+        
+                            if (!$projectPlan) {
+                                // If the project plan does not exist, display a message and suggest creating one
+                                toastr()->timeOut(10000)->closeButton()->warning('Project plan not found.');
+                                return redirect()->back();
+                            }
+        
+                            
+        
+                            // Return the view with the project plan and its components
+                            return view('projectManager.select_project_plan_to_delete', compact('projectPlan'));
+                        }
+
+ 
+              }
+              
+              public function delete_plan($id){
+                $projectPlan = Project_Plan::where('id', $id)->first();
+                if (!$projectPlan) {
+                    // If the project plan does not exist, display a message and suggest creating one
+                    toastr()->timeOut(10000)->closeButton()->warning('Project plan not found.');
+                    return redirect()->back();
+                }
+
+                $projectPlan->delete();
+                toastr()->timeOut(10000)->closeButton()->addSuccess('Project plan deleted successfully');
+                return redirect()->back();
+              }
+
+              public function delete_objective($id){
+                $objective = Project_Objective::where('plan_id', $id)->get();
+                    if (!$objective) {
+                        toastr()->timeOut(10000)->closeButton()->warning('No project objective found for this project plan.');
+                        return redirect()->back();
+                    }
+
+                    $objectiveDel = Project_Objective:: find($objective->id);
+
+                $objectiveDel->delete();
+                toastr()->timeOut(10000)->closeButton()->addSuccess('Project objective deleted successfully');
+                return redirect()->back();
+              }
 
 }
 
@@ -994,22 +1588,19 @@ public function assign_task_update_post(Request $request, $id)
  
 
 
+// public function select_category_to_edit_pp(){
+//                 $category = Category:: orderBy('cat_name' , 'asc')->get();
+//                 return view('projectManager.select_category_to_edit_pp' , compact('category'));
+//             }
 
+//             public function select_project_to_edit_pp($id){
+//                 $project = Project::where('category_id', $id)->orderBy('name', 'asc')->get();
+//                 $category = Category::find($id);
 
-// public function select_category_assign_task(){
-//     $category = Category:: orderBy('cat_name' , 'asc')->get();
-//     return view('projectManager.select_category_assign_task' , compact('category'));
-// }
+//                 if ($project->isEmpty()) {
+//                     toastr()->timeOut(10000)->closeButton()->warning('No projects found under the selected category.');
+//                     return redirect()->back();
+//                 }
 
-// public function select_project_to_assign_task($id)
-// {
-// $project = Project::where('category_id', $id)->orderBy('name', 'asc')->get();
-// $category = Category::find($id);
-
-// if ($project->isEmpty()) {
-//     toastr()->timeOut(10000)->closeButton()->warning('No projects found under the selected category.');
-//     return redirect()->back();
-// }
-
-// return view('projectManager.select_project_to_assign_task', compact('project', 'category'));
-// }
+//                 return view('projectManager.select_project_to_edit_pp', compact('project', 'category'));
+//             }
