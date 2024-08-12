@@ -72,7 +72,7 @@ class User extends Authenticatable implements MustVerifyEmail
         {
             return $this->hasMany(Developer_has_Task::class);
         }
-<<<<<<< HEAD
+
 
    
         public function developerHasTasks()
@@ -83,6 +83,5 @@ class User extends Authenticatable implements MustVerifyEmail
         
 
 }
-=======
-    }
->>>>>>> 0c277ad714f5ac62c43a95d4dc7b8ac56cf48e9a
+
+
