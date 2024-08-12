@@ -2,15 +2,18 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Spatie\Permission\Traits\HasRoles;
+use Illuminate\Contracts\Auth\MustVerifyEmail as MustVerifyEmailContract;
+
+
 
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
-class User extends Authenticatable
+class User extends Authenticatable implements MustVerifyEmail
 {
     use HasFactory, Notifiable,HasRoles;
 
@@ -69,6 +72,7 @@ class User extends Authenticatable
         {
             return $this->hasMany(Developer_has_Task::class);
         }
+<<<<<<< HEAD
 
    
         public function developerHasTasks()
@@ -79,3 +83,6 @@ class User extends Authenticatable
         
 
 }
+=======
+    }
+>>>>>>> 0c277ad714f5ac62c43a95d4dc7b8ac56cf48e9a

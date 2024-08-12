@@ -3,6 +3,7 @@
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\SeniorManagerController;
 use App\Http\Controllers\ProjectManagerController;
 use App\Http\Controllers\DeveloperController;
@@ -43,19 +44,28 @@ Route::middleware(['auth'])->group(function () {
         ->middleware('role:Customer');
 });
 
+Route::get('/add_employee', [App\Http\Controllers\AdminController::class, 'add_employee'])
+    ->name('admin.add_employee')
+    ->middleware(['web', 'auth', 'CheckRole:Admin']);
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// the home controller or landing page controller page start
+     Route::get('/', [HomeController::class, 'index'])->name('home.index');
+
+    
 
 Route::middleware(['auth', 'CheckRole:Admin'])->group(function () 
 {
     Route::get('/admin/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
+    Route::get('edit_profile', [AdminController::class, 'edit_profile'])->name('admin.edit_profile');
+  
+
      // Define route for editing profile image
     Route::get('admin_image_edit', [AdminController::class, 'admin_image_edit'])->name('admin.admin_image_edit');
     Route::patch('update_admin_profile_image/{id}', [AdminController::class, 'update_admin_profile_image']);
     Route::get('admin_edit_profile', [AdminController::class, 'admin_edit_profile'])->name('admin.admin_edit_profile');
     Route::get('add_employee', [AdminController::class, 'add_employee'])->name('admin.add_employee');
+    Route::post('register_employee', [AdminController::class, 'register_employee'])->name('register_employee');
+    
     Route::get('edit', [AdminController::class, 'edit'])->name('admin.edit');
     Route::get('delete', [AdminController::class, 'delete'])->name('admin.delete');
     Route::get('delete_category', [AdminController::class, 'delete_category'])->name('admin.delete_category');
@@ -274,17 +284,17 @@ Route::middleware(['auth', 'CheckRole:Senior Manager'])->group(function ()
 
 });
 
-       // Senior Manager Routes End 🌹🌹🌹🌹
+       // Senior Manager Routes End
     
-       // Customer Routes Start 👩‍👩‍👦‍👦👩‍👩‍👦👩‍👩‍👧👩‍👩‍👧‍👦
+       // Customer Routes Start 
 Route::middleware(['auth', 'CheckRole:Customer'])->group(function () {
     Route::get('/customer/dashboard', [CustomerController::class, 'dashboard'])->name('customer.dashboard');
 });
 
-       // Customer Routes End 👩‍👩‍👦‍👦👩‍👩‍👦👩‍👩‍👧👩‍👩‍👧‍👦
+       // Customer Routes End 
 
 
-       // Project Manager Routes Start 🧗‍♂️🧗‍♂️🧗‍♀️🕺
+       // Project Manager Routes Start
 
    Route::middleware(['auth', 'CheckRole:Project Manager'])->group(function () 
    {
