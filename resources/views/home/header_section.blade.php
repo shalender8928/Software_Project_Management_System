@@ -15,6 +15,11 @@
               <li><a class="nav-link scrollto " href="#portfolio">Portfolio</a></li>
               <li><a class="nav-link scrollto" href="#team">Team</a></li>
               <li><a class="nav-link scrollto" href="#contact">Contact</a></li>
+              <form method="POST" action="{{ route('logout') }}">
+                @csrf
+
+              <input   type="submit" value="Logout">
+            </form>
               <li><a class="nav-link scrollto" href="{{url('/login')}}">Login</a></li>
               <li><a class="nav-link scrollto" href="{{url('/register')}}">Register</a></li>
             </ul>

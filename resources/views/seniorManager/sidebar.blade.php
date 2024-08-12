@@ -1,7 +1,7 @@
 <nav class="sidebar"style="width: 250px;">
 <div class="sidebar-header"style="width: 250px;">
 <a href="#" class="sidebar-brand" style="font-size:5;">
-  senion Manager<span> spms</span>
+  Senior Manager
 </a>
 <div class="sidebar-toggler not-active">
   <span></span>
@@ -20,7 +20,6 @@
     </a>
   </li>
 
-  <li class="nav-item nav-category">home</li>
 
 
  <!-- start the manage Development team -->

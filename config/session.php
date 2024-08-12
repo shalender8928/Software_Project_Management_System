@@ -214,4 +214,10 @@ return [
 
     'partitioned' => env('SESSION_PARTITIONED_COOKIE', false),
 
+    'driver' => env('SESSION_DRIVER', 'file'),
+'lifetime' => env('SESSION_LIFETIME', 1), // Set to 15 minutes or as needed
+'expire_on_close' => true, // This ensures the session expires when the browser closes
+
+
+
 ];

@@ -8,7 +8,7 @@
     <meta name="author" content="NobleUI">
     <meta name="keywords" content="nobleui, bootstrap, bootstrap 5, bootstrap5, admin, dashboard, template, responsive, css, sass, html, theme, front-end, ui kit, web">
 
-    <title>NobleUI - HTML Bootstrap 5 Admin Dashboard Template</title>
+    <title>Software Project Management System</title>
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -77,7 +77,7 @@
         Login
     </button>
 </div>
-                                            <a href="{{ route('register') }}" class="d-block mt-3 text-muted">Not a user? Sign up</a>
+                                            <a href="{{ route('register') }}" class="d-block mt-3 text-muted">Don't have an Account? Sign up</a>
                                         </form>
                                     </div>
                                 </div>
