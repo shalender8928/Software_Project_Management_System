@@ -55,8 +55,7 @@ document.onkeypress = resetTimer;
 // Handle browser/tab close
 window.addEventListener('beforeunload', function (e) {
     // Optional: display confirmation dialog
-    e.preventDefault();
-    e.returnValue = ''; // Standard for most browsers
+   // Standard for most browsers
 });
 
 </script>

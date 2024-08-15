@@ -37,47 +37,17 @@
 
     <!-- End Services Section -->
 
-    <!-- ======= Call To Action Section ======= -->
+   
 
-    @include('home.call_action_section')
+ 
 
-    <!-- End Call To Action Section -->
-
-    <!-- ======= Skills Section ======= -->
-
-    @include('home.skill_section')
-
-    <!-- End Skills Section -->
-
-    <!-- ======= Facts Section ======= -->
+    
 
     @include('home.facts_section')
 
-    <!-- End Facts Section -->
+  
 
-    <!-- ======= Portfolio Section ======= -->
-
-    @include('home.portfolio_section')
-
-    <!-- End Portfolio Section -->
-
-    <!-- ======= Our Clients Section ======= -->
-
-    @include('home.clients_section')
-
-   <!-- End Our Clients Section -->
-
-    <!-- ======= Testimonials Section ======= -->
-
-    @include('home.testimonials_section')
-     
-    <!-- End Testimonials Section -->
-
-    <!-- ======= Team Section ======= -->
-
-      @include('home.team_section')
-      
-    <!-- End Team Section -->
+  
 
     <!-- ======= Contact Section ======= -->
 
