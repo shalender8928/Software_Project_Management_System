@@ -59,8 +59,8 @@
                 <div class="col-md-12">
                     <div class="card">
                         <div class="card-body">
-                        <h6 class="card-title">Rejection Form for the <span style="color: aqua; font-weight:bolder">{{$projectPlan->name}}</span> Project Plan</h6>
-                 <form action="{{ route('seniorManager.reject', $projectPlan->id) }}" method="POST">
+                        <h6 class="card-title">Rereject Form for the <span style="color: aqua; font-weight:bolder">{{$projectPlan->name}}</span> Project Plan</h6>
+                 <form action="{{ route('seniorManager.reject_approved_pp', $projectPlan->id) }}" method="POST">
                                  @csrf
                             <div class="form-group">
                               <label for="rejection_reason" style="font-weight: bold; font-size: 1.1rem; color: #333;">Rejection Reason</label>

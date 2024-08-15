@@ -28,7 +28,7 @@
                         <th class="pt-0">Category Name</th>
                         <th class="pt-0">Description</th>
                         <th class="pt-0">Created By</th>
-                        <th class="pt-0">View List of Project</th>
+                        <th class="pt-0"> Select View Project Category</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -47,7 +47,7 @@
                                 
 
                       <td>
-                        <a class="btn btn-info" href="{{url('view_projects_by_category',$datas->id)}}">View</a>
+                        <a class="btn btn-info" href="{{url('view_projects_by_category',$datas->id)}}">Select</a>
                       </td>
                             </tr>
                         @endforeach

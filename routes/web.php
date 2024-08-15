@@ -91,7 +91,7 @@ Route::middleware(['auth', 'CheckRole:Admin'])->group(function ()
     Route::get('update_category/{id}', [AdminController::class, 'update_category'])->name('admin.update_category');
 
     Route::get('delete_employee/{id}', [AdminController::class, 'delete_employee']);
-    Route::get('delete_pro_category/{id}', [AdminController::class, 'delete_pro_category']);
+    Route::get('delete_pro_category/{id}', [AdminController::class, 'delete_pro_catecgory']);
 
 
     Route::patch('admin_update_profile/{id}', [AdminController::class, 'admin_update_profile']);
@@ -272,14 +272,45 @@ Route::middleware(['auth', 'CheckRole:Senior Manager'])->group(function ()
 
    Route::get('view_projects_by_category/{id}', [SeniorManagerController::class, 'viewProjectsByCategory'])->name('seniorManager.view_projects_by_category');
 
-   Route::get('approve_project/{id}', [SeniorManagerController::class, 'approve_project'])->name('seniorManager.approve_project');
-
-   Route::get('reject_project/{id}', [SeniorManagerController::class,'reject_project'])->name('seniorManager.reject_project');
-
    // Define route for editing profile image
   Route::get('image_edit', [SeniorManagerController::class, 'editImage'])->name('seniorManager.image_edit');
 
   Route::patch('update_profile_image/{id}', [SeniorManagerController::class, 'update_profile_image']);
+
+  Route::get('View_project_Details_with_project_plan/{id}' , [SeniorManagerController:: class, 'View_project_Details_with_project_plan'])->name('seniorManager.View_project_Details_with_project_plan');
+      //View Project plan 
+  Route::get('view_project_plan/{id}' , [SeniorManagerController:: class, 'view_project_plan'])->name('seniorManager.view_project_plan');
+      //View project plan objective
+  Route::get('view_objective_of_project_plan/{id}' , [SeniorManagerController:: class, 'view_objective_of_project_plan'])->name('seniorManager.view_objective_of_project_plan');
+    //View project plan scop
+  Route::get('view_project_plan_scope/{id}' , [SeniorManagerController:: class, 'view_project_plan_scope'])->name('seniorManager.view_project_plan_scope');
+       //View project plan deliverable
+  Route::get('view_project_deliverable/{id}' , [SeniorManagerController:: class, 'view_project_deliverable'])->name('seniorManager.view_project_deliverable');
+      //View project plan dependency
+  Route::get('view_project_dependency/{id}' , [SeniorManagerController:: class, 'view_project_dependency'])->name('seniorManager.view_project_dependency');
+      //View project plan  milestone
+  Route::get('view_project_milestone/{id}' , [SeniorManagerController:: class, 'view_project_milestone'])->name('seniorManager.view_project_milestone');
+       //View project resource
+  Route::get('view_project_resource/{id}' , [SeniorManagerController:: class, 'view_project_resource'])->name('seniorManager.view_project_resource');
+   // Approve Project Plan
+  Route::get('approve_project/{id}', [SeniorManagerController::class, 'approve'])->name('seniorManager.approve_project');
+        //  approved_reject_project
+  Route::get('approved_reject_project/{id}', [SeniorManagerController::class, 'approved_reject_project'])->name('seniorManager.approved_reject_project');
+
+   // Reject Project form
+  Route::get('reject_project/{id}', [SeniorManagerController::class, 'showRejectionForm'])->name('seniorManager.reject_project');
+     // reject project
+  Route::post('reject/{id}', [SeniorManagerController::class, 'rejectProject'])->name('seniorManager.reject');
+  // approved project list pagee
+  Route::get('approved_project_page', [SeniorManagerController::class, 'approvedProjectPage'])->name('seniorManager.approved_project_page');
+
+  Route::get('reject_project_list', [SeniorManagerController::class, 'rejectProjectPage'])->name('seniorManager.reject_project_list');
+
+  Route::get('reject_approved_project/{id}', [SeniorManagerController::class, 'reject_approved_project'])->name('seniorManager.reject_approved_project');
+
+  Route::post('reject_approved_pp/{id}', [SeniorManagerController::class, 'reject_approved_pp'])->name('seniorManager.reject_approved_pp');
+
+
 
 
 });
@@ -380,7 +411,7 @@ Route::middleware(['auth', 'CheckRole:Customer'])->group(function () {
 
     // Adding Project Scope
    Route::get('go_to_scope/{id}', [ProjectManagerController::class, 'go_to_scope'])->name('projectManager.go_to_scope');
-   Route::post('store_project_scope', [ProjectManagerController::class, 'store_project_scope'])->name('projectManager.store_project_scope');
+   Route::get('store_project_scope', [ProjectManagerController::class, 'store_project_scope'])->name('projectManager.store_project_scope');
 
 
    Route::get('assign_task', [ProjectManagerController::class, 'assign_task'])->name('projectManager.assign_task');

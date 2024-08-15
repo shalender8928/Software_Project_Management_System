@@ -13,6 +13,7 @@ class Project extends Model
         return $this->hasOne('App\Models\User', 'id', 'created_by');
     }
 
+
     public function updater(){
         return $this->hasOne('App\Models\User', 'id', 'updated_by');
     }
@@ -27,4 +28,10 @@ class Project extends Model
     {
         return $this->hasMany(Task::class);
     }
-}
+        // Define the relationship with ProjectPlan
+        public function projectPlans()
+        {
+            return $this->hasMany(Project_Plan::class);
+        }
+        
+    }

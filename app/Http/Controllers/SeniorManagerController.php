@@ -11,6 +11,14 @@ use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Feedback;
 use App\Models\Category;
+use App\Models\Developer_has_Task;
+use App\Models\Project_Plan;
+use App\Models\Project_Objective;
+use App\Models\Project_Scope;
+use App\Models\Project_Deliverable;
+use App\Models\Project_Dependency;
+use App\Models\Project_Milestone;
+use App\Models\Project_Resource;
 
 
 class SeniorManagerController extends Controller
@@ -34,8 +42,14 @@ class SeniorManagerController extends Controller
     // Fetch the count of developers
 
     $developers =  User::role('developer')->count();
+
+       // Count the number of approved projects
+    $approvedProjectsCount = Project_Plan::where('status', 'approved')->count();
+
+     // Count the number of approved projects
+     $rejectedProjectsCount = Project_Plan::where('status', 'rejected')->count();
         
-   return view('seniorManager.dashboard', compact('data', 'projects', 'pending', 'completed','tasks','projectManagerRole','developers'));
+   return view('seniorManager.dashboard', compact('data', 'projects', 'pending', 'completed','tasks','projectManagerRole','developers','approvedProjectsCount','rejectedProjectsCount'));
       
     }
     public function mange_view_profile(){
@@ -107,30 +121,6 @@ class SeniorManagerController extends Controller
  
          
      }
-     public function approveProject($id)
-    {
-        // Find the project by ID
-        $project = Project::findOrFail($id);
-        
-        // Update the status to "Approved"
-        $project->status = 'Approved';
-        $project->save();
-        
-        // Redirect back with a success message
-        return redirect()->route('seniorManager.view_project_list')->with('success', 'Project approved successfully.');
-    }
-    public function rejectProject($id)
-    {
-        // Find the project by ID
-        $project = Project::findOrFail($id);
-        
-        // Update the status to "Rejected"
-        $project->status = 'Rejected';
-        $project->save();
-        
-        // Redirect back with a success message
-        return redirect()->route('seniorManager.view_project_list')->with('success', 'Project rejected successfully.');
-    }
     // view the project manager 
     public function view_project_managers()
     {
@@ -210,53 +200,34 @@ class SeniorManagerController extends Controller
         return view('seniorManager.view_projec_developer_details', compact('data','developer','address'));
     }
     public function viewProjectsByCategory($id)
-    {
-     $user = Auth::user();
-     $user_id = $user->id;    // logged in User Id
-     $data = User::find($user_id);
- 
-             // Fetch the category and its projects
-    //   $category = Category::with('projects')->find($id);
-      $category = Category::with('projects')->findOrFail($id);
- 
-     if (!$category) {
-         return redirect()->back()->with('error', 'Category not found.');
-     }
-     $projects = $category->projects;
- 
-     return view('seniorManager.view_projects_by_category', compact('data','projects'));
-     
-     }
-     public function approve_project($id)
-     {
-         $user = Auth::user();
-         $user_id = $user->id;    // logged-in User Id
-         $data = User::find($user_id);
-        // Find the project by ID
-        $projects = Project::find($id);
+   {
+    // Get the logged-in user
+    $user = Auth::user();
+    $user_id = $user->id;  // Logged in User ID
+    $data = User::find($user_id);
 
-         // Update the project status to 'Approved'
-         $projects->status = 'pending';
-         $projects->save();
-         return view('seniorManager.approve_project', compact('data','projects'));
-     }
+    // Fetch the category and its projects, excluding those with approved project plans
+    $category = Category::with(['projects' => function ($query) {
+        $query->whereDoesntHave('projectPlans', function ($subQuery) {
+            $subQuery->where('status', 'approved');
+        });
+    }])->findOrFail($id);
+
+    if (!$category) {
+        return redirect()->back()->with('error', 'Category not found.');
+    }
+
+    // Retrieve the projects within the category
+    $projects = $category->projects;
+
+    // Pass the data to the view
+    return view('seniorManager.view_projects_by_category', compact('data', 'projects'));
+    
+    }
+    
+
 
      
-     public function reject_project($id)
-     {
-         $user = Auth::user();
-         $user_id = $user->id;    // logged-in User Id
-         $data = User::find($user_id);
-         // Find the project by ID
-         $projects = Project::findOrFail($id);
-
-         // Update the project status to 'Rejected'
-         $projects->status ='pending';
-         $projects->save();
-
-         // Redirect back with a success message
-         return view('seniorManager.reject_project', compact('data','projects'));
-     }
         // Show the form to edit the profile image
         public function editImage()
         {
@@ -285,5 +256,317 @@ class SeniorManagerController extends Controller
             return redirect()->route('seniorManager.dashboard');
 
         }
+        public function View_project_Details_with_project_plan($id)
+        {
+            // Fetch the project plan
+            $projectPlan = Project_Plan::where('project_id', $id)->first();
+            $data = Auth::user();
+        
+            if (!$projectPlan) {
+                // If the project plan does not exist, display a message and suggest creating one
+                toastr()->timeOut(10000)->closeButton()->warning('Project plan not found. Please create a project plan first.');
+                return redirect()->back();
+            }
+        
+            // Check the status of the project plan
+            if ($projectPlan->status == 'approved') {
+                // Redirect if the status is 'approved'
+                toastr()->timeOut(10000)->closeButton()->success('This project plan has been approved and is no longer available for modification.');
+                return redirect()->route('seniorManager.dashboard');
+            }
+        
+            // Return the view with the project plan and its components
+            return view('seniorManager.View_project_Details_with_project_plan', compact('projectPlan', 'data'));
+        }
+        
+        // View project plan Details
+        public function view_project_plan($id){
+            $data = Auth::user();
+            $projectPlan = Project_Plan::where('id', $id)->first();
+            $project = Project::where('id',$projectPlan->project_id )->first();
+
+            if (!$projectPlan) {
+                // If the project plan does not exist, display a message and suggest creating one
+                toastr()->timeOut(10000)->closeButton()->warning('Project plan not found. Please create a project plan first.');
+                return redirect()->back();
+            }
+
+            return view('seniorManager.view_project_plan', compact('projectPlan', 'project','data'));
+
+        }
+        //View project Plan Objective
+        public function view_objective_of_project_plan($id)
+        {
+            $data = Auth::user();
+            $objective = Project_Objective::where('plan_id', $id)->first();
+            $projectPlan = Project_Plan::find($id);
+            $project = Project:: where('id' ,$projectPlan->project_id )->first();
+        
+            if (!$objective) {
+                toastr()->timeOut(10000)->closeButton()->warning('No project objective found for this project plan. Please create a project objective first.');
+                return redirect()->back();
+            }
+        
+            return view('seniorManager.view_objective_of_project_plan', compact('objective', 'projectPlan' , 'project','data'));
+        }
+        // View project plan scop
+        public function view_project_plan_scope($id){
+            $data = Auth::user();
+            $scope = Project_Scope::where('plan_id', $id)->first();
+            $projectPlan = Project_Plan::find($id);
+            $project = Project:: where('id' ,$projectPlan->project_id )->first();
+        
+            if (!$scope) {
+                toastr()->timeOut(10000)->closeButton()->warning('No project scope found for this project plan. Please create a project scope first.');
+                return redirect()->back();
+            }
+        
+            return view('seniorManager.view_project_plan_scope', compact('scope', 'projectPlan' , 'project','data'));
+        }
+        // View project  Deliverable
+        public function view_project_deliverable($id)
+        {
+            $data = Auth::user();
+            $deliverable = Project_Deliverable:: find($id);
+            $projectPlan = Project_Plan::where('id' , $deliverable->plan_id)->first();
+            $project = Project::where('id', $projectPlan->project_id)->first();
+
+
+            return view('seniorManager.view_project_deliverable' , compact('deliverable','projectPlan', 'project','data'));
+        }
+        public function view_project_dependency($id)
+        {
+            $user = Auth::user();
+            $data = User::find($user->id);
+        
+            // Find the project dependency
+            $dependency = Project_Dependency::find($id);
+        
+            // Check if the dependency exists
+            if (!$dependency) {
+                toastr()->timeOut(10000)->closeButton()->warning('Dependency not found.');
+                return redirect()->back();
+            }
+        
+            // Find the project plan
+            $projectPlan = Project_Plan::find($dependency->plan_id);
+        
+            // Check if the project plan exists
+            if (!$projectPlan) {
+                toastr()->timeOut(10000)->closeButton()->warning('Project plan not found.');
+                return redirect()->back();
+            }
+        
+            $project = Project::where('id', $projectPlan->project_id)->first();
+        
+            // Get all tasks related to the project
+            $tasks = Task::where('project_id', $projectPlan->project_id)->get();
+        
+            // Return the view with the necessary data
+            return view('seniorManager.view_project_dependency', compact('data', 'dependency', 'projectPlan', 'project', 'tasks'));
+        }
+        public function view_project_milestone($id)
+        {
+            $data = Auth::user();
+            $milestone = Project_Milestone::find($id);
+        
+            if (!$milestone) {
+                // Handle the case where the milestone is not found
+                return redirect()->back()->with('error', 'Milestone not found');
+                
+            }
+        
+            $projectPlan = Project_Plan::where('id', $milestone->plan_id)->first();
+        
+            if (!$projectPlan) {
+                // Handle the case where the project plan is not found
+                return redirect()->back()->with('error', 'Project plan not found');
+            }
+        
+            $project = Project::where('id', $projectPlan->project_id)->first();
+        
+            if (!$project) {
+                // Handle the case where the project is not found
+                return redirect()->back()->with('error', 'Project not found');
+            }
+        
+            return view('seniorManager.view_project_milestone', compact('milestone', 'projectPlan', 'project', 'data'));
+        }
+        public function view_project_resource($id)
+        {
+            $user = Auth::user();
+            $data = User::find($user->id);
+            $resource = Project_Resource:: find($id);
+            $projectPlan = Project_Plan::where('id' , $resource->plan_id)->first();
+            $project = Project::where('id', $projectPlan->project_id)->first();
+            return view('seniorManager.view_project_resource' , compact('resource','projectPlan', 'project','data'));
+        }
+         //    project aproved
+        public function approve($id)
+        {
+        // Fetch the project plan by its ID
+        $projectPlan = Project_Plan::find($id);
+    
+        // Check if the project plan exists and its status is 'draft'
+        if ($projectPlan && $projectPlan->status === 'draft') {
+            // Update the status to 'approved'
+            $projectPlan->status = 'approved';
+            $projectPlan->approved_by = auth()->user()->id;
+            $projectPlan->approved_on = now();
+    
+            // Save the changes
+            $projectPlan->save();
+    
+           
+    
+        // Display success notification and redirect to the approved project list page
+        toastr()->timeOut(10000)->closeButton()->success('Project Plan approved and deleted successfully.');
+        return redirect()->route('seniorManager.approved_project_page');
+        }
+    
+    // If the project plan doesn't exist or isn't in draft status, display warning and redirect back
+    toastr()->timeOut(10000)->closeButton()->warning('Project Plan not found or not in draft status.');
+    return redirect()->route('seniorManager.approved_project_page');
+    }
+    // approvedProjectPage
+    public function approvedProjectPage()
+    {
+        $data = Auth::user();
+        // Count of approved projects
+        $count = Project_Plan::where('status', 'approved')->count();
+
+    
+        // Fetch approved project plans with related project, category, and user data
+        $approvedProjects = Project_Plan::where('status', 'approved')->with(['project.category', 'createdBy', 'approvedBy'])
+            ->paginate(10);
+    
+        return view('seniorManager.approved_project_page', compact('data', 'approvedProjects','count'));
+    }
+    // rejectProject
+    public function showRejectionForm($id)
+    {
+        $data = Auth::user();
+        $projectPlan = Project_Plan::find($id);
+
+        if ($projectPlan) {
+            $showRejectionForm = true; // This will trigger the display of the form
+            return view('seniorManager.reject_project', compact('projectPlan', 'showRejectionForm','data'));
+        } else {
+            return redirect()->back()->with('error', 'Project Plan not found.');
+        }
+    }
+    // rejectProject
+    public function rejectProject(Request $request, $id)
+    {
+        // Fetch the project plan by its ID
+        $projectPlan = Project_Plan::find($id);
+    
+        // Check if the project plan exists and its status is 'draft'
+        if ($projectPlan && $projectPlan->status === 'draft') {
+            // Update the status to 'rejected'
+            $projectPlan->status = 'rejected';
+            $projectPlan->rejection_reason = $request->input('rejection_reason');
+            $projectPlan->approved_by = auth()->user()->id;
+            $projectPlan->approved_on = now();
+    
+            // Save the changes
+            $projectPlan->save();
+    
+           
+    
+            // Display success notification and redirect to the rejected project list page
+            toastr()->timeOut(10000)->closeButton()->success('Project Plan rejected and deleted successfully.');
+            return redirect()->route('seniorManager.reject_project_list');
+        }
+    
+        // If the project plan doesn't exist or isn't in draft status, display warning and redirect back
+        toastr()->timeOut(10000)->closeButton()->warning('Project Plan not found or not in draft status.');
+        return redirect()->route('seniorManager.rejected_project_list');
+    }
+    
+    // rejectProjectPage
+    public function rejectProjectPage()
+    {
+        $data = Auth::user();
+        // Count of approved projects
+        $count = Project_Plan::where('status', 'rejected')->count();
+
+    
+        // Fetch approved project plans with related project, category, and user data
+        $rejectedProjects = Project_Plan::where('status', 'rejected')->with(['project.category', 'createdBy', 'approvedBy'])
+            ->paginate(10);
+    
+        return view('seniorManager.reject_project_list', compact('data', 'rejectedProjects','count'));
+    }
+    
+    public function reject_approved_project($id)
+    {
+        $data = Auth::user();
+        $projectPlan = Project_Plan::find($id);
+
+        if ($projectPlan) {
+            $showRejectionForm = true; // This will trigger the display of the form
+            return view('seniorManager.reject_approved_project', compact('projectPlan', 'showRejectionForm','data'));
+        } else {
+            return redirect()->back()->with('error', 'Project Plan not found.');
+        }
+    }
+    // reject_approved_pp
+    public function reject_approved_pp(Request $request, $id)
+    {
+        // Fetch the project plan by its ID
+        $projectPlan = Project_Plan::find($id);
+    
+        // Check if the project plan exists and its status is 'approved'
+        if ($projectPlan && $projectPlan->status === 'approved') {
+            // Update the status to 'rejected'
+            $projectPlan->status = 'rejected';
+            $projectPlan->rejection_reason = $request->input('rejection_reason');
+            $projectPlan->rejected_by = auth()->user()->id; // Track who rejected it
+            $projectPlan->rejected_on = now();
+    
+            // Save the changes to the database
+            $projectPlan->save();
+    
+            // Display success notification and redirect to the rejected project list page
+            toastr()->timeOut(10000)->closeButton()->success('Project Plan status updated to "rejected" successfully.');
+            return redirect()->route('seniorManager.reject_project_list');
+        }
+    
+        // If the project plan doesn't exist or isn't in 'approved' status, display warning and redirect back
+        toastr()->timeOut(10000)->closeButton()->warning('Project Plan not found or not in approved status.');
+        return redirect()->route('seniorManager.reject_project_list');
+    }
+    public function approved_reject_project($id)
+    {
+    // Fetch the project plan by its ID
+    $projectPlan = Project_Plan::find($id);
+
+    // Check if the project plan exists and its status is 'draft'
+    if ($projectPlan && $projectPlan->status === 'rejected') {
+        // Update the status to 'approved'
+        $projectPlan->status = 'approved';
+        $projectPlan->approved_by = auth()->user()->id;
+        $projectPlan->approved_on = now();
+
+        // Save the changes
+        $projectPlan->save();
+
+       
+
+    // Display success notification and redirect to the approved project list page
+    toastr()->timeOut(10000)->closeButton()->success('Project Plan status updated to "approved" successfully.');
+    return redirect()->route('seniorManager.approved_project_page');
+    }
+
+// If the project plan doesn't exist or isn't in draft status, display warning and redirect back
+  toastr()->timeOut(10000)->closeButton()->warning('Project Plan not found or not in draft status.');
+  return redirect()->route('seniorManager.approved_project_page');
+
+}
+    
+    
+ 
+
     
 }

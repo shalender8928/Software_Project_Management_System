@@ -37,13 +37,13 @@
 </a>
 
       <!-- Approve Project Plan Link -->
-<a href="{{ route('seniorManager.approve_project', ['id' => 1]) }}" class="nav-link">
+<a href="{{ route('seniorManager.approved_project_page', ['id' => 1]) }}" class="nav-link">
                 <i  class="menu-icon" data-feather="check-circle" class="icon-sm me-3"></i>
                 <span class="link-title">Approve project plan</span>
             </a>
 
             <!-- Reject Project Plan Link -->
-            <a href="{{ route('seniorManager.reject_project', ['id' => 1]) }}" class="nav-link">
+            <a href="{{ route('seniorManager.reject_project_list', ['id' => 1]) }}" class="nav-link">
                 <i class="menu-icon" data-feather="x-circle" class="icon-sm me-3"></i>
                 <span class="link-title">Cancel project plan</span>
             </a> 

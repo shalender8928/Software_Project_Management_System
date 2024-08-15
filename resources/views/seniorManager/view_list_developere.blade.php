@@ -12,7 +12,7 @@
 
         <div class="page-content" style="margin-left:100px">
             <div class="row profile-body">
-                <div class="col-md-8 col-xl-9 middle-wrapper">
+                <div class="col-md-7 col-xl-9 middle-wrapper">
                     <div class="row">
                         <div class="col-md-12 grid-margin stretch-card">
                             <div class="card">

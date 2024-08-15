@@ -36,7 +36,7 @@
 
                                     <div class="mb-3">
                                         <label class="form-label">Project Name</label>
-                                        <input type="text" class="form-control" id="project_name" name="project_name" value="{{ $project->project_name }}" required>
+                                        <input type="text" class="form-control" id="project_name" name="project_name" value="{{ $project->name }}" required>
                                       
                                     </div>
                                     <!-- description -->
@@ -70,11 +70,8 @@
     <input type="text" class="form-control" id="category_id" name="category_id" value="{{ $project->category_id }}" required>
 </div>
 
-        
+<p class="text-warning">This project is not approved. To approve this project, click on the <a href="{{ url('View_project_Details_with_project_plan', $project->id) }}">details project</a> and follow the instructions.</p>
                                 <a class="btn btn-secondary" href="{{ route('seniorManager.view_project_list') }}">Back</a>
-
-                                
-                                
                               
                             </div>
                         </div>
