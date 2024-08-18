@@ -180,9 +180,9 @@
               <i class="me-2 icon-md" data-feather="edit"></i>
               <span>Edit Profile</span>
           <li class="dropdown-item py-2">
-            <a href="javascript:;" class="text-body ms-0">
-              <i class="me-2 icon-md" data-feather="repeat"></i>
-              <span>Switch User</span>
+            <a href="{{url('changee_password_dt')}}" class="text-body ms-0">
+            <i class="me-2 icon-md" data-feather="lock"></i>
+              <span>Change Password</span>
             </a>
           </li>
           <li class="dropdown-item py-2">

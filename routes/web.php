@@ -83,6 +83,10 @@ Route::middleware(['auth', 'CheckRole:Admin'])->group(function ()
     Route::get('view_employee_list', [AdminController::class, 'view_employee_list'])->name('admin.view_employee_list');
     Route::get('view_category_list', [AdminController::class, 'view_category_list'])->name('admin.view_category_list');
 
+              // changee_password_sm
+    Route::get('changee_password_admin', [AdminController::class, 'changee_password_admin'])->name('admin.changee_password_admin');
+    Route::post('update_changee_password_admin', [AdminController::class, 'change_Password_admin'])->name('admin.update_changee_password_admin');
+
 
     Route::get('view_employee_detail/{id}', [AdminController::class, 'view_employee_detail'])->name('admin.view_employee_detail');
     Route::get('view_category_detail/{id}', [AdminController::class, 'view_category_detail'])->name('admin.view_category_detail');
@@ -216,13 +220,20 @@ Route::middleware(['auth', 'CheckRole:Developer'])->group(function ()
        // Define route for editing profile image
     Route::get('developer_image_edit', [DeveloperController::class, 'developer_image_edit'])->name('developer.developer_image_edit');
 
+        // changee_password_sm
+    Route::get('changee_password_dt', [DeveloperController::class, 'changee_password_dt'])->name('developer.changee_password_dt');
+
+    Route::post('update_changee_password_dt', [DeveloperController::class, 'changePassword_dev_team'])->name('developer.update_changee_password_dt');
+
     Route::patch('update_developer_image/{id}', [DeveloperController::class, 'update_developer_image']);
 
     Route::get('edit_developer_profile', [DeveloperController::class, 'edit_developer_profile'])->name('developer.edit_developer_profile');
 
     Route::get('view_project_plans', [DeveloperController::class, 'view_project_plans'])->name('developer.view_project_plans');
 
-    Route::get('view_details_project/{id}', [DeveloperController::class, 'view_details_project'])->name('developer.view_details_project');
+    Route::get('view_projects_by_category_developer/{id}', [DeveloperController::class, 'viewProjectsByCategory_DT'])->name('developer.view_projects_by_category_developer');
+
+    Route::get('view_project_details_developer/{id}', [DeveloperController::class, 'view_project_details_developer'])->name('developer.view_project_details_developer');
     
     Route::get('view_feedback', [DeveloperController::class, 'view_feedback'])->name('developer.view_feedback');
 
@@ -247,6 +258,10 @@ Route::middleware(['auth', 'CheckRole:Senior Manager'])->group(function ()
     Route::get('/senior-manager/dashboard', [SeniorManagerController::class, 'dashboard'])->name('seniorManager.dashboard');
 
     Route::get('edit_profile', [SeniorManagerController::class, 'edit_profile'])->name('seniorManager.edit_profile');
+    // changee_password_sm
+    Route::get('changee_password_sm', [SeniorManagerController::class, 'changee_password_sm'])->name('seniorManager.changee_password_sm');
+
+    Route::post('update_changee_password', [SeniorManagerController::class, 'changePassword'])->name('seniorManager.update_changee_password');
 
     Route::get('mange_view_profile', [SeniorManagerController::class, 'mange_view_profile'])->name('seniorManager.mange_view_profile');
     
@@ -419,7 +434,11 @@ Route::middleware(['auth', 'CheckRole:Customer'])->group(function () {
    Route::get('project_manger_view_profile', [ProjectManagerController::class, 'project_manger_view_profile'])->name('projectManager.project_manger_view_profile');
 
       // Define route for editing profile image
-  Route::get('change_image', [ProjectManagerController::class, 'changeImage'])->name('projectManager.change_image');
+   Route::get('change_image', [ProjectManagerController::class, 'changeImage'])->name('projectManager.change_image');
+          // changee_password_sm
+   Route::get('changee_password_pm', [ProjectManagerController::class, 'changee_password_pm'])->name('projectManager.changee_password_pm');
+
+   Route::post('update_changee_password_pm', [ProjectManagerController::class, 'changePassword_project_manager'])->name('projectManager.update_changee_password_pm');
 
   Route::patch('project_man_update_profile_image/{id}', [ProjectManagerController::class, 'project_man_update_profile_image']);
 

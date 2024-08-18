@@ -45,7 +45,7 @@
 
     <!-- ======= Skills Section ======= -->
 
-    @include('home.skill_section')
+    <!-- @include('home.skill_section') -->
 
     <!-- End Skills Section -->
 

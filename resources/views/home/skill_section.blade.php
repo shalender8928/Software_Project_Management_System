@@ -1,3 +1,4 @@
+skill.blade.php
 <section id="skills">
       <div class="container" data-aos="fade-up">
 

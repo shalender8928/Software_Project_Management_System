@@ -119,6 +119,39 @@ class ProjectManagerController extends Controller
        return redirect()->route('projectManager.dashboard');
 
    }
+          //  changee password 
+          public function changee_password_pm()
+          {
+              $user = Auth::user();
+              $user_id = $user->id;    // logged in User Id
+              $data = User::find($user_id);
+              return view('projectManager.changee_password_pm', compact('data'));
+      
+          }
+          //    change password update
+        public function changePassword_project_manager(Request $request)
+        {
+            // Validate the request
+            $request->validate([
+                'current_password' => 'required',
+                'new_password' => 'required|min:8|confirmed', // 'confirmed' checks new_password_confirmation
+            ]);
+    
+            // Check if the current password matches
+            if (!Hash::check($request->current_password, Auth::user()->password)) {
+                toastr()->error('Current Password Does Not Match');
+                return redirect()->back();
+            }
+    
+            // Update the new password
+            User::whereId(auth()->user()->id)->update([
+                'password' => Hash::make($request->new_password),
+            ]);
+    
+            toastr()->success('Password successfully changed');
+            return redirect()->route('projectManager.dashboard');
+        }
+
 
    
 

@@ -4,19 +4,18 @@
 @include('developer.css')
 
 <body>
- <div class="main-wrapper">
+<div class="main-wrapper">
 
 <!-- partial:partials/_sidebar.html -->
-   @include('developer.sidebar')
+@include('developer.sidebar')
 
 <!-- partial -->
 
-   <div class="page-wrapper">
+<div class="page-wrapper">
             
     <!-- partial:partials/_navbar.html -->
     
          @include('developer.header')  
-
 
          <div class="page-content"  style="margin-left:100px">
            
@@ -31,47 +30,47 @@
                                 <h6 class="card-title">View Project Details</h6>
                              
                                     <!-- Display project details -->
-                                    
-                                    
+                                 
 
                                     <div class="mb-3">
                                         <label class="form-label">Project Name</label>
-                                        <input type="text" class="form-control" id="project_name" name="project_name" value="{{ $project->project_name }}" required>
+                                        <input type="text" class="form-control" id="project_name" name="project_name" value="{{ $project->name }}" required>
                                       
                                     </div>
                                     <!-- description -->
-   <div class="mb-3">
+<div class="mb-3">
     <label for="description" class="form-label">Description</label>
     <textarea class="form-control" id="description" name="description">{{ $project->description }}</textarea>
-   </div>
+</div>
 <!-- status -->
-   <div class="mb-3">
+<div class="mb-3">
     <label for="status">Status:</label>
     <input type="text" class="form-control" id="status" name="status" value="{{ $project->status }}" required>
-   </div>
+</div>
 <!-- deadline -->
-   <div class="mb-3">
+<div class="mb-3">
     <label for="deadline" class="form-label">Deadline</label>
     <input type="date" class="form-control" id="deadline" name="deadline" value="{{ $project->deadline }}" required>
-   </div>
+</div>
 <!-- start_date -->
-   <div class="mb-3">
+<div class="mb-3">
     <label for="start_date">Start Date:</label>
     <input type="date" class="form-control" id="start_date" name="start_date" value="{{ $project->start_date }}" required>
-   </div>
+</div>
 <!-- end_date -->
-   <div class="mb-3">
+<div class="mb-3">
     <label for="end_date">End Date:</label>
     <input type="date" class="form-control" id="end_date" name="end_date" value="{{ $project->end_date }}" required>
-   </div>
+</div>
 <!-- category_id -->
-   <div class="mb-3">
+<div class="mb-3">
     <label for="category_id">Category</label>
     <input type="text" class="form-control" id="category_id" name="category_id" value="{{ $project->category_id }}" required>
-    </div>
-        
-                  <a class="btn btn-secondary" href="{{ route('developer.view_project_plans') }}">Back</a>    
-                        </div>
+</div>
+
+                                <a class="btn btn-secondary" href="{{ route('developer.view_project_plans') }}">Back</a>
+                              
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -83,16 +82,15 @@
                 </div> 
             </div>
             <!-- right wrapper end -->
-        </div> 
+        </div>
          </div>
-         <!-- partial:partials/_footer.html -->
 
     @include('developer.footer') 
 
       <!-- partial -->
     </div>
 
-      </div>
+  </div>
 
   <!-- core:js -->
   @include('developer.js')

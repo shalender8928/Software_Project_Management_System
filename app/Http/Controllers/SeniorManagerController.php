@@ -1,6 +1,8 @@
 <?php
 
 namespace App\Http\Controllers;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Auth;
 use App\Models\Project;
 use App\Models\Task;
 use Illuminate\Support\Facades\DB;
@@ -8,7 +10,6 @@ use App\Models\Address;
 use Illuminate\Http\Request;
 use Spatie\Permission\Models\Role;
 use App\Models\User;
-use Illuminate\Support\Facades\Auth;
 use App\Models\Feedback;
 use App\Models\Category;
 use App\Models\Developer_has_Task;
@@ -99,6 +100,37 @@ class SeniorManagerController extends Controller
  
          return redirect()->route('seniorManager.dashboard');
  
+     }
+    //  changee password 
+     public function changee_password_sm()
+     {
+         $user = Auth::user();
+         $user_id = $user->id;    // logged in User Id
+         $data = User::find($user_id);
+         return view('seniorManager.changee_password_sm', compact('data'));
+ 
+     }
+     public function changePassword(Request $request)
+     {
+         // Validate the request
+         $request->validate([
+             'current_password' => 'required',
+             'new_password' => 'required|min:8|confirmed', // 'confirmed' checks new_password_confirmation
+         ]);
+ 
+         // Check if the current password matches
+         if (!Hash::check($request->current_password, Auth::user()->password)) {
+             toastr()->error('Current Password Does Not Match');
+             return redirect()->back();
+         }
+ 
+         // Update the new password
+         User::whereId(auth()->user()->id)->update([
+             'password' => Hash::make($request->new_password),
+         ]);
+ 
+         toastr()->success('Password successfully changed');
+         return redirect()->route('seniorManager.dashboard');
      }
      public function view_project_list()
      {
