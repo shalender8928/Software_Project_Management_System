@@ -12,7 +12,11 @@
 
         <div class="page-content" style="margin-left:100px">
             <div class="row profile-body">
+<<<<<<< HEAD
                 <div class="col-md-8 col-xl-9 middle-wrapper">
+=======
+                <div class="col-md-7 col-xl-9 middle-wrapper">
+>>>>>>> b260690166f437c962fb8f5a07530bce5cae6fac
                     <div class="row">
                         <div class="col-md-12 grid-margin stretch-card">
                             <div class="card">

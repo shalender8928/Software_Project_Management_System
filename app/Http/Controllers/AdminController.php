@@ -94,6 +94,39 @@ class AdminController extends Controller
             return redirect()->route('admin.dashboard');
 
         }
+          //  changee password 
+          public function changee_password_admin()
+          {
+              $user = Auth::user();
+              $user_id = $user->id;    // logged in User Id
+              $data = User::find($user_id);
+              return view('admin.changee_password_admin', compact('data'));
+      
+          }
+          //    change password update
+        public function change_Password_admin(Request $request)
+        {
+            // Validate the request
+            $request->validate([
+                'current_password' => 'required',
+                'new_password' => 'required|min:8|confirmed', // 'confirmed' checks new_password_confirmation
+            ]);
+    
+            // Check if the current password matches
+            if (!Hash::check($request->current_password, Auth::user()->password)) {
+                toastr()->error('Current Password Does Not Match');
+                return redirect()->back();
+            }
+    
+            // Update the new password
+            User::whereId(auth()->user()->id)->update([
+                'password' => Hash::make($request->new_password),
+            ]);
+    
+            toastr()->success('Password successfully changed');
+            return redirect()->route('admin.dashboard');
+        }
+
 
 
     public function admin_edit_profile()
@@ -328,11 +361,16 @@ public function update_employee_profile(Request $request, $id)
         if ($data) {
             $data->delete();
             toastr()->timeOut(10000)->closeButton()->success('Employee Successfully Deleted');
+        $data = User:: find($id);
+        if ($data) {
+            $data->delete();
+            toastr()->timeOut(10000)->closeButton()->success('Category Successfully Deleted');
         } else {
             toastr()->timeOut(10000)->closeButton()->error('Category Not Found');
         }
         return redirect()->back();
     }
+}
 
     public function view_employee_list(){
         $roles = ['Developer', 'Senior Manager', 'Project Manager'];
@@ -418,6 +456,7 @@ public function update_employee_profile(Request $request, $id)
 
     public function edit_category(){
         $data = Category::orderBy('cat_name','asc')->get();
+        $data = Category::orderBy('created_at','desc')->get();
         return view('admin.edit_category',compact('data'));
     }
 
@@ -529,8 +568,10 @@ public function delete_pro_category($id){
     }
 
 
-public function create_role(Request $request){ 
-        $user = Auth::user();
+
+public function create_role(Request $request)
+{
+    $user = Auth::user();
         $user_id = $user->id;    // logged-in User ID
 
         // Check if the user has the 'add-employee' permission
@@ -541,7 +582,6 @@ public function create_role(Request $request){
             toastr()->timeOut(10000)->closeButton()->warning('You are not permitted to add  new role');
             return redirect()->back();
         }
-
     $request->validate([
         'name' => 'required|string|max:255|unique:roles,name',
     ]);
@@ -622,7 +662,6 @@ public function update_role($id){
         toastr()->timeOut(10000)->closeButton()->warning('You are not permitted to edit role');
         return redirect()->back();
     }
-
     $data = Role::find($id);
 
     return view('admin.update_role' , compact('data'));
@@ -680,6 +719,7 @@ public function update_role_db(Request $request, $id){
 
     public function view_role_list(){
         $data = Role:: orderBy('name' , 'asc')->get();
+        $data = Role:: orderBy('created_at' , 'desc')->get();
 
         return view('admin.view_role_list' , compact('data'));
     }
@@ -720,21 +760,22 @@ public function update_role_db(Request $request, $id){
     }
 
 
-    public function update_user_assigned_role($id){
+
+    public function update_user_assigned_role($id) {
         $user = Auth::user();
         $user_id = $user->id; 
         $roles = Role:: find($id);
-    
         
-        $data = User::wherehas('roles', function ($query) use ($roles) {
-        $query->whereIn('name', $roles);
+        $data = User::whereHas('roles', function ($query) use ($roles) {
+            $query->whereIn('name', $roles);
         })
-        ->where('id' ,'!=' , $user_id )
+        ->where('id', '!=', $user_id)
         ->orderBy('created_at', 'desc')
         ->get();
-    
+        
         return view('admin.update_user_assigned_role', compact('data'));
     }
+    
 
     public function update_rolllee($id)
     {
@@ -821,11 +862,16 @@ public function update_role_db(Request $request, $id){
 
     public function edit_permission(){
 
+
         $permission = Permission::orderBy('name' , 'asc')->get();
+
+        $permission = Permission::orderBy('created_at' , 'desc')->get();
+
         return view('admin.edit_permission', compact('permission'));
     }
 
     public function update_permission($id){
+
         $user = Auth::user();
         $user_id = $user->id;    // logged-in User ID
 
@@ -837,6 +883,8 @@ public function update_role_db(Request $request, $id){
             toastr()->timeOut(10000)->closeButton()->warning('You are not permitted to edit permission');
             return redirect()->back();
         }
+
+
 
         $permission = Permission::find($id);
         return view('admin.update_permission',  compact('permission'));
@@ -867,6 +915,7 @@ public function update_role_db(Request $request, $id){
     } 
 
     public function delete_permission_added($id){
+
         $user = Auth::user();
         $user_id = $user->id;    // logged-in User ID
 
@@ -880,6 +929,9 @@ public function update_role_db(Request $request, $id){
         }
 
         
+
+        {
+
             $permission = Permission::find($id);
     
             if (!$permission) {
@@ -890,7 +942,11 @@ public function update_role_db(Request $request, $id){
             }
     
             return redirect()->back();
+
         
+
+        }
+
     }
 
     public function assign_permission(){
@@ -898,6 +954,7 @@ public function update_role_db(Request $request, $id){
 
         return view('admin.assign_permission' , compact('data'));
     }
+
 
     public function view_user_of_such_role($id)
 {
@@ -954,6 +1011,7 @@ public function update_role_db(Request $request, $id){
 
     public function view_permitted_user($id)
     {
+
         $user = Auth::user();
         $user_id = $user->id;    // logged-in User ID
 
@@ -965,6 +1023,8 @@ public function update_role_db(Request $request, $id){
             toastr()->timeOut(10000)->closeButton()->warning('You are not permitted to view users permitted for this permission ');
             return redirect()->back();
         }
+
+
 
         // Find the permission by its ID
         $permission = Permission::find($id);
@@ -998,6 +1058,7 @@ public function update_role_db(Request $request, $id){
 
         public function assign_category_to_selected_user($id){
 
+
             $user = Auth::user();
             $user_id = $user->id;    // logged-in User ID
             
@@ -1009,6 +1070,8 @@ public function update_role_db(Request $request, $id){
                 toastr()->timeOut(10000)->closeButton()->warning('You are not permitted to assign project category to employee');
                 return redirect()->back();
             }
+
+
             $user = User::findOrFail($id);
             $category = Category::orderBy('cat_name' , 'asc')->get();
             return view('admin.assign_category_to_selected_user', compact('user', 'category'));
@@ -1029,6 +1092,7 @@ public function update_role_db(Request $request, $id){
 
         public function view_employee_category($id)
 
+
         
         {
             $user = Auth::user();
@@ -1042,6 +1106,9 @@ public function update_role_db(Request $request, $id){
                 toastr()->timeOut(10000)->closeButton()->warning('You are not permitted to view employee assigned under this project category category');
                 return redirect()->back();
             }
+
+        
+
             // Find the category by ID
             $category = Category::find($id);
         
@@ -1079,6 +1146,7 @@ public function update_role_db(Request $request, $id){
         }
 
         public function update_category_assigned($id){
+
             $user = Auth::user();
             $user_id = $user->id;    // logged-in User ID
             
@@ -1090,6 +1158,8 @@ public function update_role_db(Request $request, $id){
                 toastr()->timeOut(10000)->closeButton()->warning('You are not permitted to update assigned project category to employee');
                 return redirect()->back();
             }
+
+
             $user = User:: find($id);
             $categories = Category::orderBy('cat_name' , 'asc')->get();
             return view('admin.update_category_assigned' , compact('user' , 'categories'));
@@ -1118,6 +1188,7 @@ public function update_role_db(Request $request, $id){
 
         public function create_qualification(Request $request){
 
+
             $user = Auth::user();
             $user_id = $user->id;    // logged-in User ID
 
@@ -1129,6 +1200,8 @@ public function update_role_db(Request $request, $id){
                 toastr()->timeOut(10000)->closeButton()->warning('You are not permitted to add  new qualification');
                 return redirect()->back();
             }
+
+
 
             $request->validate([
                 'qualification' => 'required|string|max:255',
@@ -1163,6 +1236,7 @@ public function update_role_db(Request $request, $id){
         }
 
         public function update_qualifications($id){
+
             $user = Auth::user();
             $user_id = $user->id;    // logged-in User ID
 
@@ -1174,6 +1248,8 @@ public function update_role_db(Request $request, $id){
                 toastr()->timeOut(10000)->closeButton()->warning('You are not permitted to edit qualification');
                 return redirect()->back();
             }
+
+
 
             $qualification = Qualification:: find($id);
             return view('admin.update_qualifications' , compact('qualification'));
@@ -1204,6 +1280,7 @@ public function update_role_db(Request $request, $id){
         }
 
         public function delete_qualifications_added($id){
+
             $user = Auth::user();
             $user_id = $user->id;    // logged-in User ID
 
@@ -1215,6 +1292,8 @@ public function update_role_db(Request $request, $id){
                 toastr()->timeOut(10000)->closeButton()->warning('You are not permitted to delete qualification');
                 return redirect()->back();
             }
+
+
 
             $qualification = Qualification:: find($id);
             $qualification->delete();
@@ -1239,6 +1318,7 @@ public function update_role_db(Request $request, $id){
         }
 
         public function view_user_of_such_role_qualification($id){
+
             $user = Auth::user();
             $user_id = $user->id;    // logged-in User ID
 
@@ -1250,6 +1330,8 @@ public function update_role_db(Request $request, $id){
                 toastr()->timeOut(10000)->closeButton()->warning('You are not permitted to assign qualification to employee');
                 return redirect()->back();
             }
+
+
             $role = Role::find($id);
 
         if (!$role) {
@@ -1266,7 +1348,10 @@ public function update_role_db(Request $request, $id){
         }
 
         public function assign_qualifiaction_for_selected_user($id){
+
             
+
+
             $qualification = Qualification::orderBy('name', 'asc')->get();
             $user = User::find($id);
             $userQualification = $user->qualifications->pluck('id')->toArray(); // Get IDs of assigned permissions
@@ -1282,6 +1367,7 @@ public function update_role_db(Request $request, $id){
         }
 
         public function view_qualified_user($id){
+
             $user = Auth::user();
             $user_id = $user->id;    // logged-in User ID
 
@@ -1293,6 +1379,8 @@ public function update_role_db(Request $request, $id){
                 toastr()->timeOut(10000)->closeButton()->warning('You are not permitted to view qualified user for this qualification');
                 return redirect()->back();
             }
+
+
 
             // Find the permission by its ID
             $qualification = Qualification::find($id);

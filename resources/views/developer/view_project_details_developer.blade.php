@@ -1,13 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
 
-@include('seniorManager.css')
+@include('developer.css')
 
 <body>
 <div class="main-wrapper">
 
 <!-- partial:partials/_sidebar.html -->
-@include('seniorManager.sidebar')
+@include('developer.sidebar')
 
 <!-- partial -->
 
@@ -15,8 +15,7 @@
             
     <!-- partial:partials/_navbar.html -->
     
-         @include('seniorManager.header')  
-
+         @include('developer.header')  
 
          <div class="page-content"  style="margin-left:100px">
            
@@ -31,16 +30,11 @@
                                 <h6 class="card-title">View Project Details</h6>
                              
                                     <!-- Display project details -->
-                                    
-                                    
+                                 
 
                                     <div class="mb-3">
                                         <label class="form-label">Project Name</label>
-<<<<<<< HEAD
-                                        <input type="text" class="form-control" id="project_name" name="project_name" value="{{ $project->project_name }}" required>
-=======
                                         <input type="text" class="form-control" id="project_name" name="project_name" value="{{ $project->name }}" required>
->>>>>>> b260690166f437c962fb8f5a07530bce5cae6fac
                                       
                                     </div>
                                     <!-- description -->
@@ -74,16 +68,7 @@
     <input type="text" class="form-control" id="category_id" name="category_id" value="{{ $project->category_id }}" required>
 </div>
 
-<<<<<<< HEAD
-        
-                                <a class="btn btn-secondary" href="{{ route('seniorManager.view_project_list') }}">Back</a>
-
-                                
-                                
-=======
-<p class="text-warning">This project is not approved. To approve this project, click on the <a href="{{ url('View_project_Details_with_project_plan', $project->id) }}">details project</a> and follow the instructions.</p>
-                                <a class="btn btn-secondary" href="{{ route('seniorManager.view_project_list') }}">Back</a>
->>>>>>> b260690166f437c962fb8f5a07530bce5cae6fac
+                                <a class="btn btn-secondary" href="{{ route('developer.view_project_plans') }}">Back</a>
                               
                             </div>
                         </div>
@@ -98,20 +83,9 @@
             </div>
             <!-- right wrapper end -->
         </div>
-
-
-
-
-         
          </div>
-         
 
-
-
-      
-         <!-- partial:partials/_footer.html -->
-
-    @include('seniorManager.footer') 
+    @include('developer.footer') 
 
       <!-- partial -->
     </div>
@@ -119,7 +93,7 @@
   </div>
 
   <!-- core:js -->
-  @include('seniorManager.js')
+  @include('developer.js')
 
 </body>
 </html>

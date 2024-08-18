@@ -23,7 +23,13 @@ return new class extends Migration
             $table->unsignedBigInteger('created_by');
             $table->unsignedBigInteger('updated_by')->nullable();
             $table->unsignedBigInteger('approved_by')->nullable();
+<<<<<<< HEAD
             $table->timestamp('approved_on')->nullable();
+=======
+            $table->unsignedBigInteger('rejected_by')->nullable();
+            $table->timestamp('approved_on')->nullable();
+            $table->timestamp('rejected_on')->nullable();
+>>>>>>> b260690166f437c962fb8f5a07530bce5cae6fac
             $table->text('rejection_reason')->nullable();
             $table->timestamps();
 
@@ -32,6 +38,10 @@ return new class extends Migration
             $table->foreign('created_by')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('updated_by')->references('id')->on('users')->onDelete('set null');
             $table->foreign('approved_by')->references('id')->on('users')->onDelete('set null');
+<<<<<<< HEAD
+=======
+            $table->foreign('rejected_by')->references('id')->on('users')->onDelete('set null');
+>>>>>>> b260690166f437c962fb8f5a07530bce5cae6fac
         });
     }
 

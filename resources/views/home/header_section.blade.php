@@ -17,12 +17,7 @@
               <li><a class="nav-link scrollto" href="#contact">Contact</a></li>
               <li><a class="nav-link scrollto" href="{{url('/login')}}">Login</a></li>
               <li><a class="nav-link scrollto" href="{{url('/register')}}">Register</a></li>
-              <li class="dropdown-item py-2">
-                <form method="POST" action="{{ route('logout') }}">
-                  @csrf
-                      <input class = "btn btn-danger" type="submit" value = "Logout">
-              </form>
-              </li>
+              
             </ul>
             <i class="bi bi-list mobile-nav-toggle"></i>
           </nav><!-- .navbar -->

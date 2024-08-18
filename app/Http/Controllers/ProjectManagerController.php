@@ -17,8 +17,6 @@ use App\Models\Project_Dependency;
 use App\Models\Project_Milestone;
 use App\Models\Project_Resource;
 use App\Models\user_category;
- 
-
 
 
 
@@ -250,7 +248,7 @@ class ProjectManagerController extends Controller
             $project->start_date == $request->input('start_date') &&
             $project->deadline == $request->input('deadline')
         ) {
-            toastr()->timeOut(10000)->closeButton()->info('No changes were made to the project.');
+            toastr()->timeOut(10000)->closeButton()->info('No changes were made.');
             return redirect()->back();
         }
     
@@ -323,8 +321,6 @@ class ProjectManagerController extends Controller
     public function view_project_list($id){
         $project = Project::where('category_id', $id)->orderBy('name', 'asc')->get();
         $category = Category::find($id);
-        $user = Auth::user();
-
 
         if ($project->isEmpty()) {
             toastr()->timeOut(10000)->closeButton()->warning('No projects found under the selected category.');
