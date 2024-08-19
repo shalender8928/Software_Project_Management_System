@@ -288,9 +288,17 @@ Route::middleware(['auth', 'CheckRole:Senior Manager'])->group(function ()
        // Senior Manager Routes End
     
        // Customer Routes Start 
-Route::middleware(['auth', 'CheckRole:Customer'])->group(function () {
-    Route::get('/customer/dashboard', [CustomerController::class, 'dashboard'])->name('customer.dashboard');
-});
+     
+
+       Route::middleware(['auth', 'CheckRole:Customer'])->group(function () {
+           Route::get('/dashboard', [CustomerController::class, 'dashboard'])->name('customer.dashboard');
+           Route::get('cust_view_profile', [CustomerController::class, 'cust_view_profile'])->name('customer.view_profile');
+           Route::get('edit_customer_profile', [CustomerController::class, 'edit_customer_profile'])->name('customer.edit_profile');
+           Route::post('update_ cust_profile/{id}', [CustomerController::class, 'update_profile'])->name('customer.update_profile');
+           Route::get('/edit-image', [CustomerController::class, 'customer_image_edit'])->name('customer.edit_image');
+           Route::post('/update-image/{id}', [CustomerController::class, 'update_customer_image'])->name('customer.update_image');
+       });
+       
 
        // Customer Routes End 
 

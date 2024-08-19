@@ -3,33 +3,48 @@
 
         <header class="section-header">
           <h3>About Us</h3>
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+          <p>Hawi Software Solutions (HSS) is an emerging software firm located in Adama, Ethiopia producing quality software for its clients. It is established to steer customers through the next generation of business innovation powered by technology with state-of-the-art business automation, software development and consultation services.
+
+HSS is powered by highly skilled professionals and developers, and equipped with the latest managerial and IT tools and works round the-clock to assure the timely delivery of your applications with the highest quality.</p>
         </header>
 
         <div class="row about-cols">
 
-          <div class="col-md-4" data-aos="fade-up" data-aos-delay="100">
+          <div class="col-md-4" data-aos="fade-up" data-aos-delay="300">
             <div class="about-col">
               <div class="img">
                 <img src="{{asset('assets/images/about-mission.jpg')}}" alt="" class="img-fluid">
                 <div class="icon"><i class="bi bi-bar-chart"></i></div>
+                <p></p>
+                <p></p>
               </div>
-              <h2 class="title"><a href="#">Our Mission</a></h2>
+              <p></p>
+              <h2 class="title"><a href="#"> Mission</a></h2>
               <p>
-                Lorem ipsum dolor sit amet, consectetur elit, sed do eiusmod tempor ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+              It’s through our commitment and passion to our clients that we develop software to face real-world challenges.
+              </p>
+              <p>
+             It’s our love for and dedication to what we do that enables us to become a better company for ourselves, our clients, our community and the world.
               </p>
             </div>
           </div>
 
-          <div class="col-md-4" data-aos="fade-up" data-aos-delay="200">
+          <div class="col-md-4" data-aos="fade-up" data-aos-delay="300">
             <div class="about-col">
+            <p></p>
               <div class="img">
                 <img src="{{asset('assets/images/about-plan.jpg')}}" alt="" class="img-fluid">
                 <div class="icon"><i class="bi bi-brightness-high"></i></div>
+                <p></p>
+                <p></p>
               </div>
-              <h2 class="title"><a href="#">Our Plan</a></h2>
+              <p></p>
+              
+              <p></p>
+              <p></p>
+              <h2 class="title"><a href="#">Vision</a></h2>
               <p>
-                Sed ut perspiciatis unde omnis iste natus error sit voluptatem doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.
+              Our vision is to become a world-class software development and technology provider company and to offer client-oriented solutions that are highly reliable.
               </p>
             </div>
           </div>
@@ -40,9 +55,20 @@
                 <img src="{{asset('assets/images/about-vision.jpg')}}" alt="" class="img-fluid">
                 <div class="icon"><i class="bi bi-calendar4-week"></i></div>
               </div>
-              <h2 class="title"><a href="#">Our Vision</a></h2>
+              <h2 class="title"><a href="#">Values</a></h2>
               <p>
-                Nemo enim ipsam voluptatem quia voluptas sit aut odit aut fugit, sed quia magni dolores eos qui ratione voluptatem sequi nesciunt Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet.
+               Honesty
+              </p>
+              <p>Accountability
+
+              </p>
+              <p>
+              Wisdom
+              </p>
+              <p>
+              Innovation
+              </p><p>
+              integrity
               </p>
             </div>
           </div>
