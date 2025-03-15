@@ -184,9 +184,9 @@ public function register_employee(Request $request)
     $user_id = $user->id;    // logged-in User ID
     
     // Check if the user has the 'add-employee' permission
-    $hasPermission = $user->permissions()->where('name', 'add employee')->exists();
+    // $hasPermission = $user->permissions()->where('name', 'add employee')->exists();
     
-    if (!$hasPermission) {
+    if (!$user->can('add employee')) {
 
         toastr()->timeOut(10000)->closeButton()->warning('You are not permitted to add new employee');
         return redirect()->back();
@@ -261,9 +261,9 @@ public function update_employee($id){
     $user_id = $user->id;    // logged-in User ID
     
     // Check if the user has the 'add-employee' permission
-    $hasPermission = $user->permissions()->where('name', 'edit employee')->exists();
+    // $hasPermission = $user->permissions()->where('name', 'edit employee')->exists();
     
-    if (!$hasPermission) {
+    if (!$user->can('edit employee')) {
 
         toastr()->timeOut(10000)->closeButton()->warning('You are not permitted to edit employee details');
         return redirect()->back();
@@ -350,9 +350,9 @@ public function update_employee_profile(Request $request, $id)
     $user_id = $user->id;    // logged-in User ID
     
     // Check if the user has the 'add-employee' permission
-    $hasPermission = $user->permissions()->where('name', 'delete employee')->exists();
+    // $hasPermission = $user->permissions()->where('name', 'delete employee')->exists();
     
-    if (!$hasPermission) {
+    if (!$user->can('delete employee')) {
 
         toastr()->timeOut(10000)->closeButton()->warning('You are not permitted to delete employee');
         return redirect()->back();
@@ -388,9 +388,9 @@ public function update_employee_profile(Request $request, $id)
         $user_id = $user->id;    // logged-in User ID
         
         // Check if the user has the 'add-employee' permission
-        $hasPermission = $user->permissions()->where('name', 'view employee detail')->exists();
+        // $hasPermission = $user->permissions()->where('name', 'view employee detail')->exists();
         
-        if (!$hasPermission) {
+        if (!$user->can('view employee detail')) {
     
             toastr()->timeOut(10000)->closeButton()->warning('You are not permitted to view employee details');
             return redirect()->back();
@@ -411,9 +411,9 @@ public function update_employee_profile(Request $request, $id)
         $user_id = $user->id;    // logged-in User ID
         
         // Check if the user has the 'add-employee' permission
-        $hasPermission = $user->permissions()->where('name', 'add category')->exists();
+        // $hasPermission = $user->permissions()->where('name', 'add category')->exists();
         
-        if (!$hasPermission) {
+        if (!$user->can('add category')) {
     
             toastr()->timeOut(10000)->closeButton()->warning('You are not permitted to add  new project category');
             return redirect()->back();
@@ -465,9 +465,9 @@ public function update_employee_profile(Request $request, $id)
         $user_id = $user->id;    // logged-in User ID
         
         // Check if the user has the 'add-employee' permission
-        $hasPermission = $user->permissions()->where('name', 'edit category')->exists();
+        // $hasPermission = $user->permissions()->where('name', 'edit category')->exists();
         
-        if (!$hasPermission) {
+        if (!$user->can('edit category')) {
     
             toastr()->timeOut(10000)->closeButton()->warning('You are not permitted to edit project category');
             return redirect()->back();
@@ -518,9 +518,9 @@ public function delete_pro_category($id){
     $user_id = $user->id;    // logged-in User ID
     
     // Check if the user has the 'add-employee' permission
-    $hasPermission = $user->permissions()->where('name', 'delete category')->exists();
+    // $hasPermission = $user->permissions()->where('name', 'delete category')->exists();
     
-    if (!$hasPermission) {
+    if (!$user->can('delete category')) {
 
         toastr()->timeOut(10000)->closeButton()->warning('You are not permitted to delete project category');
         return redirect()->back();
@@ -551,9 +551,9 @@ public function delete_pro_category($id){
         $user_id = $user->id;    // logged-in User ID
         
         // Check if the user has the 'add-employee' permission
-        $hasPermission = $user->permissions()->where('name', 'view category')->exists();
+        // $hasPermission = $user->permissions()->where('name', 'view category')->exists();
         
-        if (!$hasPermission) {
+        if (!$user->can('view category')) {
     
             toastr()->timeOut(10000)->closeButton()->warning('You are not permitted to view project category details');
             return redirect()->back();
@@ -575,9 +575,9 @@ public function create_role(Request $request)
         $user_id = $user->id;    // logged-in User ID
 
         // Check if the user has the 'add-employee' permission
-        $hasPermission = $user->permissions()->where('name', 'add role')->exists();
+        // $hasPermission = $user->permissions()->where('name', 'add role')->exists();
 
-        if (!$hasPermission) {
+        if (!$user->can('add role')) {
 
             toastr()->timeOut(10000)->closeButton()->warning('You are not permitted to add  new role');
             return redirect()->back();
@@ -616,9 +616,9 @@ public function assign_role() {
         $user_id = $user->id;    // logged-in User ID
 
         // Check if the user has the 'add-employee' permission
-        $hasPermission = $user->permissions()->where('name', 'assign role')->exists();
+        // $hasPermission = $user->permissions()->where('name', 'assign role')->exists();
 
-        if (!$hasPermission) {
+        if (!$user->can('assign role')) {
 
             toastr()->timeOut(10000)->closeButton()->warning('You are not permitted to assign role to employee');
             return redirect()->back();
@@ -655,9 +655,9 @@ public function update_role($id){
     $user_id = $user->id;    // logged-in User ID
 
     // Check if the user has the 'add-employee' permission
-    $hasPermission = $user->permissions()->where('name', 'edit role')->exists();
+    // $hasPermission = $user->permissions()->where('name', 'edit role')->exists();
 
-    if (!$hasPermission) {
+    if (!$user->can('edit role')) {
 
         toastr()->timeOut(10000)->closeButton()->warning('You are not permitted to edit role');
         return redirect()->back();
@@ -696,9 +696,9 @@ public function update_role_db(Request $request, $id){
         $user_id = $user->id;    // logged-in User ID
 
         // Check if the user has the 'add-employee' permission
-        $hasPermission = $user->permissions()->where('name', 'delete role')->exists();
+        // $hasPermission = $user->permissions()->where('name', 'delete role')->exists();
 
-        if (!$hasPermission) {
+        if (!$user->can('delete role')) {
 
             toastr()->timeOut(10000)->closeButton()->warning('You are not permitted to delete role');
             return redirect()->back();
@@ -731,9 +731,9 @@ public function update_role_db(Request $request, $id){
         $user_id = $user->id;    // logged-in User ID
 
         // Check if the user has the 'add-employee' permission
-        $hasPermission = $user->permissions()->where('name', 'view role')->exists();
+        // $hasPermission = $user->permissions()->where('name', 'view role')->exists();
 
-        if (!$hasPermission) {
+        if (!$user->can('view role')) {
 
             toastr()->timeOut(10000)->closeButton()->warning('You are not permitted to view user assigned to this role');
             return redirect()->back();
@@ -783,9 +783,9 @@ public function update_role_db(Request $request, $id){
         $user_id = $user->id;    // logged-in User ID
 
         // Check if the user has the 'add-employee' permission
-        $hasPermission = $user->permissions()->where('name', 'update assigned role')->exists();
+        // $hasPermission = $user->permissions()->where('name', 'update assigned role')->exists();
 
-        if (!$hasPermission) {
+        if (!$user->can('update assigned role')) {
 
             toastr()->timeOut(10000)->closeButton()->warning('You are not permitted to update assigned role to employee');
             return redirect()->back();
@@ -833,9 +833,9 @@ public function update_role_db(Request $request, $id){
         $user_id = $user->id;    // logged-in User ID
 
         // Check if the user has the 'add-employee' permission
-        $hasPermission = $user->permissions()->where('name', 'add permission')->exists();
+        // $hasPermission = $user->permissions()->where('name', 'add permission')->exists();
 
-        if (!$hasPermission) {
+        if (!$user->can('add permission')) {
 
             toastr()->timeOut(10000)->closeButton()->warning('You are not permitted to add  new permission');
             return redirect()->back();
@@ -876,9 +876,9 @@ public function update_role_db(Request $request, $id){
         $user_id = $user->id;    // logged-in User ID
 
         // Check if the user has the 'add-employee' permission
-        $hasPermission = $user->permissions()->where('name', 'edit permission')->exists();
+        // $hasPermission = $user->permissions()->where('name', 'edit permission')->exists();
 
-        if (!$hasPermission) {
+        if (!$user->can('edit permission')) {
 
             toastr()->timeOut(10000)->closeButton()->warning('You are not permitted to edit permission');
             return redirect()->back();
@@ -920,9 +920,9 @@ public function update_role_db(Request $request, $id){
         $user_id = $user->id;    // logged-in User ID
 
         // Check if the user has the 'add-employee' permission
-        $hasPermission = $user->permissions()->where('name', 'delete permission')->exists();
+        // $hasPermission = $user->permissions()->where('name', 'delete permission')->exists();
 
-        if (!$hasPermission) {
+        if (!$user->can('delete permission')) {
 
             toastr()->timeOut(10000)->closeButton()->warning('You are not permitted to delete permission');
             return redirect()->back();
@@ -962,9 +962,9 @@ public function update_role_db(Request $request, $id){
     $user_id = $user->id;    // logged-in User ID
 
     // Check if the user has the 'assign permission' permission
-    $hasPermission = $user->permissions()->where('name', 'assign permission')->exists();
+    // $hasPermission = $user->permissions()->where('name', 'assign permission')->exists();
 
-    if (!$hasPermission) {
+    if (!$user->can('assign permission')) {
         toastr()->timeOut(10000)->closeButton()->warning('You are not permitted to assign permission');
         return redirect()->back();
     }
@@ -1016,9 +1016,9 @@ public function update_role_db(Request $request, $id){
         $user_id = $user->id;    // logged-in User ID
 
         // Check if the user has the 'add-employee' permission
-        $hasPermission = $user->permissions()->where('name', 'view permission')->exists();
+        // $hasPermission = $user->permissions()->where('name', 'view permission')->exists();
 
-        if (!$hasPermission) {
+        if (!$user->can('view permission')) {
 
             toastr()->timeOut(10000)->closeButton()->warning('You are not permitted to view users permitted for this permission ');
             return redirect()->back();
@@ -1063,9 +1063,9 @@ public function update_role_db(Request $request, $id){
             $user_id = $user->id;    // logged-in User ID
             
             // Check if the user has the 'add-employee' permission
-            $hasPermission = $user->permissions()->where('name', 'assign category')->exists();
+            // $hasPermission = $user->permissions()->where('name', 'assign category')->exists();
             
-            if (!$hasPermission) {
+            if (!$user->can('assign category')) {
         
                 toastr()->timeOut(10000)->closeButton()->warning('You are not permitted to assign project category to employee');
                 return redirect()->back();
@@ -1099,9 +1099,9 @@ public function update_role_db(Request $request, $id){
             $user_id = $user->id;    // logged-in User ID
             
             // Check if the user has the 'add-employee' permission
-            $hasPermission = $user->permissions()->where('name', 'view category')->exists();
+            // $hasPermission = $user->permissions()->where('name', 'view category')->exists();
             
-            if (!$hasPermission) {
+            if (!$user->can('view category')) {
         
                 toastr()->timeOut(10000)->closeButton()->warning('You are not permitted to view employee assigned under this project category category');
                 return redirect()->back();
@@ -1151,9 +1151,9 @@ public function update_role_db(Request $request, $id){
             $user_id = $user->id;    // logged-in User ID
             
             // Check if the user has the 'add-employee' permission
-            $hasPermission = $user->permissions()->where('name', 'update assigned category')->exists();
+            // $hasPermission = $user->permissions()->where('name', 'update assigned category')->exists();
             
-            if (!$hasPermission) {
+            if (!$user->can('update assigned category')) {
         
                 toastr()->timeOut(10000)->closeButton()->warning('You are not permitted to update assigned project category to employee');
                 return redirect()->back();
@@ -1193,9 +1193,9 @@ public function update_role_db(Request $request, $id){
             $user_id = $user->id;    // logged-in User ID
 
             // Check if the user has the 'add-employee' permission
-            $hasPermission = $user->permissions()->where('name', 'add qualification')->exists();
+            // $hasPermission = $user->permissions()->where('name', 'add qualification')->exists();
 
-            if (!$hasPermission) {
+            if (!$user->can('add qualification')) {
 
                 toastr()->timeOut(10000)->closeButton()->warning('You are not permitted to add  new qualification');
                 return redirect()->back();
@@ -1241,9 +1241,9 @@ public function update_role_db(Request $request, $id){
             $user_id = $user->id;    // logged-in User ID
 
             // Check if the user has the 'add-employee' permission
-            $hasPermission = $user->permissions()->where('name', 'edit qualification')->exists();
+            // $hasPermission = $user->permissions()->where('name', 'edit qualification')->exists();
 
-            if (!$hasPermission) {
+            if (!$user->can('edit qualification')) {
 
                 toastr()->timeOut(10000)->closeButton()->warning('You are not permitted to edit qualification');
                 return redirect()->back();
@@ -1285,9 +1285,9 @@ public function update_role_db(Request $request, $id){
             $user_id = $user->id;    // logged-in User ID
 
             // Check if the user has the 'add-employee' permission
-            $hasPermission = $user->permissions()->where('name', 'delete qualification')->exists();
+            // $hasPermission = $user->permissions()->where('name', 'delete qualification')->exists();
 
-            if (!$hasPermission) {
+            if (!$user->can('delete qualification')) {
 
                 toastr()->timeOut(10000)->closeButton()->warning('You are not permitted to delete qualification');
                 return redirect()->back();
@@ -1323,9 +1323,9 @@ public function update_role_db(Request $request, $id){
             $user_id = $user->id;    // logged-in User ID
 
             // Check if the user has the 'add-employee' permission
-            $hasPermission = $user->permissions()->where('name', 'assign qualification')->exists();
+            // $hasPermission = $user->permissions()->where('name', 'assign qualification')->exists();
 
-            if (!$hasPermission) {
+            if (!$user->can('assign qualification')) {
 
                 toastr()->timeOut(10000)->closeButton()->warning('You are not permitted to assign qualification to employee');
                 return redirect()->back();
@@ -1372,9 +1372,9 @@ public function update_role_db(Request $request, $id){
             $user_id = $user->id;    // logged-in User ID
 
             // Check if the user has the 'add-employee' permission
-            $hasPermission = $user->permissions()->where('name', 'view qualification')->exists();
+            // $hasPermission = $user->permissions()->where('name', 'view qualification')->exists();
 
-            if (!$hasPermission) {
+            if (!$user->can('view qualification')) {
 
                 toastr()->timeOut(10000)->closeButton()->warning('You are not permitted to view qualified user for this qualification');
                 return redirect()->back();

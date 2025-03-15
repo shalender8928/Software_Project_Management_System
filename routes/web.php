@@ -48,7 +48,7 @@ Route::get('/add_employee', [App\Http\Controllers\AdminController::class, 'add_e
     ->name('admin.add_employee')
     ->middleware(['web', 'auth', 'CheckRole:Admin']);
 
-// the home controller or landing page controller page start
+    // the home controller or landing page controller page start
      Route::get('/', [HomeController::class, 'index'])->name('home.index');
 
     
@@ -207,7 +207,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-    // Developer Routes Start ❤🧡💛💚
+// Developer Routes Start ❤🧡💛💚
 
 Route::middleware(['auth', 'CheckRole:Developer'])->group(function () 
 {
@@ -240,9 +240,9 @@ Route::middleware(['auth', 'CheckRole:Developer'])->group(function ()
 
 });
 
-          // Developer Routes E
+// Developer Routes E
 
-          // Senior Manager Routes Start
+// Senior Manager Routes Start
 Route::middleware(['auth', 'CheckRole:Senior Manager'])->group(function () 
 {
     Route::get('/senior-manager/dashboard', [SeniorManagerController::class, 'dashboard'])->name('seniorManager.dashboard');
@@ -285,28 +285,28 @@ Route::middleware(['auth', 'CheckRole:Senior Manager'])->group(function ()
 
 });
 
-       // Senior Manager Routes End
-    
-       // Customer Routes Start 
-     
+// Senior Manager Routes End
 
-       Route::middleware(['auth', 'CheckRole:Customer'])->group(function () {
-           Route::get('/dashboard', [CustomerController::class, 'dashboard'])->name('customer.dashboard');
-           Route::get('cust_view_profile', [CustomerController::class, 'cust_view_profile'])->name('customer.view_profile');
-           Route::get('edit_customer_profile', [CustomerController::class, 'edit_customer_profile'])->name('customer.edit_profile');
-           Route::post('update_ cust_profile/{id}', [CustomerController::class, 'update_profile'])->name('customer.update_profile');
-           Route::get('/edit-image', [CustomerController::class, 'customer_image_edit'])->name('customer.edit_image');
-           Route::post('/update-image/{id}', [CustomerController::class, 'update_customer_image'])->name('customer.update_image');
-       });
-       
-
-       // Customer Routes End 
+// Customer Routes Start 
 
 
-       // Project Manager Routes Start
+Route::middleware(['auth', 'CheckRole:Customer'])->group(function () {
+   Route::get('/dashboard', [CustomerController::class, 'dashboard'])->name('customer.dashboard');
+   Route::get('cust_view_profile', [CustomerController::class, 'cust_view_profile'])->name('customer.view_profile');
+   Route::get('edit_customer_profile', [CustomerController::class, 'edit_customer_profile'])->name('customer.edit_profile');
+   Route::post('update_ cust_profile/{id}', [CustomerController::class, 'update_profile'])->name('customer.update_profile');
+   Route::get('/edit-image', [CustomerController::class, 'customer_image_edit'])->name('customer.edit_image');
+   Route::post('/update-image/{id}', [CustomerController::class, 'update_customer_image'])->name('customer.update_image');
+});
 
-   Route::middleware(['auth', 'CheckRole:Project Manager'])->group(function () 
-   {
+
+// Customer Routes End 
+
+
+// Project Manager Routes Start
+
+Route::middleware(['auth', 'CheckRole:Project Manager'])->group(function () 
+{
 
    Route::get('/projectManager/dashboard', [projectManagerController::class, 'dashboard'])->name('projectManager.dashboard');
 
@@ -345,7 +345,7 @@ Route::middleware(['auth', 'CheckRole:Senior Manager'])->group(function ()
    Route::get('select_category_to_editt', [ProjectManagerController::class, 'select_category_to_editt'])->name('projectManager.select_category_to_editt');
    Route::get('select_project_to_editt/{id}', [ProjectManagerController::class, 'select_project_to_editt'])->name('projectManager.select_project_to_editt');
    Route::get('edit_task/{id}', [ProjectManagerController::class, 'edit_task'])->name('projectManager.edit_task');
-   Route::get('update_task/{id}', [ProjectManagerController::class, 'update_task'])->name('projectManager.update_project');
+   Route::get('update_task/{id}', [ProjectManagerController::class, 'update_task'])->name('projectManager.update_task');
    Route::patch('update_task_post/{id}', [ProjectManagerController::class, 'update_task_post']);
 
     // Delete Task
@@ -380,7 +380,7 @@ Route::middleware(['auth', 'CheckRole:Senior Manager'])->group(function ()
    Route::get('select_category_to_add_pro_plan', [ProjectManagerController::class, 'select_category_to_add_pro_plan'])->name('projectManager.select_category_to_add_pro_plan');
    Route::get('select_project_to_add_pro_plan/{id}', [ProjectManagerController::class, 'select_project_to_add_pro_plan'])->name('projectManager.select_project_to_add_pro_plan');
    Route::get('add_new_pro_plan/{id}', [ProjectManagerController::class, 'add_new_pro_plan'])->name('projectManager.add_new_pro_plan');
-   Route::post('create_project_plan', [ProjectManagerController::class, 'create_project_plan'])->name('projectManager.create_project_plan');
+   Route::post('create_project_plan', [ProjectManagerController::class, 'create_project_plan'])->name('projectManager.create_project_plan.post');
 
    // Adding Project Objective
    Route::get('go_to_objective/{id}', [ProjectManagerController::class, 'go_to_objective'])->name('projectManager.go_to_objective');
@@ -392,7 +392,7 @@ Route::middleware(['auth', 'CheckRole:Senior Manager'])->group(function ()
    Route::post('store_project_scope', [ProjectManagerController::class, 'store_project_scope'])->name('projectManager.store_project_scope');
 
 
-   Route::get('assign_task', [ProjectManagerController::class, 'assign_task'])->name('projectManager.assign_task');
+   // Route::get('assign_task', [ProjectManagerController::class, 'assign_task'])->name('projectManager.assign_task');
    
    Route::get('project_manger_view_profile', [ProjectManagerController::class, 'project_manger_view_profile'])->name('projectManager.project_manger_view_profile');
 
@@ -474,7 +474,7 @@ Route::middleware(['auth', 'CheckRole:Senior Manager'])->group(function ()
    Route::get('delete_plan/{id}', [ProjectManagerController::class, 'delete_plan'])->name('projectManager.delete_plan');
    
    // Delete Objective
-   Route::get('delete_objective/{id}', [ProjectManagerController::class, 'delete_plan'])->name('projectManager.delete_plan');
+   Route::get('delete_objective/{id}', [ProjectManagerController::class, 'delete_objective'])->name('projectManager.delete_objective');
 
 
 });

@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::table('project__plans', function (Blueprint $table) {
+        /*Schema::table('project__plans', function (Blueprint $table) {
             // Adding 'rejected_by' column after 'approved_by'
             $table->unsignedBigInteger('rejected_by')->nullable()->after('approved_by');
             
@@ -20,18 +20,18 @@ return new class extends Migration
             
             // Adding foreign key constraint to 'rejected_by'
             $table->foreign('rejected_by')->references('id')->on('users')->onDelete('set null');
-        });
+        });*/
     }
     public function down()
     {
-        Schema::table('project__plans', function (Blueprint $table) {
+        /*Schema::table('project__plans', function (Blueprint $table) {
             // Dropping the 'rejected_by' column and its foreign key constraint
             $table->dropForeign(['rejected_by']);
             $table->dropColumn('rejected_by');
             
             // Dropping the 'rejected_on' column
             $table->dropColumn('rejected_on');
-        });
+        });*/
     }
 
 };

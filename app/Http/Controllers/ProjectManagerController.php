@@ -138,9 +138,9 @@ class ProjectManagerController extends Controller
         $user_id = $user->id;    // logged-in User ID
 
         // Check if the user has the 'add-employee' permission
-        $hasPermission = $user->permissions()->where('name', 'add project')->exists();
+        // $hasPermission = $user->permissions()->where('name', 'add project')->exists();
 
-        if (!$hasPermission) {
+        if (!$user->can('add project')) {
 
             toastr()->timeOut(10000)->closeButton()->warning('You are not permitted to add new project');
             return redirect()->back();
@@ -202,9 +202,9 @@ class ProjectManagerController extends Controller
         $user_id = $user->id;    // logged-in User ID
 
         // Check if the user has the 'add-employee' permission
-        $hasPermission = $user->permissions()->where('name', 'edit project')->exists();
+        // $hasPermission = $user->permissions()->where('name', 'edit project')->exists();
 
-        if (!$hasPermission) {
+        if (!$user->can('edit project')) {
 
             toastr()->timeOut(10000)->closeButton()->warning('You are not permitted to edit project');
             return redirect()->back();
@@ -289,9 +289,9 @@ class ProjectManagerController extends Controller
         $user_id = $user->id;    // logged-in User ID
 
         // Check if the user has the 'add-employee' permission
-        $hasPermission = $user->permissions()->where('name', 'delete project')->exists();
+        // $hasPermission = $user->permissions()->where('name', 'delete project')->exists();
 
-        if (!$hasPermission) {
+        if (!$user->can('delete project')) {
 
             toastr()->timeOut(10000)->closeButton()->warning('You are not permitted to delete project');
             return redirect()->back();
@@ -334,9 +334,9 @@ class ProjectManagerController extends Controller
         $user_id = $user->id;    // logged-in User ID
 
         // Check if the user has the 'add-employee' permission
-        $hasPermission = $user->permissions()->where('name', 'view project')->exists();
+        // $hasPermission = $user->permissions()->where('name', 'view project')->exists();
 
-        if (!$hasPermission) {
+        if (!$user->can('view project')) {
 
             toastr()->timeOut(10000)->closeButton()->warning('You are not permitted to view project details');
             return redirect()->back();
@@ -373,9 +373,9 @@ class ProjectManagerController extends Controller
         $user_id = $user->id;    // logged-in User ID
 
         // Check if the user has the 'add-employee' permission
-        $hasPermission = $user->permissions()->where('name', 'add task')->exists();
+        // $hasPermission = $user->permissions()->where('name', 'add task')->exists();
 
-        if (!$hasPermission) {
+        if (!$user->can('add task')) {
 
             toastr()->timeOut(10000)->closeButton()->warning('You are not permitted to add new task');
             return redirect()->back();
@@ -440,9 +440,9 @@ class ProjectManagerController extends Controller
     $user_id = $user->id;    // logged-in User ID
 
     // Check if the user has the 'add-employee' permission
-    $hasPermission = $user->permissions()->where('name', 'edit task')->exists();
+    // $hasPermission = $user->permissions()->where('name', 'edit task')->exists();
 
-    if (!$hasPermission) {
+    if (!$user->can('edit task')) {
 
         toastr()->timeOut(10000)->closeButton()->warning('You are not permitted to edit the task');
         return redirect()->back();
@@ -533,9 +533,9 @@ class ProjectManagerController extends Controller
         $user_id = $user->id;    // logged-in User ID
 
         // Check if the user has the 'add-employee' permission
-        $hasPermission = $user->permissions()->where('name', 'delete task')->exists();
+        // $hasPermission = $user->permissions()->where('name', 'delete task')->exists();
 
-        if (!$hasPermission) {
+        if (!$user->can('delete task')) {
 
             toastr()->timeOut(10000)->closeButton()->warning('You are not permitted to delete                                                                                                                                                                                                                                                                                                                                                                                                task');
             return redirect()->back();
@@ -584,9 +584,9 @@ class ProjectManagerController extends Controller
         $user_id = $user->id;    // logged-in User ID
 
         // Check if the user has the 'add-employee' permission
-        $hasPermission = $user->permissions()->where('name', 'view task')->exists();
+        // $hasPermission = $user->permissions()->where('name', 'view task')->exists();
 
-        if (!$hasPermission) {
+        if (!$user->can('view task')) {
 
             toastr()->timeOut(10000)->closeButton()->warning('You are not permitted to view task details');
             return redirect()->back();
@@ -656,9 +656,9 @@ public function assign_task($id)
         $user_id = $user->id;    // logged-in User ID
 
         // Check if the user has the 'add-employee' permission
-        $hasPermission = $user->permissions()->where('name', 'assign task')->exists();
+        // $hasPermission = $user->permissions()->where('name', 'assign task')->exists();
 
-        if (!$hasPermission) {
+        if (!$user->can('assign task')) {
 
             toastr()->timeOut(10000)->closeButton()->warning('You are not permitted to assign task to developer');
             return redirect()->back();
@@ -758,9 +758,9 @@ public function assign_task($id)
         $user_id = $user->id;    // logged-in User ID
 
         // Check if the user has the 'add-employee' permission
-        $hasPermission = $user->permissions()->where('name', 'update assigned task')->exists();
+        // $hasPermission = $user->permissions()->where('name', 'update assigned task')->exists();
 
-        if (!$hasPermission) {
+        if (!$user->can('update assigned task')) {
 
             toastr()->timeOut(10000)->closeButton()->warning('You are not permitted to update assigned task for developer');
             return redirect()->back();
@@ -832,9 +832,9 @@ public function assign_task_update_post($taskId)
         $user_id = $user->id;    // logged-in User ID
 
         // Check if the user has the 'add-employee' permission
-        $hasPermission = $user->permissions()->where('name', 'add project plan')->exists();
+        // $hasPermission = $user->permissions()->where('name', 'add project plan')->exists();
 
-        if (!$hasPermission) {
+        if (!$user->can('add project plan')) {
 
             toastr()->timeOut(10000)->closeButton()->warning('You are not permitted to add project plan');
             return redirect()->back();
@@ -1193,9 +1193,9 @@ public function assign_task_update_post($taskId)
         $user_id = $user->id;    // logged-in User ID
 
         // Check if the user has the 'add-employee' permission
-        $hasPermission = $user->permissions()->where('name', 'edit project plan')->exists();
+        // $hasPermission = $user->permissions()->where('name', 'edit project plan')->exists();
 
-        if (!$hasPermission) {
+        if (!$user->can('edit project plan')) {
 
             toastr()->timeOut(10000)->closeButton()->warning('You are not permitted to edit project plan');
             return redirect()->back();

@@ -65,6 +65,7 @@ class RolesAndPermissionsSeeder extends Seeder
 
         // Create Admin role and assign only 'assign permission'
         $adminRole = Role::create(['name' => 'Admin']);
-        $adminRole->givePermissionTo('assign permission');
+        // $adminRole->givePermissionTo('assign permission');
+        $adminRole->givePermissionTo($permissions);
     }
 }

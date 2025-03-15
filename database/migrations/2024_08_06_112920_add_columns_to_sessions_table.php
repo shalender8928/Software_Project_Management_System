@@ -13,10 +13,10 @@ class AddColumnsToSessionsTable extends Migration
      */
     public function up()
     {
-        Schema::table('sessions', function (Blueprint $table) {
+        /*Schema::table('sessions', function (Blueprint $table) {
             $table->string('ip_address')->nullable()->after('last_activity');
             $table->string('user_agent')->nullable()->after('ip_address');
-        });
+        });*/
     }
 
     /**
@@ -26,8 +26,8 @@ class AddColumnsToSessionsTable extends Migration
      */
     public function down()
     {
-        Schema::table('sessions', function (Blueprint $table) {
+        /*Schema::table('sessions', function (Blueprint $table) {
             $table->dropColumn(['ip_address', 'user_agent']);
-        });
+        });*/
     }
 }
